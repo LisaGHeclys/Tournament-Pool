@@ -1,6 +1,11 @@
 "use client"
 import {Button} from "@/components/ui/button";
 import {useRouter} from "next/navigation";
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
+import {Label} from "@/components/ui/label";
+import {Input} from "@/components/ui/input";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import {Github} from "lucide-react";
 
 export default function Home() {
   const router = useRouter();
@@ -19,7 +24,17 @@ export default function Home() {
         <div/>
       </header>
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        {/*TODO: Card for login registration*/}
+        <Card className="w-[400px]">
+          <CardHeader>
+            <CardTitle>Login</CardTitle>
+            <CardDescription>On this app, we’ll use your GitHub account to securely log you in, so you don’t need to create a new password.</CardDescription>
+          </CardHeader>
+          <CardContent className="flex justify-center">
+            <Button>
+              <Github/>
+            </Button>
+          </CardContent>
+        </Card>
       </main>
     </div>
   );
