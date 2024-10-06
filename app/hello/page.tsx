@@ -1,14 +1,24 @@
-"use client"
-import {useRouter} from "next/navigation";
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
-import {Button} from "@/components/ui/button";
-import {Input} from "@/components/ui/input";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
-import {Label} from "@/components/ui/label";
+"use client";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 export default function Home() {
-  const router = useRouter();
-
   return (
     <div className="min-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <header className="p-8 w-full h-fit flex flex-wrap sm:flex-row justify-between">
@@ -20,14 +30,16 @@ export default function Home() {
         <Card className="w-[400px]">
           <CardHeader>
             <CardTitle>Registration</CardTitle>
-            <CardDescription>This is your first time on our app, we will need some information.</CardDescription>
+            <CardDescription>
+              This is your first time on our app, we will need some information.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form>
               <div className="grid w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="username">Username</Label>
-                  <Input id="username" placeholder="Your username"/>
+                  <Input id="username" placeholder="Your username" />
                 </div>
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="purpose">What purpose do you have ?</Label>
