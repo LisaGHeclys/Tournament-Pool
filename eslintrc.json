@@ -13,5 +13,8 @@
     "plugin:tailwindcss/recommended",
     "prettier"
   ],
-  "plugins": ["prettier", "@typescript-eslint", "tailwindcss"]
+  "plugins": ["prettier", "@typescript-eslint", "tailwindcss"],
+  "rules": {
+    "@typescript-eslint/no-empty-interface": "off"
+  }
 }

@@ -1,19 +1,31 @@
 "use client";
-import { Copyright, Github, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { SessionProvider } from "next-auth/react";
+import Footer from "@/components/ui/footer";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import ChartPreview from "@/components/ui/chart-preview";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 export default function Home() {
   const router = useRouter();
 
   return (
     <SessionProvider>
-      <div className="min-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
-        <header className="p-8 w-full h-fit flex flex-wrap sm:flex-row justify-between">
+      <div className="min-h-screen p-8 sm:pb-20 gap-8 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
+        <header className="md:p-8 w-full h-fit flex flex-wrap sm:flex-row justify-between">
           <div />
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-            Welcome to this page !
+            Welcome to the Tournament Pool !
           </h1>
           {
             <Button
@@ -25,31 +37,58 @@ export default function Home() {
             </Button>
           }
         </header>
-        <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start"></main>
-        <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-          <p className="flex items-center gap-2">
-            <Copyright width={16} height={16} />
-            All rights reserved
-          </p>
-          <a
-            className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-            href="https://github.com/LisaGHeclys"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Github width={16} height={16} />
-            Github
-          </a>
-          <a
-            className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-            href="https://lisamlglaziou.fr"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Globe width={16} height={16} />
-            Go see my other projects →
-          </a>
-        </footer>
+        <main className="h-full w-full flex flex-col gap-8 row-start-2 items-center">
+          <div className="relative">
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="search"
+              placeholder="Search a pool..."
+              className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+            />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full lg:w-3/4 justify-center">
+            <ChartPreview />
+            <ChartPreview />
+            <ChartPreview />
+            <ChartPreview />
+            <ChartPreview />
+            <ChartPreview />
+            <ChartPreview />
+            <ChartPreview />
+            <ChartPreview />
+            <ChartPreview />
+            <ChartPreview />
+            <ChartPreview />
+            <ChartPreview />
+            <ChartPreview />
+            <ChartPreview />
+          </div>
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious href="#" />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#" isActive>
+                  1
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">2</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">3</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext href="#" />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </main>
+        <Footer />
       </div>
     </SessionProvider>
   );
