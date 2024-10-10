@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 
-export default function Home() {
+export default function Hello() {
   return (
     <div className="min-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <header className="p-8 w-full h-fit flex flex-wrap sm:flex-row justify-between">
