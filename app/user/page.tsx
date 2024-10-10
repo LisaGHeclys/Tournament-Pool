@@ -75,7 +75,7 @@ export default function User() {
                       <Plus />
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="flex flex-col sm:max-w-[625px]">
+                  <DialogContent className="flex flex-col sm:max-w-[425px]">
                     <DialogHeader>
                       <DialogTitle>Add a tournament</DialogTitle>
                       <DialogDescription>
