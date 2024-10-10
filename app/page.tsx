@@ -22,20 +22,12 @@ export default function Home() {
   return (
     <SessionProvider>
       <div className="min-h-screen p-8 sm:pb-20 gap-8 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
-        <header className="md:p-8 w-full h-fit flex flex-wrap sm:flex-row justify-between">
+        <header className="md:p-8 w-full h-fit flex flex-wrap sm:flex-row items-center justify-between">
           <div />
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
             Welcome to the Tournament Pool !
           </h1>
-          {
-            <Button
-              onClick={() => {
-                router.push("/login");
-              }}
-            >
-              Login
-            </Button>
-          }
+          {<Button onClick={() => router.push("/login")}>Login</Button>}
         </header>
         <main className="h-full w-full flex flex-col gap-8 row-start-2 items-center">
           <div className="relative">
