@@ -150,7 +150,7 @@ export default function User() {
                         You can create your own tournament here.
                       </DialogDescription>
                     </DialogHeader>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} className="grid gap-4">
                       <div className="grid w-full items-center gap-4">
                         <div className="flex flex-col space-y-1.5">
                           <Label htmlFor="name">Tournament Name</Label>
@@ -167,6 +167,7 @@ export default function User() {
                           </Label>
                           <Input
                             id="team-number"
+                            className="flex flex-grow"
                             type="number"
                             value={teamNumber.toString()}
                             min="2"
@@ -179,12 +180,12 @@ export default function User() {
                         {tournament.teams.map((team, index) => (
                           <div
                             key={index}
-                            className="flex flex-row space-x-1.5"
+                            className="flex w-full flex-col space-y-1.5"
                           >
-                            <div className="flex flex-col space-y-1.5">
-                              <Label htmlFor={`team-name-${index}`}>
-                                Team {index + 1} Name
-                              </Label>
+                            <Label htmlFor={`team-name-${index}`}>
+                              Team {index + 1} : Name and Color
+                            </Label>
+                            <div key={index} className="flex flex-row gap-4">
                               <Input
                                 id={`team-name-${index}`}
                                 value={team.name}
@@ -198,24 +199,21 @@ export default function User() {
                                 placeholder="Team name"
                                 required
                               />
-                            </div>
-                            <div className="flex flex-col space-y-1.5">
-                              <Label htmlFor={`team-color-${index}`}>
-                                Team {index + 1} Color
-                              </Label>
-                              <ColorPicker
-                                id={`team-color-${index}`}
-                                value={team.color}
-                                onChange={(v) =>
-                                  handleTeamChange(index, "color", v)
-                                }
-                                aria-required
-                              />
+                              <div>
+                                <ColorPicker
+                                  id={`team-color-${index}`}
+                                  value={team.color}
+                                  onChange={(v) =>
+                                    handleTeamChange(index, "color", v)
+                                  }
+                                  aria-required
+                                />
+                              </div>
                             </div>
                           </div>
                         ))}
                       </div>
-                      <DialogFooter className="mt-2 flex">
+                      <DialogFooter>
                         <Button type="submit">Create a tournament</Button>
                       </DialogFooter>
                     </form>
