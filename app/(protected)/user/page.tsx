@@ -29,13 +29,22 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { getSession, useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export default function User() {
+  const { data } = useSession();
+  const session = getSession();
+
+  console.log(session);
+
+  if (session == null) redirect("/");
+
   return (
     <div className="min-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Welcome back username !
+          Welcome back {data?.user?.name} !
         </h1>
         <UserNav />
       </header>
@@ -45,7 +54,7 @@ export default function User() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                  <BreadcrumbLink href="/public">Home</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>

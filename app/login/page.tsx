@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -10,15 +10,18 @@ import {
 } from "@/components/ui/card";
 import { Github } from "lucide-react";
 import React from "react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Home() {
   const router = useRouter();
+  const { status } = useSession();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signIn("github", { redirectTo: "/hello" });
+    await signIn("github", { redirectTo: "/user" });
   };
+
+  if (status === "authenticated") redirect("/user");
 
   return (
     <div className="min-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">

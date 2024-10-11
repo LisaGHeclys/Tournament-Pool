@@ -39,19 +39,24 @@ export default function Hello() {
               <div className="grid w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="username">Username</Label>
-                  <Input id="username" placeholder="Your username" />
+                  <Input
+                    id="username"
+                    placeholder="By default we use your github username"
+                  />
                 </div>
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="purpose">What purpose do you have ?</Label>
-                  <Select>
-                    <SelectTrigger id="purpose">
-                      <SelectValue placeholder="Select" />
+                  <Label htmlFor="how-find">
+                    How did you find my project ?
+                  </Label>
+                  <Select required>
+                    <SelectTrigger id="how-find">
+                      <SelectValue placeholder="example: GitHub" />
                     </SelectTrigger>
                     <SelectContent position="popper">
-                      <SelectItem value="next">Next.js</SelectItem>
-                      <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                      <SelectItem value="astro">Astro</SelectItem>
-                      <SelectItem value="nuxt">Nuxt.js</SelectItem>
+                      <SelectItem value="github">GitHub</SelectItem>
+                      <SelectItem value="my-website">My Website</SelectItem>
+                      <SelectItem value="linkedin">Linkedin</SelectItem>
+                      <SelectItem value="others">Others</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
