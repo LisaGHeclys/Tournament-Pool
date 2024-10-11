@@ -30,15 +30,80 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
+import React from "react";
+import {
+  addTournamentBody,
+  teamBody,
+} from "@/app/api/_helpers/types/interfaces";
+import { ColorPicker } from "@/components/ui/color-picker";
 
 export default function User() {
-  const { data } = useSession();
+  const { data: session } = useSession();
+  const [tournament, setTournament] = React.useState<addTournamentBody>({
+    name: "",
+    teams: [
+      { name: "", color: "" },
+      { name: "", color: "" },
+    ],
+    createdBy: session?.user?.name ?? "",
+  });
+  const [teamNumber, setTeamNumber] = React.useState<number>(2);
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setTournament((prev) => ({
+      ...prev,
+      [e.target.id]: e.target.value,
+    }));
+  };
+
+  const handleTeamNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const number = parseInt(e.target.value, 10);
+    setTeamNumber(number);
+    setTournament((prev) => {
+      let updatedTeams = [...prev.teams];
+
+      if (number > updatedTeams.length) {
+        updatedTeams.push(
+          ...Array.from({ length: number - updatedTeams.length }, () => ({
+            name: "",
+            color: "",
+          })),
+        );
+      } else {
+        updatedTeams = updatedTeams.slice(0, number);
+      }
+
+      return {
+        ...prev,
+        teams: updatedTeams,
+      };
+    });
+  };
+
+  const handleTeamChange = (
+    index: number,
+    field: "name" | "color",
+    value: string,
+  ) => {
+    const updatedTeams = [...tournament.teams];
+    updatedTeams[index][field] = value;
+    setTournament((prev) => ({
+      ...prev,
+      teams: updatedTeams,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Tournament name:", tournament);
+  };
 
   return (
     <div className="min-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Welcome back {data?.user?.name} !
+          Welcome back {session?.user?.name} !
         </h1>
         <UserNav />
       </header>
@@ -85,15 +150,14 @@ export default function User() {
                         You can create your own tournament here.
                       </DialogDescription>
                     </DialogHeader>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                       <div className="grid w-full items-center gap-4">
                         <div className="flex flex-col space-y-1.5">
-                          <Label htmlFor="tournament-name">
-                            Tournament Name
-                          </Label>
+                          <Label htmlFor="name">Tournament Name</Label>
                           <Input
-                            id="tournament-name"
+                            id="name"
                             placeholder="Your tournament name"
+                            onChange={handleOnChange}
                             required
                           />
                         </div>
@@ -104,15 +168,57 @@ export default function User() {
                           <Input
                             id="team-number"
                             type="number"
+                            value={teamNumber.toString()}
+                            min="2"
+                            max="5"
+                            onChange={handleTeamNumberChange}
                             placeholder="Your number of teams"
                             required
                           />
                         </div>
+                        {tournament.teams.map((team, index) => (
+                          <div
+                            key={index}
+                            className="flex flex-row space-x-1.5"
+                          >
+                            <div className="flex flex-col space-y-1.5">
+                              <Label htmlFor={`team-name-${index}`}>
+                                Team {index + 1} Name
+                              </Label>
+                              <Input
+                                id={`team-name-${index}`}
+                                value={team.name}
+                                onChange={(e) =>
+                                  handleTeamChange(
+                                    index,
+                                    "name",
+                                    e.target.value,
+                                  )
+                                }
+                                placeholder="Team name"
+                                required
+                              />
+                            </div>
+                            <div className="flex flex-col space-y-1.5">
+                              <Label htmlFor={`team-color-${index}`}>
+                                Team {index + 1} Color
+                              </Label>
+                              <ColorPicker
+                                id={`team-color-${index}`}
+                                value={team.color}
+                                onChange={(v) =>
+                                  handleTeamChange(index, "color", v)
+                                }
+                                aria-required
+                              />
+                            </div>
+                          </div>
+                        ))}
                       </div>
+                      <DialogFooter className="mt-2 flex">
+                        <Button type="submit">Create a tournament</Button>
+                      </DialogFooter>
                     </form>
-                    <DialogFooter className="flex">
-                      <Button>Create a tournament</Button>
-                    </DialogFooter>
                   </DialogContent>
                 </Dialog>
               </div>

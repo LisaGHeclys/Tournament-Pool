@@ -1,4 +1,4 @@
-type teamBody = {
+export type teamBody = {
   name: string;
   color: string;
   points?: number[];
