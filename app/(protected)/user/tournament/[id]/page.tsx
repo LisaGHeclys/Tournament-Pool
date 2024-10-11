@@ -17,7 +17,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ChartPreview from "@/components/ui/chart-preview";
 import { UserNav } from "@/components/ui/user-nav";
@@ -46,13 +46,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getSession } from "next-auth/react";
 
 export default function Tournament() {
   const router = useRouter();
-  const session = getSession();
-
-  if (session == null) redirect("/");
 
   return (
     <div className="min-h-screen md:max-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
