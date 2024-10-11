@@ -15,12 +15,11 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { UserNav } from "@/components/ui/user-nav";
 
 export default function Home() {
   const router = useRouter();
   const { data: session } = useSession();
-
-  console.log("session", session);
 
   return (
     <div className="min-h-screen p-8 sm:pb-20 gap-8 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -29,14 +28,18 @@ export default function Home() {
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
           Welcome to the Tournament Pool !
         </h1>
-        {<Button onClick={() => router.push("/login")}>Login</Button>}
+        {session ? (
+          <UserNav />
+        ) : (
+          <Button onClick={() => router.push("/login")}>Login</Button>
+        )}
       </header>
-      <main className="h-full w-full flex flex-col gap-8 row-start-2 items-center">
-        <div className="relative">
+      <main className="h-full w-full flex flex-col gap-8 row-start-2 items-center justify-around">
+        <div className="relative mt-4">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
-            placeholder="Search a pool..."
+            placeholder="Search for a pool..."
             className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
           />
         </div>

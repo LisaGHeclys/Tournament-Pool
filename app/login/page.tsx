@@ -17,7 +17,7 @@ export default function Home() {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signIn("github", { redirectTo: "/hello" });
+    await signIn("github", { redirectTo: "/user" });
   };
 
   return (
