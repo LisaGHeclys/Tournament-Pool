@@ -16,6 +16,8 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { UserNav } from "@/components/ui/user-nav";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import React from "react";
 
 export default function Home() {
   const router = useRouter();

@@ -6,12 +6,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import React from "react";
+import { tournamentBody } from "@/app/api/_helpers/types/interfaces";
 
-export default function ChartPreview() {
+type ChartPreviewProps = {
+  tournament?: tournamentBody;
+};
+
+export default function ChartPreview({ tournament }: ChartPreviewProps) {
   return (
     <Card className="w-full h-[100px]">
       <CardHeader>
-        <CardTitle>Title of the pool</CardTitle>
+        <CardTitle>{tournament?.name ?? "Title of the pool"}</CardTitle>
         <CardDescription>Description of the pool</CardDescription>
       </CardHeader>
       <CardContent className="flex justify-center">

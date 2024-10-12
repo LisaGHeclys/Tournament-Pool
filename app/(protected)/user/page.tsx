@@ -33,6 +33,8 @@ import { useSession } from "next-auth/react";
 import React from "react";
 import { tournamentBody } from "@/app/api/_helpers/types/interfaces";
 import { ColorPicker } from "@/components/ui/color-picker";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import ChartPreview from "@/components/ui/chart-preview";
 
 export default function User() {
   const { data: session } = useSession();
@@ -97,7 +99,7 @@ export default function User() {
   };
 
   return (
-    <div className="min-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="min-h-screen md:max-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
           Welcome back {session?.user?.name} !
@@ -105,12 +107,12 @@ export default function User() {
         <UserNav />
       </header>
       <main className="w-full h-full flex gap-8 items-center">
-        <Card className="m-16 p-2 px-16 w-full h-full ">
+        <Card className="flex flex-col p-2 px-16 w-full h-full">
           <CardHeader>
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/public">Home</BreadcrumbLink>
+                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
@@ -123,101 +125,110 @@ export default function User() {
               You can create tournaments here and find your previous ones.
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="w-full">
-              <div className="lg:px-32 w-full flex flex-row gap-8">
-                <div className="relative w-full">
-                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="search"
-                    placeholder="Search a pool..."
-                    className="w-full rounded-lg bg-background pl-8"
-                  />
-                </div>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button>
-                      <Plus />
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="flex flex-col sm:max-w-[425px]">
-                    <DialogHeader>
-                      <DialogTitle>Add a tournament</DialogTitle>
-                      <DialogDescription>
-                        You can create your own tournament here.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <form onSubmit={handleSubmit} className="grid gap-4">
-                      <div className="grid w-full items-center gap-4">
-                        <div className="flex flex-col space-y-1.5">
-                          <Label htmlFor="name">Tournament Name</Label>
-                          <Input
-                            id="name"
-                            placeholder="Your tournament name"
-                            onChange={handleOnChange}
-                            required
-                          />
-                        </div>
-                        <div className="flex flex-col space-y-1.5">
-                          <Label htmlFor="team-number">
-                            How many teams do you need ?
+          <CardContent className="flex flex-col h-full gap-8">
+            <div className="lg:px-32 w-full flex flex-row gap-8">
+              <div className="relative w-full">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="search"
+                  placeholder="Search a pool..."
+                  className="w-full rounded-lg bg-background pl-8"
+                />
+              </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button>
+                    <Plus />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="flex flex-col sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Add a tournament</DialogTitle>
+                    <DialogDescription>
+                      You can create your own tournament here.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <form onSubmit={handleSubmit} className="grid gap-4">
+                    <div className="grid w-full items-center gap-4">
+                      <div className="flex flex-col space-y-1.5">
+                        <Label htmlFor="name">Tournament Name</Label>
+                        <Input
+                          id="name"
+                          placeholder="Your tournament name"
+                          onChange={handleOnChange}
+                          required
+                        />
+                      </div>
+                      <div className="flex flex-col space-y-1.5">
+                        <Label htmlFor="team-number">
+                          How many teams do you need ?
+                        </Label>
+                        <Input
+                          id="team-number"
+                          className="flex flex-grow"
+                          type="number"
+                          value={teamNumber.toString()}
+                          min="2"
+                          max="5"
+                          onChange={handleTeamNumberChange}
+                          placeholder="Your number of teams"
+                          required
+                        />
+                      </div>
+                      {tournament.teams.map((team, index) => (
+                        <div
+                          key={index}
+                          className="flex w-full flex-col space-y-1.5"
+                        >
+                          <Label htmlFor={`team-name-${index}`}>
+                            Team {index + 1} : Name and Color
                           </Label>
-                          <Input
-                            id="team-number"
-                            className="flex flex-grow"
-                            type="number"
-                            value={teamNumber.toString()}
-                            min="2"
-                            max="5"
-                            onChange={handleTeamNumberChange}
-                            placeholder="Your number of teams"
-                            required
-                          />
-                        </div>
-                        {tournament.teams.map((team, index) => (
-                          <div
-                            key={index}
-                            className="flex w-full flex-col space-y-1.5"
-                          >
-                            <Label htmlFor={`team-name-${index}`}>
-                              Team {index + 1} : Name and Color
-                            </Label>
-                            <div key={index} className="flex flex-row gap-4">
-                              <Input
-                                id={`team-name-${index}`}
-                                value={team.name}
-                                onChange={(e) =>
-                                  handleTeamChange(
-                                    index,
-                                    "name",
-                                    e.target.value,
-                                  )
+                          <div key={index} className="flex flex-row gap-4">
+                            <Input
+                              id={`team-name-${index}`}
+                              value={team.name}
+                              onChange={(e) =>
+                                handleTeamChange(index, "name", e.target.value)
+                              }
+                              placeholder="Team name"
+                              required
+                            />
+                            <div>
+                              <ColorPicker
+                                id={`team-color-${index}`}
+                                value={team.color}
+                                onChange={(v) =>
+                                  handleTeamChange(index, "color", v)
                                 }
-                                placeholder="Team name"
-                                required
+                                aria-required
                               />
-                              <div>
-                                <ColorPicker
-                                  id={`team-color-${index}`}
-                                  value={team.color}
-                                  onChange={(v) =>
-                                    handleTeamChange(index, "color", v)
-                                  }
-                                  aria-required
-                                />
-                              </div>
                             </div>
                           </div>
-                        ))}
-                      </div>
-                      <DialogFooter>
-                        <Button type="submit">Create a tournament</Button>
-                      </DialogFooter>
-                    </form>
-                  </DialogContent>
-                </Dialog>
-              </div>
+                        </div>
+                      ))}
+                    </div>
+                    <DialogFooter>
+                      <Button type="submit">Create a tournament</Button>
+                    </DialogFooter>
+                  </form>
+                </DialogContent>
+              </Dialog>
             </div>
+            <ScrollArea className="w-full h-[500px] px-2">
+              <div className="flex flex-col gap-4 p-2">
+                <ChartPreview />
+                <ChartPreview />
+                <ChartPreview />
+                <ChartPreview />
+                <ChartPreview />
+                <ChartPreview />
+                <ChartPreview />
+                <ChartPreview />
+                <ChartPreview />
+                <ChartPreview />
+                <ChartPreview />
+              </div>
+            </ScrollArea>
           </CardContent>
         </Card>
       </main>
