@@ -16,12 +16,23 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { UserNav } from "@/components/ui/user-nav";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import React from "react";
+import PulseLoader from "@/components/ui/pulse-loader";
 
 export default function Home() {
   const router = useRouter();
   const { status } = useSession();
+
+  function handleUserNav() {
+    switch (status) {
+      case "authenticated":
+        return <UserNav />;
+      case "loading":
+        return <PulseLoader width={45} height={45} />;
+      default:
+        return <Button onClick={() => router.push("/login")}>Login</Button>;
+    }
+  }
 
   return (
     <div className="min-h-screen p-8 sm:pb-20 gap-8 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -30,11 +41,7 @@ export default function Home() {
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
           Welcome to the Tournament Pool !
         </h1>
-        {status == "authenticated" ? (
-          <UserNav />
-        ) : (
-          <Button onClick={() => router.push("/login")}>Login</Button>
-        )}
+        {handleUserNav()}
       </header>
       <main className="h-full w-full flex flex-col gap-8 row-start-2 items-center justify-around">
         <div className="relative mt-4">
