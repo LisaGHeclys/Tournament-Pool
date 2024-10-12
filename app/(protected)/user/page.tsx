@@ -67,6 +67,7 @@ export default function User() {
           ...Array.from({ length: number - updatedTeams.length }, () => ({
             name: "",
             color: "",
+            points: [],
           })),
         );
       } else {
