@@ -31,19 +31,16 @@ import {
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
 import React from "react";
-import {
-  addTournamentBody,
-  teamBody,
-} from "@/app/api/_helpers/types/interfaces";
+import { tournamentBody } from "@/app/api/_helpers/types/interfaces";
 import { ColorPicker } from "@/components/ui/color-picker";
 
 export default function User() {
   const { data: session } = useSession();
-  const [tournament, setTournament] = React.useState<addTournamentBody>({
+  const [tournament, setTournament] = React.useState<tournamentBody>({
     name: "",
     teams: [
-      { name: "", color: "" },
-      { name: "", color: "" },
+      { name: "", color: "", points: [] },
+      { name: "", color: "", points: [] },
     ],
     createdBy: session?.user?.name ?? "",
   });

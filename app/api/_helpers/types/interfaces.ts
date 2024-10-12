@@ -4,7 +4,7 @@ export type teamBody = {
   points?: number[];
 };
 
-export type addTournamentBody = {
+export type tournamentBody = {
   id?: string;
   name: string;
   teams: teamBody[];

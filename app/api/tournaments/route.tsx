@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/firebase/firebase";
 import withSession from "@/app/api/_helpers/middleware/with-session";
-import { addTournamentBody } from "@/app/api/_helpers/types/interfaces";
+import { tournamentBody } from "@/app/api/_helpers/types/interfaces";
 
 async function putHandler(req: NextRequest) {
-  const body: addTournamentBody = JSON.parse(await req.text());
+  const body: tournamentBody = JSON.parse(await req.text());
   const { name, teams, createdBy } = body;
 
   if (!name)
