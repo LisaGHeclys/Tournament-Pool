@@ -214,21 +214,17 @@ export default function User() {
                 </DialogContent>
               </Dialog>
             </div>
-            <ScrollArea className="w-full h-[500px] px-2">
-              <div className="flex flex-col gap-4 p-2">
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-              </div>
-            </ScrollArea>
+            <div className="flex w-full justify-center">
+              <ScrollArea className="w-2/3 h-[500px] px-2">
+                <div className="flex flex-col gap-4 p-2">
+                  <ChartPreview height="360" />
+                  <ChartPreview height="360" />
+                  <ChartPreview height="360" />
+                  <ChartPreview height="360" />
+                  <ChartPreview height="360" />
+                </div>
+              </ScrollArea>
+            </div>
           </CardContent>
         </Card>
       </main>

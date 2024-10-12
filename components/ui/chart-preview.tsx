@@ -1,27 +1,33 @@
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import React from "react";
 import { tournamentBody } from "@/app/api/_helpers/types/interfaces";
+import PieChartComponent from "@/components/ui/pie-chart";
 
 type ChartPreviewProps = {
+  height?: string;
   tournament?: tournamentBody;
 };
 
-export default function ChartPreview({ tournament }: ChartPreviewProps) {
+export default function ChartPreview({
+  height,
+  tournament,
+}: ChartPreviewProps) {
   return (
-    <Card className="w-full h-[100px]">
-      <CardHeader>
+    <Card
+      className={`w-full h-[${height ?? "240"}px] flex flex-row justify-between drop-shadow-md`}
+    >
+      <CardHeader className="w-1/2">
         <CardTitle>{tournament?.name ?? "Title of the pool"}</CardTitle>
         <CardDescription>Description of the pool</CardDescription>
       </CardHeader>
-      <CardContent className="flex justify-center">
-        {/*TODO: preview of the chart*/}
-      </CardContent>
+      <div className="flex h-full p-4 w-1/2">
+        <PieChartComponent />
+      </div>
     </Card>
   );
 }

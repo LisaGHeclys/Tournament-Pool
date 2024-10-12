@@ -52,16 +52,7 @@ export default function Home() {
             className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full lg:w-3/4 justify-center">
-          <ChartPreview />
-          <ChartPreview />
-          <ChartPreview />
-          <ChartPreview />
-          <ChartPreview />
-          <ChartPreview />
-          <ChartPreview />
-          <ChartPreview />
-          <ChartPreview />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full justify-center">
           <ChartPreview />
           <ChartPreview />
           <ChartPreview />
