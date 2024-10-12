@@ -185,17 +185,7 @@ export default function Tournament() {
             </div>
             <ScrollArea className="w-full h-[500px] px-2">
               <div className="flex flex-col gap-4 p-2">
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
-                <ChartPreview />
+                {/*TODO: create a PointsPreview component*/}
               </div>
             </ScrollArea>
           </CardContent>
