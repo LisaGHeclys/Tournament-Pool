@@ -33,11 +33,11 @@ export default function PieChartComponent({ tournament }: PieChartProps) {
   console.log(tournament.name, chartData, chartConfig);
 
   return (
-    <Card className="w-full h-full flex flex-col">
-      <CardContent className="pb-0">
+    <Card className="w-full h-full flex flex-col p-4">
+      <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto aspect-square max-h-[250px] pb-0 [&_.recharts-pie-label-text]:fill-foreground"
         >
           <PieChart>
             <ChartTooltip
@@ -47,10 +47,10 @@ export default function PieChartComponent({ tournament }: PieChartProps) {
             <Pie
               data={chartData}
               dataKey="teamPoints"
+              label
               nameKey="teamName"
               innerRadius={60}
-              strokeWidth={5}
-            ></Pie>
+            />
           </PieChart>
         </ChartContainer>
       </CardContent>

@@ -235,7 +235,7 @@ export default function User() {
                     <ChartPreview
                       key={tournament.id ?? index}
                       tournament={tournament}
-                      height="360"
+                      height="380"
                     />
                   ))}
                 </div>
