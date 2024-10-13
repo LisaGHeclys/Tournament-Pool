@@ -42,7 +42,7 @@ export default function Home() {
         </h1>
         {handleUserNav()}
       </header>
-      <main className="h-full w-full flex flex-col gap-8 row-start-2 items-center justify-around">
+      <main className="h-full w-full flex flex-col gap-8 row-start-2 items-center justify-between p-4">
         <div className="relative mt-4">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
