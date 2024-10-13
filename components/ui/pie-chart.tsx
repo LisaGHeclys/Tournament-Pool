@@ -9,37 +9,29 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { tournamentBody } from "@/app/api/_helpers/types/interfaces";
 
-const chartData = [
-  { teamName: "team1", teamPoints: 275, fill: "var(--color-team1)" },
-  { teamName: "team2", teamPoints: 200, fill: "var(--color-team2)" },
-  { teamName: "team3", teamPoints: 287, fill: "var(--color-team3)" },
-  { teamName: "team4", teamPoints: 173, fill: "var(--color-team4)" },
-];
+type PieChartProps = {
+  tournament: tournamentBody;
+};
 
-const chartConfig = {
-  teamPoints: {
-    label: "Teams Points",
-  },
-  team1: {
-    label: "Team 1",
-    color: "hsl(var(--chart-1))",
-  },
-  team2: {
-    label: "Team 2",
-    color: "hsl(var(--chart-2))",
-  },
-  team3: {
-    label: "Team 3",
-    color: "hsl(var(--chart-3))",
-  },
-  team4: {
-    label: "Team 4",
-    color: "hsl(var(--chart-4))",
-  },
-} satisfies ChartConfig;
+export default function PieChartComponent({ tournament }: PieChartProps) {
+  const chartData = tournament.teams.map((team) => ({
+    teamName: team.name,
+    teamPoints: team.points?.reduce((a, b) => a + b, 0) || 50,
+    fill: team.color,
+  }));
 
-export default function PieChartComponent() {
+  const chartConfig = tournament.teams.reduce((config, team) => {
+    config[team.name.toLowerCase().replace(/\s+/g, "")] = {
+      label: team.name,
+      color: team.color,
+    };
+    return config;
+  }, {} as ChartConfig);
+
+  console.log(tournament.name, chartData, chartConfig);
+
   return (
     <Card className="w-full h-full flex flex-col">
       <CardContent className="pb-0">

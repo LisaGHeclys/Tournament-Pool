@@ -38,6 +38,7 @@ import ChartPreview from "@/components/ui/chart-preview";
 
 export default function User() {
   const { data: session } = useSession();
+  const [open, setOpen] = React.useState(false);
   const [tournament, setTournament] = React.useState<tournamentBody>({
     name: "",
     teams: [
@@ -47,6 +48,7 @@ export default function User() {
     createdBy: session?.user?.name ?? "",
   });
   const [teamNumber, setTeamNumber] = React.useState<number>(2);
+  const [tournaments, setTournaments] = React.useState<tournamentBody[]>([]);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -96,7 +98,17 @@ export default function User() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Tournament name:", tournament);
+    setTournament({
+      name: "",
+      teams: [
+        { name: "", color: "", points: [] },
+        { name: "", color: "", points: [] },
+      ],
+      createdBy: session?.user?.name ?? "",
+    });
+    setTeamNumber(2);
+    setTournaments((prev) => [tournament, ...prev]);
+    setOpen(false);
   };
 
   return (
@@ -136,7 +148,7 @@ export default function User() {
                   className="w-full rounded-lg bg-background pl-8"
                 />
               </div>
-              <Dialog>
+              <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                   <Button>
                     <Plus />
@@ -218,11 +230,14 @@ export default function User() {
             <div className="flex w-full justify-center">
               <ScrollArea className="w-2/3 h-[500px] px-2">
                 <div className="flex flex-col gap-4 p-2">
-                  <ChartPreview height="360" />
-                  <ChartPreview height="360" />
-                  <ChartPreview height="360" />
-                  <ChartPreview height="360" />
-                  <ChartPreview height="360" />
+                  {tournaments.map((tournament, index) => (
+                    // TODO: remove the index to get the tournament id only
+                    <ChartPreview
+                      key={tournament.id ?? index}
+                      tournament={tournament}
+                      height="360"
+                    />
+                  ))}
                 </div>
               </ScrollArea>
             </div>

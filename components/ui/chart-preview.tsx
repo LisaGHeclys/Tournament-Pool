@@ -10,7 +10,7 @@ import PieChartComponent from "@/components/ui/pie-chart";
 
 type ChartPreviewProps = {
   height?: string;
-  tournament?: tournamentBody;
+  tournament: tournamentBody;
 };
 
 export default function ChartPreview({
@@ -22,11 +22,11 @@ export default function ChartPreview({
       className={`w-full h-[${height ?? "240"}px] flex flex-row justify-between drop-shadow-md`}
     >
       <CardHeader className="w-1/2">
-        <CardTitle>{tournament?.name ?? "Title of the pool"}</CardTitle>
+        <CardTitle>{tournament.name}</CardTitle>
         <CardDescription>Description of the pool</CardDescription>
       </CardHeader>
       <div className="flex h-full p-4 w-1/2">
-        <PieChartComponent />
+        <PieChartComponent tournament={tournament} />
       </div>
     </Card>
   );

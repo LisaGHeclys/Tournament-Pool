@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 import Footer from "@/components/ui/footer";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import ChartPreview from "@/components/ui/chart-preview";
 import {
   Pagination,
   PaginationContent,
@@ -53,12 +52,7 @@ export default function Home() {
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full justify-center">
-          <ChartPreview />
-          <ChartPreview />
-          <ChartPreview />
-          <ChartPreview />
-          <ChartPreview />
-          <ChartPreview />
+          {/*  TODO: Chart preview for all tournaments*/}
         </div>
         <Pagination>
           <PaginationContent>
