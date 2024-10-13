@@ -1,0 +1,4 @@
+*.md
+*.mdx
+.next
+next.config.mjs
