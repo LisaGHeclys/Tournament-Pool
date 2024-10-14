@@ -15,7 +15,7 @@ async function getHandler(req: NextRequest) {
       .collection("tournaments")
       .doc(id)
       .get()
-      .then((doc) => ({ id: doc.id, ...doc.data() }) as tournamentBody);
+      .then((doc) => ({ ...doc.data() }) as tournamentBody);
 
     if (!tournament)
       return NextResponse.json(
