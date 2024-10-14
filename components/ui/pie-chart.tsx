@@ -30,8 +30,6 @@ export default function PieChartComponent({ tournament }: PieChartProps) {
     return config;
   }, {} as ChartConfig);
 
-  console.log(tournament.name, chartData, chartConfig);
-
   return (
     <Card className="w-full h-full flex flex-col p-4">
       <CardContent className="flex-1 pb-0">

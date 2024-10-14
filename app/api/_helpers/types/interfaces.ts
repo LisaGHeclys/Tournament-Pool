@@ -5,7 +5,7 @@ export type teamBody = {
 };
 
 export type tournamentBody = {
-  id?: string;
+  id?: number;
   name: string;
   teams: teamBody[];
   createdBy: string;

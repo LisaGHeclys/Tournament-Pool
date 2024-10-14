@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/carousel";
 import { useRouter } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import ChartPreview from "@/components/ui/chart-preview";
 import { UserNav } from "@/components/ui/user-nav";
 import {
   Breadcrumb,

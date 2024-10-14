@@ -40,6 +40,7 @@ export default function User() {
   const { data: session } = useSession();
   const [open, setOpen] = React.useState(false);
   const [tournament, setTournament] = React.useState<tournamentBody>({
+    id: Date.now(),
     name: "",
     teams: [
       { name: "", color: "", points: [] },
@@ -98,7 +99,10 @@ export default function User() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setTeamNumber(2);
+    setTournaments((prev) => [tournament, ...prev]);
     setTournament({
+      id: Date.now(),
       name: "",
       teams: [
         { name: "", color: "", points: [] },
@@ -106,8 +110,6 @@ export default function User() {
       ],
       createdBy: session?.user?.name ?? "",
     });
-    setTeamNumber(2);
-    setTournaments((prev) => [tournament, ...prev]);
     setOpen(false);
   };
 
@@ -230,10 +232,10 @@ export default function User() {
             <div className="flex w-full justify-center">
               <ScrollArea className="w-2/3 h-[500px] px-2">
                 <div className="flex flex-col gap-4 p-2">
-                  {tournaments.map((tournament, index) => (
+                  {tournaments.map((tournament) => (
                     // TODO: remove the index to get the tournament id only
                     <ChartPreview
-                      key={tournament.id ?? index}
+                      key={tournament.id}
                       tournament={tournament}
                       height="380"
                     />
