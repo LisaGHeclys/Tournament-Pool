@@ -31,12 +31,16 @@ import {
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
 import React from "react";
-import { tournamentBody } from "@/app/api/_helpers/types/interfaces";
+import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ChartPreview from "@/components/ui/chart-preview";
+import { useFetch } from "@/app/api/_helpers/useFetch";
+import { useRouter } from "next/navigation";
 
 export default function User() {
+  const { executeFetch, isLoading, error } = useFetch();
+
   const { data: session } = useSession();
   const [open, setOpen] = React.useState(false);
   const [tournament, setTournament] = React.useState<tournamentBody>({
@@ -50,6 +54,7 @@ export default function User() {
   });
   const [teamNumber, setTeamNumber] = React.useState<number>(2);
   const [tournaments, setTournaments] = React.useState<tournamentBody[]>([]);
+  const router = useRouter();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -100,7 +105,14 @@ export default function User() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setTeamNumber(2);
-    setTournaments((prev) => [tournament, ...prev]);
+    executeFetch({
+      url: "/tournaments",
+      method: Method.PUT,
+      body: tournament,
+    }).then(
+      (res) => isLoading && !error && router.push("/user/tournament/" + res),
+    );
+    //setTournaments((prev) => [tournament, ...prev]);
     setTournament({
       id: Date.now(),
       name: "",

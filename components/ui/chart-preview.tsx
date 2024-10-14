@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import React from "react";
-import { tournamentBody } from "@/app/api/_helpers/types/interfaces";
+import { tournamentBody } from "@/app/api/_helpers/types/types";
 import PieChartComponent from "@/components/ui/pie-chart";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";

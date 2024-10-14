@@ -9,7 +9,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { tournamentBody } from "@/app/api/_helpers/types/interfaces";
+import { tournamentBody } from "@/app/api/_helpers/types/types";
 
 type PieChartProps = {
   tournament: tournamentBody;
