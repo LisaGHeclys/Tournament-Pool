@@ -10,7 +10,6 @@ import PieChartComponent from "@/components/ui/pie-chart";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
 
 type ChartPreviewProps = {
   height?: string;
