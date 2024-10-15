@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -102,6 +102,18 @@ export default function User() {
     }));
   };
 
+  const handleDisabled = () => {
+    if (tournament.name == "") return true;
+
+    return tournament.teams.some((team) => {
+      return (
+        team.name === "" ||
+        team.color.toLowerCase() === "#ffffff" ||
+        team.color === ""
+      );
+    });
+  };
+
   const handleCreateTournament = async () => {
     try {
       const res = await executeFetch({
@@ -124,22 +136,31 @@ export default function User() {
     }
   };
 
-  const handleDisabled = () => {
-    if (tournament.name == "") return true;
+  const handleGetTournaments = async () => {
+    try {
+      const res = await executeFetch({
+        url: "/api/tournaments/my",
+        method: Method.GET,
+      });
 
-    return tournament.teams.some((team) => {
-      return (
-        team.name === "" ||
-        team.color.toLowerCase() === "#ffffff" ||
-        team.color === ""
-      );
-    });
+      if (res === null) {
+        setTournaments([]);
+        return;
+      }
+
+      const resToJSON = await res.json();
+
+      if (!isLoading && !isError) setTournaments(resToJSON);
+    } catch (error) {
+      console.error("Unexpected error during creation of tournament:", error);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setTeamNumber(2);
-    handleCreateTournament();
+    setTournaments((prevState) => [tournament, ...prevState]);
+    // handleCreateTournament();
     setTournament({
       name: "",
       teams: [
@@ -150,6 +171,12 @@ export default function User() {
     });
     setOpen(false);
   };
+
+  /*
+  useEffect(() => {
+    handleGetTournaments();
+  }, []);
+*/
 
   if (isLoading) {
     return (
