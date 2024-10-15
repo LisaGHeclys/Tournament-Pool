@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/pagination";
 import { UserNav } from "@/components/ui/user-nav";
 import React from "react";
-import PulseLoader from "@/components/ui/pulse-loader";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
   const router = useRouter();
@@ -27,7 +27,7 @@ export default function Home() {
       case "authenticated":
         return <UserNav />;
       case "loading":
-        return <PulseLoader width={45} height={45} />;
+        return <Skeleton className="h-8 w-8 rounded-full" />;
       default:
         return <Button onClick={() => router.push("/login")}>Login</Button>;
     }

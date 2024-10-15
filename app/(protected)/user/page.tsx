@@ -37,14 +37,13 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import ChartPreview from "@/components/ui/chart-preview";
 import { useFetch } from "@/app/api/_helpers/useFetch";
 import { useRouter } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function User() {
-  const { executeFetch, isLoading, error } = useFetch();
-
+  const { executeFetch, isLoading, isError } = useFetch();
   const { data: session } = useSession();
   const [open, setOpen] = React.useState(false);
   const [tournament, setTournament] = React.useState<tournamentBody>({
-    id: Date.now(),
     name: "",
     teams: [
       { name: "", color: "", points: [] },
@@ -53,6 +52,7 @@ export default function User() {
     createdBy: session?.user?.name ?? "",
   });
   const [teamNumber, setTeamNumber] = React.useState<number>(2);
+  //get tournaments from user
   const [tournaments, setTournaments] = React.useState<tournamentBody[]>([]);
   const router = useRouter();
 
@@ -102,19 +102,45 @@ export default function User() {
     }));
   };
 
+  const handleCreateTournament = async () => {
+    try {
+      const res = await executeFetch({
+        url: "/api/tournaments",
+        method: Method.PUT,
+        body: tournament,
+      });
+
+      if (res === null) {
+        console.error("Couldn't create tournament", res);
+        return;
+      }
+
+      const resToJSON = await res.json();
+
+      if (!isLoading && !isError)
+        router.push("/user/tournament/" + resToJSON.id);
+    } catch (error) {
+      console.error("Unexpected error during creation of tournament:", error);
+    }
+  };
+
+  const handleDisabled = () => {
+    if (tournament.name == "") return true;
+
+    return tournament.teams.some((team) => {
+      return (
+        team.name === "" ||
+        team.color.toLowerCase() === "#ffffff" ||
+        team.color === ""
+      );
+    });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setTeamNumber(2);
-    executeFetch({
-      url: "/tournaments",
-      method: Method.PUT,
-      body: tournament,
-    }).then(
-      (res) => isLoading && !error && router.push("/user/tournament/" + res),
-    );
-    //setTournaments((prev) => [tournament, ...prev]);
+    handleCreateTournament();
     setTournament({
-      id: Date.now(),
       name: "",
       teams: [
         { name: "", color: "", points: [] },
@@ -124,6 +150,23 @@ export default function User() {
     });
     setOpen(false);
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen md:max-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
+        <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
+          <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+            <Skeleton className="h-12 w-[450px]" />
+          </h1>
+          <Skeleton className="h-8 w-8 rounded-full" />
+        </header>
+        <main className="w-full h-full flex gap-8 items-center">
+          <Skeleton className="h-full w-full" />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen md:max-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -227,7 +270,6 @@ export default function User() {
                                 onChange={(v) =>
                                   handleTeamChange(index, "color", v)
                                 }
-                                aria-required
                               />
                             </div>
                           </div>
@@ -235,7 +277,9 @@ export default function User() {
                       ))}
                     </div>
                     <DialogFooter>
-                      <Button type="submit">Create a tournament</Button>
+                      <Button type="submit" disabled={handleDisabled()}>
+                        Create a tournament
+                      </Button>
                     </DialogFooter>
                   </form>
                 </DialogContent>

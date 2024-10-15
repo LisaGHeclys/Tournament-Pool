@@ -5,7 +5,7 @@ import { tournamentBody } from "@/app/api/_helpers/types/types";
 import { Session } from "next-auth";
 
 async function putHandler(req: NextRequest, session?: Session) {
-  const body: tournamentBody = JSON.parse(await req.text());
+  const body: tournamentBody = JSON.parse(await req?.text());
   const { name, teams, createdBy } = body;
 
   if (!name)
@@ -39,13 +39,15 @@ async function putHandler(req: NextRequest, session?: Session) {
       teams,
       createdBy,
     });
+
     const user = await getDb()
       .collection("users")
-      .where("id", "==", session?.user?.id || "")
+      .doc(session?.user?.id || "")
       .get();
-    const userData = user.docs[0].data();
 
-    let tournamentsId = userData.tournamentsId;
+    const userData = user.data();
+
+    let tournamentsId = userData?.tournamentsId;
     if (!tournamentsId) tournamentsId = [];
 
     tournamentsId.unshift(document.id);
