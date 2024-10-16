@@ -22,7 +22,7 @@ export function useFetch() {
           Accept: "application/json, text/plain, */*",
           "Content-Type": "application/json",
         },
-        body: body ? JSON.stringify(body) : undefined,
+        ...(body && { body: JSON.stringify(body) }),
       });
 
       if (!response.ok) {

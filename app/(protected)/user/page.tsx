@@ -150,7 +150,11 @@ export default function User() {
 
       const resToJSON = await res.json();
 
-      if (!isLoading && !isError) setTournaments(resToJSON);
+      if (!resToJSON) {
+        setTournaments([]);
+        return;
+      }
+      if (!isLoading && !isError) setTournaments(resToJSON.tournaments);
     } catch (error) {
       console.error("Unexpected error during creation of tournament:", error);
     }
@@ -160,7 +164,7 @@ export default function User() {
     e.preventDefault();
     setTeamNumber(2);
     setTournaments((prevState) => [tournament, ...prevState]);
-    // handleCreateTournament();
+    handleCreateTournament();
     setTournament({
       name: "",
       teams: [
@@ -172,11 +176,9 @@ export default function User() {
     setOpen(false);
   };
 
-  /*
   useEffect(() => {
     handleGetTournaments();
   }, []);
-*/
 
   if (isLoading) {
     return (
@@ -315,14 +317,14 @@ export default function User() {
             <div className="flex w-full justify-center">
               <ScrollArea className="w-2/3 h-[500px] px-2">
                 <div className="flex flex-col gap-4 p-2">
-                  {tournaments.map((tournament) => (
-                    // TODO: remove the index to get the tournament id only
-                    <ChartPreview
-                      key={tournament.id}
-                      tournament={tournament}
-                      height="380"
-                    />
-                  ))}
+                  {tournaments &&
+                    tournaments.map((tournament, index) => (
+                      <ChartPreview
+                        key={index}
+                        tournament={tournament}
+                        height="380"
+                      />
+                    ))}
                 </div>
               </ScrollArea>
             </div>
