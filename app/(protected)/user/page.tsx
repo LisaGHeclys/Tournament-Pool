@@ -52,7 +52,6 @@ export default function User() {
     createdBy: session?.user?.name ?? "",
   });
   const [teamNumber, setTeamNumber] = React.useState<number>(2);
-  //get tournaments from user
   const [tournaments, setTournaments] = React.useState<tournamentBody[]>([]);
   const router = useRouter();
 

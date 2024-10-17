@@ -65,6 +65,28 @@ async function putHandler(req: NextRequest, session?: Session) {
   }
 }
 
+async function getHandler(req: NextRequest) {
+  try {
+    const tournamentsData = await getDb().collection("tournaments").get();
+
+    let tournaments = [];
+
+    if (tournamentsData.empty) return NextResponse.json({ Array });
+
+    tournaments = tournamentsData.docs.map((doc) => ({
+      ...doc.data(),
+    }));
+
+    return NextResponse.json({ tournaments: tournaments });
+  } catch (e) {
+    return NextResponse.json({ error: e }, { status: 500 });
+  }
+}
+
 export async function PUT(req: NextRequest) {
   return withSession(req, putHandler);
+}
+
+export async function GET(req: NextRequest) {
+  return withSession(req, getHandler);
 }

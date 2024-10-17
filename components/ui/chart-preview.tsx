@@ -1,6 +1,7 @@
 import {
   Card,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -33,16 +34,19 @@ export default function ChartPreview({
       <Card
         className={`w-full h-full flex flex-row justify-between drop-shadow-md`}
       >
-        <CardHeader className="w-1/2 gap-2 items-start flex">
-          <CardTitle>{tournament.name}</CardTitle>
-          <Separator />
-          <CardDescription className="flex gap-4 flex-col font-medium">
-            {tournament.teams.map((team, index) => (
-              <span key={index}>
-                Team {index + 1} : {team.name}
-              </span>
-            ))}
-          </CardDescription>
+        <CardHeader className="w-1/2 gap-2 items-start justify-between flex">
+          <div className="w-full flex gap-2 items-start flex-col">
+            <CardTitle>{tournament.name}</CardTitle>
+            <Separator />
+            <CardDescription className="flex gap-4 flex-col font-medium">
+              {tournament.teams.map((team, index) => (
+                <span key={index} className="flex">
+                  Team {index + 1} : {team.name}
+                </span>
+              ))}
+            </CardDescription>
+          </div>
+          <span className="flex">Created by : {tournament.createdBy}</span>
         </CardHeader>
         <div className="flex h-full p-4 w-1/2">
           <PieChartComponent tournament={tournament} />
