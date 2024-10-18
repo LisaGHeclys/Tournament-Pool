@@ -26,11 +26,24 @@ export default function Home() {
   const { executeFetch, isLoading, isError } = useFetch();
   const { status } = useSession();
   const [tournaments, setTournaments] = React.useState<tournamentBody[]>([]);
+  const [isActive, setIsActive] = React.useState<number>(1);
+  const [totalPages, setTotalPages] = React.useState<number>(1);
 
-  const handleGetTournaments = async () => {
+  function handleUserNav() {
+    switch (status) {
+      case "authenticated":
+        return <UserNav />;
+      case "loading":
+        return <Skeleton className="h-8 w-8 rounded-full" />;
+      default:
+        return <Button onClick={() => router.push("/login")}>Login</Button>;
+    }
+  }
+
+  async function handleGetTournaments(page: number) {
     try {
       const res = await executeFetch({
-        url: "/api/tournaments/",
+        url: `/api/tournaments?page=${page}&limit=6`,
         method: Method.GET,
       });
 
@@ -50,22 +63,16 @@ export default function Home() {
     } catch (error) {
       console.error("Unexpected error during creation of tournament:", error);
     }
-  };
+  }
+
+  function handlePageClick(page: number) {
+    if (page < 1 || page > totalPages) return;
+    setIsActive(page);
+  }
 
   useEffect(() => {
-    handleGetTournaments();
+    handleGetTournaments(isActive);
   }, []);
-
-  function handleUserNav() {
-    switch (status) {
-      case "authenticated":
-        return <UserNav />;
-      case "loading":
-        return <Skeleton className="h-8 w-8 rounded-full" />;
-      default:
-        return <Button onClick={() => router.push("/login")}>Login</Button>;
-    }
-  }
 
   if (isLoading) {
     return (
@@ -103,7 +110,7 @@ export default function Home() {
             className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
           />
         </div>
-        <div className="grid md:grid-rows-3 grid-cols-1 lg:grid-cols-3 w-full ">
+        <div className="grid md:grid-rows-2 grid-cols-1 lg:grid-cols-3 w-full ">
           {tournaments &&
             tournaments.map((tournament, index) => (
               <ChartPreview key={index} tournament={tournament} height="120" />
@@ -112,24 +119,29 @@ export default function Home() {
         <Pagination>
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious href="#" />
+              <PaginationPrevious
+                className={`disabled:opacity-75`}
+                onClick={() => handlePageClick(isActive - 1)}
+              />
             </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#" isActive>
-                1
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">2</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">3</PaginationLink>
-            </PaginationItem>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <PaginationItem key={index}>
+                <PaginationLink
+                  isActive={isActive === index + 1}
+                  onClick={() => handlePageClick(index + 1)}
+                >
+                  {index + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
             <PaginationItem>
               <PaginationEllipsis />
             </PaginationItem>
             <PaginationItem>
-              <PaginationNext href="#" />
+              <PaginationNext
+                isActive={isActive === totalPages}
+                onClick={() => handlePageClick(isActive + 1)}
+              />
             </PaginationItem>
           </PaginationContent>
         </Pagination>

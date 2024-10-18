@@ -8,6 +8,8 @@ async function putHandler(req: NextRequest, session?: Session) {
   const body: tournamentBody = JSON.parse(await req?.text());
   const { name, teams, createdBy } = body;
 
+  const createdAt = new Date();
+
   if (!name)
     return NextResponse.json(
       { error: "Name of tournament is required" },
@@ -38,6 +40,7 @@ async function putHandler(req: NextRequest, session?: Session) {
       name,
       teams,
       createdBy,
+      createdAt,
     });
 
     const user = await getDb()
@@ -66,8 +69,19 @@ async function putHandler(req: NextRequest, session?: Session) {
 }
 
 async function getHandler(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const page = parseInt(searchParams.get("page") || "1");
+  const limit = parseInt(searchParams.get("limit") || "6");
+
+  const skip = (page - 1) * limit;
+
   try {
-    const tournamentsData = await getDb().collection("tournaments").get();
+    const tournamentsData = await getDb()
+      .collection("tournaments")
+      .orderBy("createdAt", "desc")
+      .offset(skip)
+      .limit(limit)
+      .get();
 
     let tournaments = [];
 
