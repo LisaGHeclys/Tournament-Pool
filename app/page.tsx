@@ -101,7 +101,7 @@ export default function Home() {
         </h1>
         {handleUserNav()}
       </header>
-      <main className="h-full w-full gap-2 flex flex-col row-start-2 items-center justify-between">
+      <main className="h-full w-full flex flex-col row-start-2 items-center justify-between">
         <div className="flex relative mt-4">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
@@ -110,10 +110,13 @@ export default function Home() {
             className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
           />
         </div>
-        <div className="grid md:grid-rows-2 grid-cols-1 lg:grid-cols-3 w-full ">
+        <div className="grid md:grid-rows-2 lg:grid-rows-3 grid-cols-1 lg:grid-cols-3 w-full h-full">
           {tournaments &&
             tournaments.map((tournament, index) => (
-              <ChartPreview key={index} tournament={tournament} height="120" />
+              <div key={index} className="h-[280px]">
+                <ChartPreview tournament={tournament} />
+                <ChartPreview tournament={tournament} />
+              </div>
             ))}
         </div>
         <Pagination>

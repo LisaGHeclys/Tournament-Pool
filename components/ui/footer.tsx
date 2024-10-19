@@ -9,7 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Footer() {
   return (
-    <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
+    <footer className="h-fit row-start-3 flex gap-6 flex-wrap items-center justify-center">
       <HoverCard>
         <HoverCardTrigger asChild>
           <Button className="flex items-center gap-2" variant="link">
