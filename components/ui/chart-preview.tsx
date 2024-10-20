@@ -38,7 +38,7 @@ export default function ChartPreview({
           <div className="w-full flex gap-2 items-start flex-col">
             <CardTitle>{tournament.name}</CardTitle>
             <Separator />
-            <CardDescription className="flex gap-4 flex-col font-medium">
+            <CardDescription className="flex gap-2 flex-col font-medium">
               {tournament.teams.map((team, index) => (
                 <span key={index} className="flex">
                   Team {index + 1} : {team.name}
