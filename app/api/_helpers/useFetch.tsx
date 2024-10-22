@@ -1,11 +1,5 @@
 import { useState } from "react";
-import { Method } from "@/app/api/_helpers/types/types";
-
-type useFetchOptions = {
-  url: string;
-  method: Method;
-  body?: object;
-};
+import { useFetchOptions } from "@/app/api/_helpers/types/types";
 
 export function useFetch() {
   const [isLoading, setIsLoading] = useState<boolean>(false);

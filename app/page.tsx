@@ -128,7 +128,7 @@ export default function Home() {
       <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
         <div />
         <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Welcome to the Tournament Pool !
+          Welcome to Tournament Pool !
         </h1>
         {handleUserNav()}
       </header>
@@ -144,7 +144,11 @@ export default function Home() {
         <div className="grid md:grid-rows-2 grid-cols-1 md:gap-4 lg:grid-cols-2 w-full">
           {tournaments &&
             tournaments.map((tournament, index) => (
-              <ChartPreview key={index} tournament={tournament} />
+              <ChartPreview
+                key={index}
+                tournament={tournament}
+                link={"/show/"}
+              />
             ))}
         </div>
         <Pagination>

@@ -322,6 +322,7 @@ export default function User() {
                         key={index}
                         tournament={tournament}
                         height="380"
+                        link={"/user/tournament/"}
                       />
                     ))}
                 </div>

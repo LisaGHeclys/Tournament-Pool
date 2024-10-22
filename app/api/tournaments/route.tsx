@@ -96,6 +96,7 @@ async function getHandler(req: NextRequest) {
       return NextResponse.json({ tournaments: [], totalPages });
 
     tournaments = tournamentsData.docs.map((doc) => ({
+      id: doc.id,
       ...doc.data(),
     }));
 
