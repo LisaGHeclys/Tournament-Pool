@@ -77,10 +77,23 @@ export default function Home() {
     if (totalPages <= 3) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
-    const startPage = Math.max(1, isActive - 1);
-    const endPage = Math.min(totalPages, startPage + 2);
-    const pages = [];
+    let startPage, endPage;
 
+    if (isActive === 1) {
+      startPage = 1;
+      endPage = 3;
+    } else if (isActive === totalPages) {
+      startPage = totalPages - 2;
+      endPage = totalPages;
+    } else {
+      startPage = isActive - 1;
+      endPage = isActive + 1;
+    }
+
+    startPage = Math.max(1, startPage);
+    endPage = Math.min(totalPages, endPage);
+
+    const pages = [];
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
     }
@@ -138,6 +151,7 @@ export default function Home() {
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
+                className={isActive === 1 ? "pointer-events-none" : ""}
                 onClick={() => handlePageClick(isActive - 1)}
               />
             </PaginationItem>
