@@ -11,8 +11,6 @@ async function getHandler(
 ) {
   const id = argument;
 
-  console.log(id);
-
   if (!id)
     return NextResponse.json({ error: "Internal error" }, { status: 500 });
 
@@ -35,12 +33,15 @@ async function getHandler(
   }
 }
 
-async function deleteHandler(req: NextRequest) {
-  const params = req.nextUrl.searchParams;
-  const id = params.get("id");
+async function deleteHandler(
+  req: NextRequest,
+  session?: Session,
+  argument?: string,
+) {
+  const id = argument;
 
   if (!id)
-    return NextResponse.json({ error: "Id is required" }, { status: 500 });
+    return NextResponse.json({ error: "Internal error" }, { status: 500 });
 
   try {
     await getDb().collection("tournaments").doc(id).delete();
@@ -57,6 +58,9 @@ export async function GET(
   return withSession(req, getHandler, params.id);
 }
 
-export async function DELETE(req: NextRequest) {
-  return withSession(req, deleteHandler);
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  return withSession(req, deleteHandler, params.id);
 }
