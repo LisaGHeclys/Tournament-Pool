@@ -31,6 +31,7 @@ import { useFetch } from "@/app/api/_helpers/useFetch";
 import { Skeleton } from "@/components/ui/skeleton";
 import { object } from "prop-types";
 import PieChartComponent from "@/components/ui/pie-chart";
+import Autoplay from "embla-carousel-autoplay";
 
 export default function ShowTournament() {
   const router = useRouter();
@@ -104,19 +105,6 @@ export default function ShowTournament() {
     }
   }
 
-  const nextSlide = () => {
-    setActiveIndex((prevIndex) => (prevIndex + 1) % totalItems);
-  };
-
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     nextSlide();
-  //   }, 10000);
-  //
-  //   console.log(activeIndex);
-  //   return () => clearInterval(intervalId);
-  // }, []);
-
   useEffect(() => {
     handleGetTournamentById();
   }, []);
@@ -176,8 +164,9 @@ export default function ShowTournament() {
           </CardHeader>
           <div className="w-full h-full flex flex-col">
             <Carousel
-              className="h-full flex justify-center items-center bg-amber-300"
+              className="h-full flex justify-center items-center"
               opts={{ loop: true }}
+              plugins={[Autoplay({ delay: 10000 })]}
             >
               <CarouselContent>
                 <CarouselItem className="flex justify-center items-center">
@@ -186,7 +175,7 @@ export default function ShowTournament() {
                   </div>
                 </CarouselItem>
                 <CarouselItem>
-                  <div className="p-1 h-full bg-violet-900 w-full">
+                  <div className="flex justify-center items-center h-full w-full">
                     <span>2</span>
                   </div>
                 </CarouselItem>
