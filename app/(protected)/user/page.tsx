@@ -181,7 +181,7 @@ export default function User() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen md:max-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <div className="min-h-screen md:max-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
         <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
             <Skeleton className="h-12 w-[450px]" />
@@ -197,7 +197,7 @@ export default function User() {
   }
 
   return (
-    <div className="min-h-screen md:max-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
       <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
           Welcome back {session?.user?.name} !
@@ -314,7 +314,7 @@ export default function User() {
               </Dialog>
             </div>
             <div className="flex w-full justify-center">
-              <ScrollArea className="w-2/3 h-[500px] px-2">
+              <ScrollArea className="w-2/3 h-[580px] px-2">
                 <div className="flex flex-col gap-4 p-2">
                   {tournaments &&
                     tournaments.map((tournament, index) => (
