@@ -15,20 +15,23 @@ import { useRouter } from "next/navigation";
 type ChartPreviewProps = {
   height?: string;
   tournament: tournamentBody;
+  link: string;
 };
 
 export default function ChartPreview({
   height,
   tournament,
+  link,
 }: ChartPreviewProps) {
   const router = useRouter();
 
+  console.log(tournament);
   return (
     <Button
       className={`w-full h-[${height ?? "320"}px] flex`}
       variant="ghost"
       onClick={() => {
-        router.push("/user/tournament/" + tournament.id);
+        router.push(link + tournament.id);
       }}
     >
       <Card
