@@ -25,7 +25,7 @@ export default function ChartPreview({
 
   return (
     <Button
-      className={`w-full h-[${height ?? "280"}px] flex`}
+      className={`w-full h-[${height ?? "320"}px] flex`}
       variant="ghost"
       onClick={() => {
         router.push("/user/tournament/" + tournament.id);

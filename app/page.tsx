@@ -43,7 +43,7 @@ export default function Home() {
   async function handleGetTournaments(page: number) {
     try {
       const res = await executeFetch({
-        url: `/api/tournaments?page=${page}&limit=6`,
+        url: `/api/tournaments?page=${page}&limit=4`,
         method: Method.GET,
       });
 
@@ -58,8 +58,11 @@ export default function Home() {
         setTournaments([]);
         return;
       }
-      console.log(resToJSON.tournaments);
-      if (!isLoading && !isError) setTournaments(resToJSON.tournaments);
+      console.log(resToJSON.totalPages);
+      if (!isLoading && !isError) {
+        setTournaments(resToJSON.tournaments);
+        setTotalPages(resToJSON.totalPages);
+      }
     } catch (error) {
       console.error("Unexpected error during creation of tournament:", error);
     }
@@ -68,6 +71,21 @@ export default function Home() {
   function handlePageClick(page: number) {
     if (page < 1 || page > totalPages) return;
     setIsActive(page);
+  }
+
+  function getVisiblePageNumbers() {
+    if (totalPages <= 3) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+    const startPage = Math.max(1, isActive - 1);
+    const endPage = Math.min(totalPages, startPage + 2);
+    const pages = [];
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+
+    return pages;
   }
 
   useEffect(() => {
@@ -93,15 +111,15 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen p-4 gap-4 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-10 font-[family-name:var(--font-geist-sans)]">
-      <header className="md:p-8 w-full h-fit flex flex-wrap sm:flex-row items-center justify-between">
+    <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+      <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
         <div />
         <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
           Welcome to the Tournament Pool !
         </h1>
         {handleUserNav()}
       </header>
-      <main className="h-full w-full gap-4 flex flex-col row-start-2 items-center justify-between">
+      <main className="h-full w-full flex flex-col md:gap-6 row-start-2 items-center justify-between">
         <div className="flex relative mt-4">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
@@ -110,29 +128,26 @@ export default function Home() {
             className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
           />
         </div>
-        <div className="grid md:grid-rows-2 lg:grid-rows-3 grid-cols-1 lg:grid-cols-3 w-full">
+        <div className="grid md:grid-rows-2 grid-cols-1 md:gap-4 lg:grid-cols-2 w-full">
           {tournaments &&
             tournaments.map((tournament, index) => (
-              <div key={index} className="h-[280px]">
-                <ChartPreview tournament={tournament} />
-              </div>
+              <ChartPreview key={index} tournament={tournament} />
             ))}
         </div>
         <Pagination>
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
-                className={`disabled:opacity-75`}
                 onClick={() => handlePageClick(isActive - 1)}
               />
             </PaginationItem>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <PaginationItem key={index}>
+            {getVisiblePageNumbers().map((pageNum) => (
+              <PaginationItem key={pageNum}>
                 <PaginationLink
-                  isActive={isActive === index + 1}
-                  onClick={() => handlePageClick(index + 1)}
+                  isActive={isActive === pageNum}
+                  onClick={() => handlePageClick(pageNum)}
                 >
-                  {index + 1}
+                  {pageNum}
                 </PaginationLink>
               </PaginationItem>
             ))}
@@ -141,7 +156,7 @@ export default function Home() {
             </PaginationItem>
             <PaginationItem>
               <PaginationNext
-                isActive={isActive === totalPages}
+                className={isActive === totalPages ? "pointer-events-none" : ""}
                 onClick={() => handlePageClick(isActive + 1)}
               />
             </PaginationItem>

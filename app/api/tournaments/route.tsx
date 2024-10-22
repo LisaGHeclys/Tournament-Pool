@@ -71,27 +71,38 @@ async function putHandler(req: NextRequest, session?: Session) {
 async function getHandler(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const page = parseInt(searchParams.get("page") || "1");
-  const limit = parseInt(searchParams.get("limit") || "6");
+  const limit = parseInt(searchParams.get("limit") || "9");
 
   const skip = (page - 1) * limit;
 
   try {
+    const tournamentsCountData = await getDb()
+      .collection("tournaments")
+      .count()
+      .get();
+    const totalCount = tournamentsCountData.data().count;
+
+    const totalPages = Math.ceil(totalCount / limit);
+
     const tournamentsData = await getDb()
       .collection("tournaments")
       .orderBy("createdAt", "desc")
       .offset(skip)
       .limit(limit)
       .get();
-
     let tournaments = [];
 
-    if (tournamentsData.empty) return NextResponse.json({ Array });
+    if (tournamentsData.empty)
+      return NextResponse.json({ tournaments: [], totalPages });
 
     tournaments = tournamentsData.docs.map((doc) => ({
       ...doc.data(),
     }));
 
-    return NextResponse.json({ tournaments: tournaments });
+    return NextResponse.json({
+      tournaments: tournaments,
+      totalPages: totalPages,
+    });
   } catch (e) {
     return NextResponse.json({ error: e }, { status: 500 });
   }
