@@ -7,17 +7,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ChevronLeft, Plus, Search } from "lucide-react";
+import { ChevronLeft, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Breadcrumb,
@@ -27,26 +25,116 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import React, { useEffect, useState } from "react";
+import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
+import { useFetch } from "@/app/api/_helpers/useFetch";
+import { Skeleton } from "@/components/ui/skeleton";
+import { object } from "prop-types";
+import PieChartComponent from "@/components/ui/pie-chart";
 
 export default function ShowTournament() {
   const router = useRouter();
+  const id = useParams().id;
+  const { executeFetch, isLoading, isError } = useFetch();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const totalItems = 2;
+
+  const [tournament, setTournament] = React.useState<tournamentBody>({
+    id: "",
+    name: "",
+    teams: [
+      {
+        name: "",
+        color: "",
+        points: [],
+      },
+    ],
+    createdBy: "",
+    createdAt: object,
+  });
+
+  async function handleGetTournamentById() {
+    try {
+      const res = await executeFetch({
+        url: `/api/tournaments/${id}`,
+        method: Method.GET,
+      });
+
+      if (res === null) {
+        setTournament({
+          id: "",
+          name: "",
+          teams: [
+            {
+              name: "",
+              color: "",
+              points: [],
+            },
+          ],
+          createdBy: "",
+          createdAt: object,
+        });
+        return;
+      }
+
+      const resToJSON = await res.json();
+
+      if (!resToJSON) {
+        setTournament({
+          id: "",
+          name: "",
+          teams: [
+            {
+              name: "",
+              color: "",
+              points: [],
+            },
+          ],
+          createdBy: "",
+          createdAt: object,
+        });
+        return;
+      }
+
+      if (!isLoading && !isError) {
+        setTournament(resToJSON);
+      }
+    } catch (error) {
+      console.error("Unexpected error during creation of tournament:", error);
+    }
+  }
+
+  const nextSlide = () => {
+    setActiveIndex((prevIndex) => (prevIndex + 1) % totalItems);
+  };
+
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     nextSlide();
+  //   }, 10000);
+  //
+  //   console.log(activeIndex);
+  //   return () => clearInterval(intervalId);
+  // }, []);
+
+  useEffect(() => {
+    handleGetTournamentById();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+        <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
+          <Skeleton className="h-12 w-full" />
+        </header>
+        <main className="w-full h-full flex gap-8 items-center">
+          <Skeleton className="h-full w-2/3" />
+          <Skeleton className="h-full w-1/3" />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
@@ -61,7 +149,7 @@ export default function ShowTournament() {
           <ChevronLeft />
         </Button>
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Tournament : name
+          Tournament : {tournament.name}
         </h1>
         <div />
       </header>
@@ -75,11 +163,9 @@ export default function ShowTournament() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/user">Your page</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Tournament ID</BreadcrumbPage>
+                  <BreadcrumbPage>
+                    Tournament : {tournament.name}
+                  </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -88,33 +174,31 @@ export default function ShowTournament() {
               Here you can see the different charts for this tournaments.
             </CardDescription>
           </CardHeader>
-          <CardContent className="w-full h-full items-center justify-center flex">
-            <Carousel className="w-full max-w-lg">
+          <div className="w-full h-full flex flex-col">
+            <Carousel
+              className="h-full flex justify-center items-center bg-amber-300"
+              opts={{ loop: true }}
+            >
               <CarouselContent>
-                {Array.from({ length: 2 }).map((_, index) => (
-                  <CarouselItem key={index}>
-                    <div className="p-1">
-                      <Card>
-                        <CardContent className="flex aspect-square items-center justify-center p-6">
-                          <span className="text-4xl font-semibold">
-                            {index + 1}
-                          </span>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                ))}
+                <CarouselItem className="flex justify-center items-center">
+                  <div className="flex justify-center items-center h-full w-full">
+                    <PieChartComponent tournament={tournament} />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="p-1 h-full bg-violet-900 w-full">
+                    <span>2</span>
+                  </div>
+                </CarouselItem>
               </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
             </Carousel>
-          </CardContent>
+          </div>
         </Card>
         <Card className="py-8 px-16 w-1/3 h-full flex flex-col">
           <CardHeader>
-            <CardTitle>Add more points ?</CardTitle>
+            <CardTitle>Team&#39;s points ?</CardTitle>
             <CardDescription>
-              You can add points depending on the team.
+              Here you can see the points from each teams.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col h-full gap-8">
@@ -127,59 +211,6 @@ export default function ShowTournament() {
                   className="w-full rounded-lg bg-background pl-8"
                 />
               </div>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button>
-                    <Plus />
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="flex flex-col sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>Add points</DialogTitle>
-                    <DialogDescription>
-                      You can add points for your teams here.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <form>
-                    <div className="grid w-full items-center gap-4">
-                      <div className="flex flex-col space-y-1.5">
-                        <Label htmlFor="reason">What reason ?</Label>
-                        <Input
-                          id="reason"
-                          placeholder="Write the reason to add points"
-                          required
-                        />
-                      </div>
-                      <div className="flex flex-col space-y-1.5">
-                        <Label htmlFor="points-number">How many points?</Label>
-                        <Input
-                          id="points-number"
-                          type="number"
-                          placeholder="How many points do you want to add ?"
-                          required
-                        />
-                      </div>
-                      <div className="flex flex-col space-y-1.5">
-                        <Label htmlFor="team-number">For which team ?</Label>
-                        <Select>
-                          <SelectTrigger id="team-number">
-                            <SelectValue placeholder="Choose a team" />
-                          </SelectTrigger>
-                          <SelectContent position="popper">
-                            <SelectItem value="team1">Team 1</SelectItem>
-                            <SelectItem value="team2">Team 2</SelectItem>
-                            <SelectItem value="team3">Team 3</SelectItem>
-                            <SelectItem value="team4">Team 4</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                  </form>
-                  <DialogFooter className="flex">
-                    <Button>Add points</Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
             </div>
             <ScrollArea className="w-full h-[500px] px-2">
               <div className="flex flex-col gap-4 p-2">

@@ -2,20 +2,26 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/firebase/firebase";
 import withSession from "@/app/api/_helpers/middleware/with-session";
 import { tournamentBody } from "@/app/api/_helpers/types/types";
+import { Session } from "next-auth";
 
-async function getHandler(req: NextRequest) {
-  const params = req.nextUrl.searchParams;
-  const id = params.get("id");
+async function getHandler(
+  req: NextRequest,
+  session?: Session,
+  argument?: string,
+) {
+  const id = argument;
+
+  console.log(id);
 
   if (!id)
-    return NextResponse.json({ error: "Id is required" }, { status: 500 });
+    return NextResponse.json({ error: "Internal error" }, { status: 500 });
 
   try {
     const tournament = await getDb()
       .collection("tournaments")
       .doc(id)
       .get()
-      .then((doc) => ({ ...doc.data() }) as tournamentBody);
+      .then((doc) => ({ id: doc.id, ...doc.data() }) as tournamentBody);
 
     if (!tournament)
       return NextResponse.json(
@@ -44,12 +50,11 @@ async function deleteHandler(req: NextRequest) {
   }
 }
 
-export async function GET(req: NextRequest) {
-  return withSession(req, getHandler);
-}
-
-export async function POST(req: NextRequest) {
-  return withSession(req, getHandler);
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  return withSession(req, getHandler, params.id);
 }
 
 export async function DELETE(req: NextRequest) {

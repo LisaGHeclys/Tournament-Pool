@@ -1,3 +1,9 @@
+export type useFetchOptions = {
+  url: string;
+  method: Method;
+  body?: object;
+};
+
 export type teamBody = {
   name: string;
   color: string;

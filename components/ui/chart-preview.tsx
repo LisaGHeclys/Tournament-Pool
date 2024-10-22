@@ -25,7 +25,6 @@ export default function ChartPreview({
 }: ChartPreviewProps) {
   const router = useRouter();
 
-  console.log(tournament);
   return (
     <Button
       className={`w-full h-[${height ?? "320"}px] flex`}
@@ -51,7 +50,7 @@ export default function ChartPreview({
           </div>
           <span className="flex">Created by : {tournament.createdBy}</span>
         </CardHeader>
-        <div className="flex h-full p-4 w-1/2">
+        <div className="flex p-4 w-1/2">
           <PieChartComponent tournament={tournament} />
         </div>
       </Card>
