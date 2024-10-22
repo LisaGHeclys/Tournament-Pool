@@ -10,17 +10,22 @@ async function getHandler(req: NextRequest, session?: Session) {
       .where("createdBy", "==", session?.user?.name || "")
       .get();
 
-    let tournaments = [];
+    if (tournamentsData.empty) return NextResponse.json({ tournaments: [] });
 
-    if (tournamentsData.empty) return NextResponse.json({ Array });
-
-    tournaments = tournamentsData.docs.map((doc) => ({
-      ...doc.data(),
-    }));
+    const tournaments = tournamentsData.docs
+      .map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }))
+      .sort((a, b) => b.createdAt - a.createdAt);
 
     return NextResponse.json({ tournaments: tournaments });
   } catch (e) {
-    return NextResponse.json({ error: e }, { status: 500 });
+    console.error("Error fetching tournaments of one user:", e);
+    return NextResponse.json(
+      { error: "Failed to fetch tournaments of one user." },
+      { status: 500 },
+    );
   }
 }
 

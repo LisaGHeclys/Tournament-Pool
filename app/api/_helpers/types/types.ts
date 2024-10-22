@@ -5,10 +5,11 @@ export type teamBody = {
 };
 
 export type tournamentBody = {
-  id?: number;
+  id?: string;
   name: string;
   teams: teamBody[];
   createdBy: string;
+  createdAt?: object;
 };
 
 export enum Method {
