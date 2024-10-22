@@ -107,7 +107,7 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen  sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+      <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
         <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
           <div />
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
