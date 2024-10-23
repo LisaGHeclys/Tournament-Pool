@@ -1,3 +1,9 @@
+export type useFetchOptions = {
+  url: string;
+  method: Method;
+  body?: object;
+};
+
 export type teamBody = {
   name: string;
   color: string;
@@ -5,10 +11,11 @@ export type teamBody = {
 };
 
 export type tournamentBody = {
-  id?: number;
+  id?: string;
   name: string;
   teams: teamBody[];
   createdBy: string;
+  createdAt?: object;
 };
 
 export enum Method {

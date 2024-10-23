@@ -9,7 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Footer() {
   return (
-    <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
+    <footer className="h-fit row-start-3 flex gap-6 flex-wrap items-center justify-center">
       <HoverCard>
         <HoverCardTrigger asChild>
           <Button className="flex items-center gap-2" variant="link">
@@ -43,7 +43,7 @@ export default function Footer() {
         </HoverCardContent>
       </HoverCard>
       <a
-        className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+        className="px-4 py-2 rounded-md h-full flex items-center gap-2 hover:underline hover:underline-offset-4"
         href="https://github.com/LisaGHeclys"
         target="_blank"
         rel="noopener noreferrer"
@@ -52,7 +52,7 @@ export default function Footer() {
         Github
       </a>
       <a
-        className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+        className="px-4 py-2 rounded-md h-full flex items-center gap-2 hover:underline hover:underline-offset-4"
         href="https://lisamlglaziou.fr"
         target="_blank"
         rel="noopener noreferrer"

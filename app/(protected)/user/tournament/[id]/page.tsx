@@ -50,7 +50,7 @@ export default function Tournament() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen md:max-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
       <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
         <Button
           className="rounded-full"
@@ -89,7 +89,7 @@ export default function Tournament() {
               Here you can see the different charts for this tournaments.
             </CardDescription>
           </CardHeader>
-          <CardContent className="w-full justify-center flex">
+          <CardContent className="w-full h-full items-center justify-center flex">
             <Carousel className="w-full max-w-lg">
               <CarouselContent>
                 {Array.from({ length: 2 }).map((_, index) => (
@@ -111,7 +111,7 @@ export default function Tournament() {
             </Carousel>
           </CardContent>
         </Card>
-        <Card className="py-8 px-16 w-1/3 max-h-full flex flex-col">
+        <Card className="py-8 px-16 w-1/3 h-full flex flex-col">
           <CardHeader>
             <CardTitle>Add more points ?</CardTitle>
             <CardDescription>

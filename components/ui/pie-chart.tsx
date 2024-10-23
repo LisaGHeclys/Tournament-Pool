@@ -10,6 +10,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { tournamentBody } from "@/app/api/_helpers/types/types";
+import Autoplay from "embla-carousel-autoplay";
 
 type PieChartProps = {
   tournament: tournamentBody;
@@ -31,11 +32,11 @@ export default function PieChartComponent({ tournament }: PieChartProps) {
   }, {} as ChartConfig);
 
   return (
-    <Card className="w-full h-full flex flex-col p-4">
-      <CardContent className="flex-1 pb-0">
+    <Card className="w-full justify-center h-full flex flex-col p-4">
+      <CardContent className="h-full w-full flex-auto justify-center pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px] pb-0 [&_.recharts-pie-label-text]:fill-foreground"
+          className="mx-auto max-w-lg aspect-square pb-0 [&_.recharts-pie-label-text]:fill-foreground"
         >
           <PieChart>
             <ChartTooltip
@@ -47,7 +48,7 @@ export default function PieChartComponent({ tournament }: PieChartProps) {
               dataKey="teamPoints"
               label
               nameKey="teamName"
-              innerRadius={60}
+              innerRadius={80}
             />
           </PieChart>
         </ChartContainer>

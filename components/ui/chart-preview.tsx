@@ -15,20 +15,22 @@ import { useRouter } from "next/navigation";
 type ChartPreviewProps = {
   height?: string;
   tournament: tournamentBody;
+  link: string;
 };
 
 export default function ChartPreview({
   height,
   tournament,
+  link,
 }: ChartPreviewProps) {
   const router = useRouter();
 
   return (
     <Button
-      className={`w-full h-[${height ?? "240"}px] flex`}
+      className={`w-full h-[${height ?? "320"}px] flex`}
       variant="ghost"
       onClick={() => {
-        router.push("/user/tournament/" + tournament.id);
+        router.push(link + tournament.id);
       }}
     >
       <Card
@@ -38,7 +40,7 @@ export default function ChartPreview({
           <div className="w-full flex gap-2 items-start flex-col">
             <CardTitle>{tournament.name}</CardTitle>
             <Separator />
-            <CardDescription className="flex gap-4 flex-col font-medium">
+            <CardDescription className="flex gap-2 flex-col font-medium">
               {tournament.teams.map((team, index) => (
                 <span key={index} className="flex">
                   Team {index + 1} : {team.name}
@@ -48,7 +50,7 @@ export default function ChartPreview({
           </div>
           <span className="flex">Created by : {tournament.createdBy}</span>
         </CardHeader>
-        <div className="flex h-full p-4 w-1/2">
+        <div className="flex p-4 w-1/2">
           <PieChartComponent tournament={tournament} />
         </div>
       </Card>

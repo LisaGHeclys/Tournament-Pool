@@ -8,6 +8,8 @@ async function putHandler(req: NextRequest, session?: Session) {
   const body: tournamentBody = JSON.parse(await req?.text());
   const { name, teams, createdBy } = body;
 
+  const createdAt = new Date();
+
   if (!name)
     return NextResponse.json(
       { error: "Name of tournament is required" },
@@ -38,6 +40,7 @@ async function putHandler(req: NextRequest, session?: Session) {
       name,
       teams,
       createdBy,
+      createdAt,
     });
 
     const user = await getDb()
@@ -66,18 +69,41 @@ async function putHandler(req: NextRequest, session?: Session) {
 }
 
 async function getHandler(req: NextRequest) {
-  try {
-    const tournamentsData = await getDb().collection("tournaments").get();
+  const { searchParams } = new URL(req.url);
+  const page = parseInt(searchParams.get("page") || "1");
+  const limit = parseInt(searchParams.get("limit") || "9");
 
+  const skip = (page - 1) * limit;
+
+  try {
+    const tournamentsCountData = await getDb()
+      .collection("tournaments")
+      .count()
+      .get();
+    const totalCount = tournamentsCountData.data().count;
+
+    const totalPages = Math.ceil(totalCount / limit);
+
+    const tournamentsData = await getDb()
+      .collection("tournaments")
+      .orderBy("createdAt", "desc")
+      .offset(skip)
+      .limit(limit)
+      .get();
     let tournaments = [];
 
-    if (tournamentsData.empty) return NextResponse.json({ Array });
+    if (tournamentsData.empty)
+      return NextResponse.json({ tournaments: [], totalPages });
 
     tournaments = tournamentsData.docs.map((doc) => ({
+      id: doc.id,
       ...doc.data(),
     }));
 
-    return NextResponse.json({ tournaments: tournaments });
+    return NextResponse.json({
+      tournaments: tournaments,
+      totalPages: totalPages,
+    });
   } catch (e) {
     return NextResponse.json({ error: e }, { status: 500 });
   }
