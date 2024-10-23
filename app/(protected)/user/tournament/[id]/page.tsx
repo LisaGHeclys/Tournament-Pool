@@ -17,7 +17,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { UserNav } from "@/components/ui/user-nav";
 import {
@@ -45,9 +45,98 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useFetch } from "@/app/api/_helpers/useFetch";
+import React, { useEffect } from "react";
+import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Tournament() {
   const router = useRouter();
+  const id = useParams().id;
+  const { executeFetch, isLoading, isError } = useFetch();
+  const [tournament, setTournament] = React.useState<tournamentBody>({
+    id: "",
+    name: "",
+    teams: [
+      {
+        name: "",
+        color: "",
+        points: [],
+      },
+    ],
+    createdBy: "",
+    createdAt: new Date(),
+  });
+
+  async function handleGetTournamentById() {
+    try {
+      const res = await executeFetch({
+        url: `/api/tournaments/${id}`,
+        method: Method.GET,
+      });
+
+      if (res === null) {
+        setTournament({
+          id: "",
+          name: "",
+          teams: [
+            {
+              name: "",
+              color: "",
+              points: [],
+            },
+          ],
+          createdBy: "",
+          createdAt: new Date(),
+        });
+        return;
+      }
+
+      const resToJSON = await res.json();
+
+      if (!resToJSON) {
+        setTournament({
+          id: "",
+          name: "",
+          teams: [
+            {
+              name: "",
+              color: "",
+              points: [],
+            },
+          ],
+          createdBy: "",
+          createdAt: new Date(),
+        });
+        return;
+      }
+
+      if (!isLoading && !isError) {
+        setTournament(resToJSON);
+      }
+    } catch (error) {
+      console.error("Unexpected error during creation of tournament:", error);
+    }
+  }
+
+  useEffect(() => {
+    handleGetTournamentById();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+        <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
+          <Skeleton className="h-12 w-full" />
+        </header>
+        <main className="w-full h-full flex gap-8 items-center">
+          <Skeleton className="h-full w-2/3" />
+          <Skeleton className="h-full w-1/3" />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
@@ -62,7 +151,7 @@ export default function Tournament() {
           <ChevronLeft />
         </Button>
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Tournament : name
+          Tournament : {tournament.name}
         </h1>
         <UserNav />
       </header>
@@ -80,7 +169,7 @@ export default function Tournament() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Tournament ID</BreadcrumbPage>
+                  <BreadcrumbPage>{tournament.name}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>

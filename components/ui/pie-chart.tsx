@@ -10,7 +10,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { tournamentBody } from "@/app/api/_helpers/types/types";
-import Autoplay from "embla-carousel-autoplay";
 
 type PieChartProps = {
   tournament: tournamentBody;

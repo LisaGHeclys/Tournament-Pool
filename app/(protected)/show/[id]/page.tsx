@@ -25,11 +25,10 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
 import { useFetch } from "@/app/api/_helpers/useFetch";
 import { Skeleton } from "@/components/ui/skeleton";
-import { object } from "prop-types";
 import PieChartComponent from "@/components/ui/pie-chart";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -37,9 +36,6 @@ export default function ShowTournament() {
   const router = useRouter();
   const id = useParams().id;
   const { executeFetch, isLoading, isError } = useFetch();
-  const [activeIndex, setActiveIndex] = useState(0);
-  const totalItems = 2;
-
   const [tournament, setTournament] = React.useState<tournamentBody>({
     id: "",
     name: "",
@@ -51,7 +47,7 @@ export default function ShowTournament() {
       },
     ],
     createdBy: "",
-    createdAt: object,
+    createdAt: new Date(),
   });
 
   async function handleGetTournamentById() {
@@ -73,7 +69,7 @@ export default function ShowTournament() {
             },
           ],
           createdBy: "",
-          createdAt: object,
+          createdAt: new Date(),
         });
         return;
       }
@@ -92,7 +88,7 @@ export default function ShowTournament() {
             },
           ],
           createdBy: "",
-          createdAt: object,
+          createdAt: new Date(),
         });
         return;
       }
