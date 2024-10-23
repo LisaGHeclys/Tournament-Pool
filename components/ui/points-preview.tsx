@@ -6,27 +6,21 @@ import {
 } from "@/components/ui/card";
 import React from "react";
 import { tournamentBody } from "@/app/api/_helpers/types/types";
-import PieChartComponent from "@/components/ui/pie-chart";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 type ChartPreviewProps = {
-  height?: string;
   tournament: tournamentBody;
   link: string;
 };
 
-export default function ChartPreview({
-  height,
-  tournament,
-  link,
-}: ChartPreviewProps) {
+export default function ChartPreview({ tournament, link }: ChartPreviewProps) {
   const router = useRouter();
 
   return (
     <Button
-      className={`w-full h-[330px] flex`}
+      className={`w-full h-[180px] flex`}
       variant="ghost"
       onClick={() => {
         router.push(link + tournament.id);
@@ -49,9 +43,6 @@ export default function ChartPreview({
           </div>
           <span className="flex">Created by : {tournament.createdBy}</span>
         </CardHeader>
-        <div className="flex h-full w-1/2 p-4">
-          <PieChartComponent tournament={tournament} />
-        </div>
       </Card>
     </Button>
   );

@@ -35,7 +35,7 @@ export default function PieChartComponent({ tournament }: PieChartProps) {
       <CardContent className="h-full w-full flex-auto justify-center pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto max-w-lg aspect-square pb-0 [&_.recharts-pie-label-text]:fill-foreground"
+          className="h-full w-full max-w-lg flex justify-center aspect-square pb-0 [&_.recharts-pie-label-text]:fill-foreground"
         >
           <PieChart>
             <ChartTooltip
