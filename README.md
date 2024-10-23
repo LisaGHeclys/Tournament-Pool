@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tournament Management Platform
 
-## Getting Started
+## Project Overview
 
-First, run the development server:
+This project is a tournament management platform designed to create tournaments, link teams, and add points to respective teams. The goal is to automatically generate charts based on the data, offering a clear and dynamic view of team standings and performance throughout the tournament.
 
+## Features
+
+- **Create Tournaments**: Easily set up new tournaments with custom rules and details.
+- **Team Management**: Link teams to tournaments and manage their details.
+- **Point System**: Add and update points for each team, automatically reflecting on the tournament charts.
+- **Chart Visualization**: Dynamic charts that provide a clear view of the tournament standings and scores.
+
+## Tech Stack
+
+- **Next.js**: A React framework for building server-side rendered applications.
+- **ShadCN UI**: A customizable component library to streamline the UI development process.
+- **Firebase Firestore**: A NoSQL cloud database for storing tournament and team data in real-time.
+
+## Installation & Setup
+
+### Prerequisites
+
+- **Node.js**: Make sure you have Node.js installed (v16 or higher).
+- **Firebase Account**: You'll need a Firebase project with Firestore set up.
+
+### Steps to Set Up Locally
+
+1. **Clone the Repository**:
+    ```bash
+    git clone git@github.com:LisaGHeclys/Tournament-Pool.git
+    cd Tournament-Pool
+    ```
+
+2. **Install Dependencies**:
+    ```bash
+    npm install
+    ```
+
+3. **Set Up Firebase**:
+    - Go to the Firebase console, create a new project, and set up Firestore.
+    - Copy your Firebase credentials (API Key, Project ID, etc.) into a `.env.local` file at the root of the project:
+    ```plaintext
+    NEXT_PUBLIC_FIREBASE_API_KEY=your-api-key
+    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-auth-domain
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
+    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-storage-bucket
+    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+    NEXT_PUBLIC_FIREBASE_APP_ID=your-app-id
+    ```
+
+4. **Run the Development Server**:
+    ```bash
+    npm run dev
+    ```
+   Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
+
+### How to Build for Production
+
+To build the application for production, run:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Contribution Guidelines
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+We welcome contributions from the community to improve this project. Here's how you can get involved:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### How to Commit
 
-## Learn More
+Follow these steps to commit changes:
 
-To learn more about Next.js, take a look at the following resources:
+1. **Create a new branch**: Start by creating a branch from an [issue of the repository on GitHub](https://github.com/LisaGHeclys/Tournament-Pool/issues).
+    ```bash
+    git fetch origin
+    git checkout "Name of your issue, ex: 1-init-project"
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Make your changes**: After you make your changes or additions, add the files to staging.
+    ```bash
+    git add -A
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Write a clear, concise commit message**: Be sure to summarize your changes in the commit message.
+    ```bash
+    git commit -m "add: feature description"
+    git commit -m "fix: fix bug description"
+    git commit -m "wip: work in progress"
+    ```
 
-## Deploy on Vercel
+4. **Push your changes to your branch**:
+    ```bash
+    git push origin "Name of your issue, ex: 1-init-project"
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. **Create a Pull Request (PR)**: Once your changes are pushed, go to the repository on GitHub, and create a pull request from your feature branch to the `dev` branch.
+    - In the pull request, provide a description of what your changes do and any relevant context.
+    - Wait for code review, and make any requested changes.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Contribution Best Practices
+
+- **Code Style**: Ensure your code follows the project’s coding conventions.
+- **Documentation**: For new features or changes, update the README or other relevant documentation.
+
+### Issue Tracking & Support
+
+If you encounter any issues or have questions, here’s how you can reach out:
+
+1. **Submit an Issue**: If you find a bug or want to request a new feature, please submit an issue via the [Tournament-Pool Issues Page](https://github.com/LisaGHeclys/Tournament-Pool/issues).
+    - Be sure to provide as much context as possible (steps to reproduce, screenshots, etc.).
+
+2. **Message Me**: If you need direct support or want to discuss the project, you can reach me by:
+    - Opening a GitHub Discussion.
+    - Sending me a message via [my GitHub profile](https://github.com/LisaGHeclys).
+
+I’ll get back to you as soon as possible. Your feedback and questions are always welcome!
