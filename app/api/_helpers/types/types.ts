@@ -15,7 +15,7 @@ export type tournamentBody = {
   name: string;
   teams: teamBody[];
   createdBy: string;
-  createdAt?: object;
+  createdAt: Date;
 };
 
 export enum Method {

@@ -50,6 +50,7 @@ export default function User() {
       { name: "", color: "", points: [] },
     ],
     createdBy: session?.user?.name ?? "",
+    createdAt: new Date(),
   });
   const [teamNumber, setTeamNumber] = React.useState<number>(2);
   const [tournaments, setTournaments] = React.useState<tournamentBody[]>([]);
@@ -171,6 +172,7 @@ export default function User() {
         { name: "", color: "", points: [] },
       ],
       createdBy: session?.user?.name ?? "",
+      createdAt: new Date(),
     });
     setOpen(false);
   };

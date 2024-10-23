@@ -48,7 +48,6 @@ import {
 import { useFetch } from "@/app/api/_helpers/useFetch";
 import React, { useEffect } from "react";
 import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
-import { object } from "prop-types";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Tournament() {
@@ -66,7 +65,7 @@ export default function Tournament() {
       },
     ],
     createdBy: "",
-    createdAt: object,
+    createdAt: new Date(),
   });
 
   async function handleGetTournamentById() {
@@ -88,7 +87,7 @@ export default function Tournament() {
             },
           ],
           createdBy: "",
-          createdAt: object,
+          createdAt: new Date(),
         });
         return;
       }
@@ -107,7 +106,7 @@ export default function Tournament() {
             },
           ],
           createdBy: "",
-          createdAt: object,
+          createdAt: new Date(),
         });
         return;
       }
