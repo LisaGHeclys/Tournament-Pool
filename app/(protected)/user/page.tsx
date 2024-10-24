@@ -150,6 +150,7 @@ export default function User() {
 
       const resToJSON = await res.json();
 
+      console.log(res);
       if (!resToJSON) {
         setTournaments([]);
         return;
@@ -323,7 +324,6 @@ export default function User() {
                       <ChartPreview
                         key={index}
                         tournament={tournament}
-                        height="380"
                         link={"/user/tournament/"}
                       />
                     ))}

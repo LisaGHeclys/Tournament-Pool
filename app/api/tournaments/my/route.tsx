@@ -13,17 +13,15 @@ async function getHandler(req: NextRequest, session?: Session) {
 
     if (tournamentsData.empty) return NextResponse.json({ tournaments: [] });
 
-    const tournaments = tournamentsData.docs
-      .map(
-        (doc) =>
-          ({
-            id: doc.id,
-            ...doc.data(),
-          }) as tournamentBody,
-      )
-      .sort(
-        (a, b) => b.createdAt.getMilliseconds() - a.createdAt.getMilliseconds(),
-      );
+    const tournaments = tournamentsData.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        createdAt: data.createdAt.toDate(),
+      } as tournamentBody;
+    });
+    tournaments.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
     return NextResponse.json({ tournaments: tournaments });
   } catch (e) {

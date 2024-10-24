@@ -12,16 +12,11 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 type ChartPreviewProps = {
-  height?: string;
   tournament: tournamentBody;
   link: string;
 };
 
-export default function ChartPreview({
-  height,
-  tournament,
-  link,
-}: ChartPreviewProps) {
+export default function ChartPreview({ tournament, link }: ChartPreviewProps) {
   const router = useRouter();
 
   return (
