@@ -46,8 +46,8 @@ export default function User() {
   const [tournament, setTournament] = React.useState<tournamentBody>({
     name: "",
     teams: [
-      { name: "", color: "", points: [] },
-      { name: "", color: "", points: [] },
+      { name: "", color: "", points: [0] },
+      { name: "", color: "", points: [0] },
     ],
     createdBy: session?.user?.name ?? "",
     createdAt: new Date(),
@@ -75,7 +75,7 @@ export default function User() {
           ...Array.from({ length: number - updatedTeams.length }, () => ({
             name: "",
             color: "",
-            points: [],
+            points: [0],
           })),
         );
       } else {
@@ -150,7 +150,6 @@ export default function User() {
 
       const resToJSON = await res.json();
 
-      console.log(res);
       if (!resToJSON) {
         setTournaments([]);
         return;
@@ -169,8 +168,8 @@ export default function User() {
     setTournament({
       name: "",
       teams: [
-        { name: "", color: "", points: [] },
-        { name: "", color: "", points: [] },
+        { name: "", color: "", points: [0] },
+        { name: "", color: "", points: [0] },
       ],
       createdBy: session?.user?.name ?? "",
       createdAt: new Date(),

@@ -18,7 +18,7 @@ type PieChartProps = {
 export default function PieChartComponent({ tournament }: PieChartProps) {
   const chartData = tournament.teams.map((team) => ({
     teamName: team.name,
-    teamPoints: team.points?.reduce((a, b) => a + b, 0) || 50,
+    teamPoints: team.points?.reduce((a, b) => a + b, 0),
     fill: team.color,
   }));
 

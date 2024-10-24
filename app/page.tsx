@@ -169,9 +169,11 @@ export default function Home() {
                 </PaginationLink>
               </PaginationItem>
             ))}
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
+            {totalPages > 3 && (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
             <PaginationItem>
               <PaginationNext
                 className={isActive === totalPages ? "pointer-events-none" : ""}
