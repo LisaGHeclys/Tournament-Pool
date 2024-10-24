@@ -36,7 +36,14 @@ export default function Home() {
       case "loading":
         return <Skeleton className="h-8 w-8 rounded-full" />;
       default:
-        return <Button onClick={() => router.push("/login")}>Login</Button>;
+        return (
+          <Button
+            className="hover:scale-105 transition ease-in-out delay-250"
+            onClick={() => router.push("/login")}
+          >
+            <span>Login</span>
+          </Button>
+        );
     }
   }
 

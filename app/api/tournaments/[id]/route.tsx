@@ -4,12 +4,11 @@ import withSession from "@/app/api/_helpers/middleware/with-session";
 import { tournamentBody } from "@/app/api/_helpers/types/types";
 import { Session } from "next-auth";
 
-async function getHandler(
+export async function GET(
   req: NextRequest,
-  session?: Session,
-  argument?: string,
+  { params }: { params: { id: string } },
 ) {
-  const id = argument;
+  const id = params.id;
 
   if (!id)
     return NextResponse.json({ error: "Internal error" }, { status: 500 });
@@ -49,13 +48,6 @@ async function deleteHandler(
   } catch (e) {
     return NextResponse.json({ error: e }, { status: 500 });
   }
-}
-
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } },
-) {
-  return withSession(req, getHandler, params.id);
 }
 
 export async function DELETE(
