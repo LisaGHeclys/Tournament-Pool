@@ -27,6 +27,7 @@ export default function Home() {
     <div className="min-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <header className="p-8 w-full h-fit flex flex-wrap sm:flex-row items-center justify-between">
         <Button
+          className="hover:scale-105 transition ease-in-out delay-150"
           onClick={() => {
             router.push("/");
           }}
@@ -49,7 +50,10 @@ export default function Home() {
           </CardHeader>
           <CardContent className="flex justify-center">
             <form onSubmit={handleSignIn}>
-              <Button type="submit">
+              <Button
+                className="hover:scale-105 transition ease-in-out delay-250"
+                type="submit"
+              >
                 <Github className="mr-2" /> Login with GitHub
               </Button>
             </form>

@@ -142,7 +142,7 @@ export default function Tournament() {
     <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
       <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
         <Button
-          className="rounded-full"
+          className="rounded-full hover:scale-[102%] transition ease-in-out delay-250"
           size="icon"
           onClick={() => {
             router.push("/user");
@@ -219,7 +219,7 @@ export default function Tournament() {
               </div>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button>
+                  <Button className="hover:scale-105 transition ease-in-out delay-250">
                     <Plus />
                   </Button>
                 </DialogTrigger>

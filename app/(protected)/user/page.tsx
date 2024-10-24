@@ -237,7 +237,7 @@ export default function User() {
               </div>
               <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                  <Button>
+                  <Button className="hover:scale-105 transition ease-in-out delay-250">
                     <Plus />
                   </Button>
                 </DialogTrigger>
