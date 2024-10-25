@@ -243,7 +243,7 @@ export default function User() {
                 </DialogTrigger>
                 <DialogContent className="flex flex-col sm:max-w-[425px]">
                   <DialogHeader>
-                    <DialogTitle>Add a tournamen</DialogTitle>
+                    <DialogTitle>Add a tournament</DialogTitle>
                     <DialogDescription>
                       You can create your own tournament here.
                     </DialogDescription>
