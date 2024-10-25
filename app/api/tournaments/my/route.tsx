@@ -18,13 +18,13 @@ async function getHandler(req: NextRequest, session?: Session) {
       return {
         id: doc.id,
         ...data,
-        createdAt: data.createdAt.toDate(),
+        createdAt: new Date(data.createdAt.toDate()),
       } as tournamentBody;
     });
-
-    tournaments.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-
-    console.log(tournaments);
+    tournaments.sort(
+      (a: tournamentBody, b: tournamentBody) =>
+        b.createdAt.getTime() - a.createdAt.getTime(),
+    );
     return NextResponse.json({ tournaments: tournaments });
   } catch (e) {
     console.error("Error fetching tournaments of one user:", e);

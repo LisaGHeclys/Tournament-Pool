@@ -54,6 +54,7 @@ import {
 } from "@/app/api/_helpers/types/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "next-auth/react";
+import PointsPreview from "@/components/ui/points-preview";
 
 export default function Tournament() {
   const router = useRouter();
@@ -64,7 +65,12 @@ export default function Tournament() {
   const [point, setPoint] = useState<pointsBody>({
     reason: "",
     points: 1,
-    createBy: session?.user?.name ?? "",
+    createdBy: session?.user?.name ?? "",
+    team: {
+      name: "",
+      color: "",
+    },
+    createdAt: new Date(),
   });
   const [teamName, setTeamName] = useState<string>("");
   const [tournament, setTournament] = React.useState<tournamentBody>({
@@ -74,11 +80,11 @@ export default function Tournament() {
       {
         name: "",
         color: "",
-        points: [],
       },
     ],
     createdBy: "",
     createdAt: new Date(),
+    points: [],
   });
 
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -105,6 +111,7 @@ export default function Tournament() {
           router.push("/user/");
         }
 
+        console.log(resToJSON);
         if (!isLoading && !isError) {
           setTournament(resToJSON);
         }
@@ -120,14 +127,10 @@ export default function Tournament() {
 
   async function handleUpdateTournament() {
     try {
-      const updatedTournament = { ...tournament };
-
-      const teamToUpdate = updatedTournament.teams.find(
-        (team) => team.name === teamName,
-      );
-      if (teamToUpdate?.points) {
-        teamToUpdate.points.push(point);
-      }
+      const updatedTournament = {
+        ...tournament,
+        points: tournament.points.push({ ...point, createdAt: new Date() }),
+      };
 
       const res = await executeFetch({
         url: `/api/tournaments/${id}`,
@@ -139,7 +142,12 @@ export default function Tournament() {
         setPoint({
           reason: "",
           points: 1,
-          createBy: session?.user?.name ?? "",
+          createdBy: session?.user?.name ?? "",
+          team: {
+            name: "",
+            color: "",
+          },
+          createdAt: new Date(),
         });
         return;
       }
@@ -158,7 +166,12 @@ export default function Tournament() {
     setPoint({
       reason: "",
       points: 1,
-      createBy: session?.user?.name ?? "",
+      createdBy: session?.user?.name ?? "",
+      team: {
+        name: "",
+        color: "",
+      },
+      createdAt: new Date(),
     });
     setOpen(false);
   }
@@ -321,7 +334,10 @@ export default function Tournament() {
                       )}
                     </div>
                     <DialogFooter className="flex">
-                      <Button type="submit" disabled={point.reason === ""}>
+                      <Button
+                        type="submit"
+                        disabled={point.reason === "" && point.team.name === ""}
+                      >
                         Add points
                       </Button>
                     </DialogFooter>
@@ -331,7 +347,10 @@ export default function Tournament() {
             </div>
             <ScrollArea className="w-full h-[500px] px-2">
               <div className="flex flex-col gap-4 p-2">
-                {/*TODO: create a PointsPreview component*/}
+                {tournament.points &&
+                  tournament.points.map((point, index) => (
+                    <PointsPreview point={point} key={index} />
+                  ))}
               </div>
             </ScrollArea>
           </CardContent>

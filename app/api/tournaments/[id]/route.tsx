@@ -37,8 +37,8 @@ async function patchHandler(
   session?: Session,
   argument?: string,
 ) {
-  const body: tournamentBody = JSON.parse(await req?.text());
   const id = argument;
+  const body: tournamentBody = JSON.parse(await req?.text());
 
   if (!id)
     return NextResponse.json({ error: "Internal error" }, { status: 500 });

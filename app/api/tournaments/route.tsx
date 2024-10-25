@@ -41,6 +41,7 @@ async function putHandler(req: NextRequest, session?: Session) {
       teams,
       createdBy,
       createdAt,
+      points: [],
     });
 
     const user = await getDb()
