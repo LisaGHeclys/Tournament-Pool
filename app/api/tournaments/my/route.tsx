@@ -21,8 +21,10 @@ async function getHandler(req: NextRequest, session?: Session) {
         createdAt: data.createdAt.toDate(),
       } as tournamentBody;
     });
+
     tournaments.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
+    console.log(tournaments);
     return NextResponse.json({ tournaments: tournaments });
   } catch (e) {
     console.error("Error fetching tournaments of one user:", e);

@@ -96,7 +96,10 @@ export default function ShowTournament() {
         setTournament(resToJSON);
       }
     } catch (error) {
-      console.error("Unexpected error during creation of tournament:", error);
+      console.error(
+        "Unexpected error during the retrieval of a tournament:",
+        error,
+      );
     }
   }
 

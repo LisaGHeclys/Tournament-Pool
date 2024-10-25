@@ -20,13 +20,32 @@ export async function GET(
       .get()
       .then((doc) => ({ id: doc.id, ...doc.data() }) as tournamentBody);
 
-    if (!tournament)
+    if (!tournament.name)
       return NextResponse.json(
         { error: "Tournament not found" },
         { status: 404 },
       );
 
     return NextResponse.json({ ...tournament });
+  } catch (e) {
+    return NextResponse.json({ error: e }, { status: 500 });
+  }
+}
+
+async function patchHandler(
+  req: NextRequest,
+  session?: Session,
+  argument?: string,
+) {
+  const body: tournamentBody = JSON.parse(await req?.text());
+  const id = argument;
+
+  if (!id)
+    return NextResponse.json({ error: "Internal error" }, { status: 500 });
+
+  try {
+    await getDb().collection("tournaments").doc(id).update(body);
+    return NextResponse.json({});
   } catch (e) {
     return NextResponse.json({ error: e }, { status: 500 });
   }
@@ -48,6 +67,13 @@ async function deleteHandler(
   } catch (e) {
     return NextResponse.json({ error: e }, { status: 500 });
   }
+}
+
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  return withSession(req, patchHandler, params.id);
 }
 
 export async function DELETE(

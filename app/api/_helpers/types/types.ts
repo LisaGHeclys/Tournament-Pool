@@ -4,10 +4,16 @@ export type useFetchOptions = {
   body?: object;
 };
 
+export type pointsBody = {
+  reason: string;
+  points: number;
+  createBy: string;
+};
+
 export type teamBody = {
   name: string;
   color: string;
-  points?: number[];
+  points?: pointsBody[];
 };
 
 export type tournamentBody = {

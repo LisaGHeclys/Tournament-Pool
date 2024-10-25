@@ -46,14 +46,27 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useFetch } from "@/app/api/_helpers/useFetch";
-import React, { useEffect } from "react";
-import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
+import React, { useEffect, useState } from "react";
+import {
+  Method,
+  pointsBody,
+  tournamentBody,
+} from "@/app/api/_helpers/types/types";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useSession } from "next-auth/react";
 
 export default function Tournament() {
   const router = useRouter();
+  const { data: session } = useSession();
   const id = useParams().id;
+  const [open, setOpen] = React.useState(false);
   const { executeFetch, isLoading, isError } = useFetch();
+  const [point, setPoint] = useState<pointsBody>({
+    reason: "",
+    points: 1,
+    createBy: session?.user?.name ?? "",
+  });
+  const [teamName, setTeamName] = useState<string>("");
   const [tournament, setTournament] = React.useState<tournamentBody>({
     id: "",
     name: "",
@@ -68,6 +81,14 @@ export default function Tournament() {
     createdAt: new Date(),
   });
 
+  function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    setPoint((prev) => ({
+      ...prev,
+      [e.target.id]: e.target.value,
+    }));
+  }
+
   async function handleGetTournamentById() {
     try {
       const res = await executeFetch({
@@ -76,54 +97,77 @@ export default function Tournament() {
       });
 
       if (res === null) {
-        setTournament({
-          id: "",
-          name: "",
-          teams: [
-            {
-              name: "",
-              color: "",
-              points: [],
-            },
-          ],
-          createdBy: "",
-          createdAt: new Date(),
-        });
-        return;
-      }
+        router.push("/user/");
+      } else {
+        const resToJSON = await res.json();
 
-      const resToJSON = await res.json();
+        if (!resToJSON.name) {
+          router.push("/user/");
+        }
 
-      if (!resToJSON) {
-        setTournament({
-          id: "",
-          name: "",
-          teams: [
-            {
-              name: "",
-              color: "",
-              points: [],
-            },
-          ],
-          createdBy: "",
-          createdAt: new Date(),
-        });
-        return;
-      }
-
-      if (!isLoading && !isError) {
-        setTournament(resToJSON);
+        if (!isLoading && !isError) {
+          setTournament(resToJSON);
+        }
       }
     } catch (error) {
-      console.error("Unexpected error during creation of tournament:", error);
+      console.error(
+        "Unexpected error during the retrieval of a tournament:",
+        error,
+      );
+      router.push("/user/");
     }
+  }
+
+  async function handleUpdateTournament() {
+    try {
+      const updatedTournament = { ...tournament };
+
+      const teamToUpdate = updatedTournament.teams.find(
+        (team) => team.name === teamName,
+      );
+      if (teamToUpdate?.points) {
+        teamToUpdate.points.push(point);
+      }
+
+      const res = await executeFetch({
+        url: `/api/tournaments/${id}`,
+        method: Method.PATCH,
+        body: updatedTournament,
+      });
+
+      if (res === null) {
+        setPoint({
+          reason: "",
+          points: 1,
+          createBy: session?.user?.name ?? "",
+        });
+        return;
+      }
+    } catch (error) {
+      console.error(
+        "Unexpected error during the update of a tournament:",
+        error,
+      );
+      router.push("/user/");
+    }
+  }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    handleUpdateTournament();
+    setPoint({
+      reason: "",
+      points: 1,
+      createBy: session?.user?.name ?? "",
+    });
+    setOpen(false);
   }
 
   useEffect(() => {
     handleGetTournamentById();
   }, []);
 
-  if (isLoading) {
+  if (isLoading || tournament.name == "") {
     return (
       <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
         <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
@@ -217,7 +261,7 @@ export default function Tournament() {
                   className="w-full rounded-lg bg-background pl-8"
                 />
               </div>
-              <Dialog>
+              <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                   <Button className="hover:scale-105 transition ease-in-out delay-250">
                     <Plus />
@@ -230,44 +274,58 @@ export default function Tournament() {
                       You can add points for your teams here.
                     </DialogDescription>
                   </DialogHeader>
-                  <form>
+                  <form onSubmit={handleSubmit} className="grid gap-4">
                     <div className="grid w-full items-center gap-4">
                       <div className="flex flex-col space-y-1.5">
-                        <Label htmlFor="reason">What reason ?</Label>
-                        <Input
-                          id="reason"
-                          placeholder="Write the reason to add points"
-                          required
-                        />
-                      </div>
-                      <div className="flex flex-col space-y-1.5">
-                        <Label htmlFor="points-number">How many points?</Label>
-                        <Input
-                          id="points-number"
-                          type="number"
-                          placeholder="How many points do you want to add ?"
-                          required
-                        />
-                      </div>
-                      <div className="flex flex-col space-y-1.5">
                         <Label htmlFor="team-number">For which team ?</Label>
-                        <Select>
+                        <Select onValueChange={(value) => setTeamName(value)}>
                           <SelectTrigger id="team-number">
                             <SelectValue placeholder="Choose a team" />
                           </SelectTrigger>
                           <SelectContent position="popper">
-                            <SelectItem value="team1">Team 1</SelectItem>
-                            <SelectItem value="team2">Team 2</SelectItem>
-                            <SelectItem value="team3">Team 3</SelectItem>
-                            <SelectItem value="team4">Team 4</SelectItem>
+                            {tournament.teams &&
+                              tournament.teams.map((team, index) => {
+                                return (
+                                  <SelectItem key={index} value={team.name}>
+                                    {team.name}
+                                  </SelectItem>
+                                );
+                              })}
                           </SelectContent>
                         </Select>
                       </div>
+                      {teamName !== "" && (
+                        <>
+                          <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="reason">What reason ?</Label>
+                            <Input
+                              id="reason"
+                              placeholder="Write the reason to add points"
+                              onChange={handleOnChange}
+                              required
+                            />
+                          </div>
+                          <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="points">How many points?</Label>
+                            <Input
+                              defaultValue={1}
+                              id="points"
+                              type="number"
+                              min={1}
+                              placeholder="How many points do you want to add ?"
+                              onChange={handleOnChange}
+                              required
+                            />
+                          </div>
+                        </>
+                      )}
                     </div>
+                    <DialogFooter className="flex">
+                      <Button type="submit" disabled={point.reason === ""}>
+                        Add points
+                      </Button>
+                    </DialogFooter>
                   </form>
-                  <DialogFooter className="flex">
-                    <Button>Add points</Button>
-                  </DialogFooter>
                 </DialogContent>
               </Dialog>
             </div>
