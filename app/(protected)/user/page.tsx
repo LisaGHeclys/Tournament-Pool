@@ -122,6 +122,8 @@ export default function User() {
         body: tournament,
       });
 
+      console.log(tournament);
+
       if (res === null) {
         console.error("Couldn't create tournament", res);
         return;

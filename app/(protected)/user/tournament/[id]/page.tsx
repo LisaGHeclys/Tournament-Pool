@@ -50,6 +50,7 @@ import React, { useEffect, useState } from "react";
 import {
   Method,
   pointsBody,
+  teamBody,
   tournamentBody,
 } from "@/app/api/_helpers/types/types";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -72,7 +73,10 @@ export default function Tournament() {
     },
     createdAt: new Date(),
   });
-  const [teamName, setTeamName] = useState<string>("");
+  const [team, setTeam] = useState<teamBody>({
+    name: "",
+    color: "",
+  });
   const [tournament, setTournament] = React.useState<tournamentBody>({
     id: "",
     name: "",
@@ -93,6 +97,16 @@ export default function Tournament() {
       ...prev,
       [e.target.id]: e.target.value,
     }));
+  }
+
+  function handleOnChangeTeam(value: string) {
+    const tempTeam: teamBody = tournament.teams.find(
+      (team) => team.name == value,
+    ) || {
+      name: "",
+      color: "",
+    };
+    setTeam(tempTeam);
   }
 
   async function handleGetTournamentById() {
@@ -129,7 +143,19 @@ export default function Tournament() {
     try {
       const updatedTournament = {
         ...tournament,
-        points: tournament.points.push({ ...point, createdAt: new Date() }),
+        points: tournament.points
+          ? tournament.points.push({
+              ...point,
+              createdAt: new Date(),
+              team: team,
+            })
+          : [
+              {
+                ...point,
+                createdAt: new Date(),
+                team: team,
+              },
+            ],
       };
 
       const res = await executeFetch({
@@ -172,6 +198,10 @@ export default function Tournament() {
         color: "",
       },
       createdAt: new Date(),
+    });
+    setTeam({
+      name: "",
+      color: "",
     });
     setOpen(false);
   }
@@ -291,7 +321,7 @@ export default function Tournament() {
                     <div className="grid w-full items-center gap-4">
                       <div className="flex flex-col space-y-1.5">
                         <Label htmlFor="team-number">For which team ?</Label>
-                        <Select onValueChange={(value) => setTeamName(value)}>
+                        <Select onValueChange={handleOnChangeTeam}>
                           <SelectTrigger id="team-number">
                             <SelectValue placeholder="Choose a team" />
                           </SelectTrigger>
@@ -307,7 +337,7 @@ export default function Tournament() {
                           </SelectContent>
                         </Select>
                       </div>
-                      {teamName !== "" && (
+                      {team.name !== "" && (
                         <>
                           <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="reason">What reason ?</Label>
@@ -345,10 +375,11 @@ export default function Tournament() {
                 </DialogContent>
               </Dialog>
             </div>
-            <ScrollArea className="w-full h-[500px] px-2">
+            <ScrollArea className="w-full h-[550px] px-2">
               <div className="flex flex-col gap-4 p-2">
-                {tournament.points &&
-                  tournament.points.map((point, index) => (
+                {!isLoading &&
+                  tournament?.points &&
+                  tournament?.points?.map((point, index) => (
                     <PointsPreview point={point} key={index} />
                   ))}
               </div>

@@ -23,7 +23,7 @@ export type tournamentBody = {
   teams: teamBody[];
   createdBy: string;
   createdAt: Date;
-  points: pointsBody[];
+  points?: pointsBody[];
 };
 
 export enum Method {

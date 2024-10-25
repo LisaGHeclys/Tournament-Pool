@@ -14,12 +14,12 @@ async function getHandler(req: NextRequest, session?: Session) {
     if (tournamentsData.empty) return NextResponse.json({ tournaments: [] });
 
     const tournaments = tournamentsData.docs.map((doc) => {
-      const data = doc.data();
+      const data = doc.data() as tournamentBody;
       return {
         id: doc.id,
         ...data,
-        createdAt: new Date(data.createdAt.toDate()),
-      } as tournamentBody;
+        createdAt: new Date(data.createdAt),
+      };
     });
     tournaments.sort(
       (a: tournamentBody, b: tournamentBody) =>
