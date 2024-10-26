@@ -39,12 +39,17 @@ async function patchHandler(
 ) {
   const id = argument;
   const body: tournamentBody = JSON.parse(await req?.text());
+  const { name, teams, points } = body;
 
   if (!id)
     return NextResponse.json({ error: "Internal error" }, { status: 500 });
 
   try {
-    await getDb().collection("tournaments").doc(id).update(body);
+    await getDb().collection("tournaments").doc(id).update({
+      name,
+      teams,
+      points,
+    });
     return NextResponse.json({});
   } catch (e) {
     return NextResponse.json({ error: e }, { status: 500 });

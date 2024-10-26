@@ -16,13 +16,21 @@ type PieChartProps = {
 };
 
 export default function PieChartComponent({ tournament }: PieChartProps) {
-  const chartData = tournament.teams.map((team) => ({
-    teamName: team.name,
-    teamPoints: team.points?.reduce(function (acc, obj) {
-      return acc + obj.points;
-    }, 0),
-    fill: team.color,
-  }));
+  console.log(tournament.points);
+
+  const chartData = tournament.teams.map((team) => {
+    const totalPoints = Array.isArray(tournament.points)
+      ? tournament.points
+          .filter((point) => point.team.name === team.name)
+          .reduce((acc, curr) => acc + curr.points, 0)
+      : 0;
+    return {
+      teamName: team.name,
+      teamPoints: totalPoints,
+      fill: team.color,
+    };
+  });
+  console.log(chartData);
 
   const chartConfig = tournament.teams.reduce((config, team) => {
     config[team.name.toLowerCase().replace(/\s+/g, "")] = {

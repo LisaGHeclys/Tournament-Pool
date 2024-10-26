@@ -95,7 +95,8 @@ export default function Tournament() {
     e.preventDefault();
     setPoint((prev) => ({
       ...prev,
-      [e.target.id]: e.target.value,
+      [e.target.id]:
+        e.target.id == "points" ? Number(e.target.value) : e.target.value,
     }));
   }
 
@@ -125,7 +126,6 @@ export default function Tournament() {
           router.push("/user/");
         }
 
-        console.log(resToJSON);
         if (!isLoading && !isError) {
           setTournament(resToJSON);
         }
@@ -143,19 +143,12 @@ export default function Tournament() {
     try {
       const updatedTournament = {
         ...tournament,
-        points: tournament.points
-          ? tournament.points.push({
-              ...point,
-              createdAt: new Date(),
-              team: team,
-            })
-          : [
-              {
-                ...point,
-                createdAt: new Date(),
-                team: team,
-              },
-            ],
+        points: Array.isArray(tournament.points)
+          ? [
+              { ...point, createdAt: new Date(), team: team },
+              ...tournament.points,
+            ]
+          : [{ ...point, createdAt: new Date(), team: team }],
       };
 
       const res = await executeFetch({
@@ -177,6 +170,7 @@ export default function Tournament() {
         });
         return;
       }
+      handleGetTournamentById();
     } catch (error) {
       console.error(
         "Unexpected error during the update of a tournament:",
@@ -377,8 +371,7 @@ export default function Tournament() {
             </div>
             <ScrollArea className="w-full h-[550px] px-2">
               <div className="flex flex-col gap-4 p-2">
-                {!isLoading &&
-                  tournament?.points &&
+                {Array.isArray(tournament.points) &&
                   tournament?.points?.map((point, index) => (
                     <PointsPreview point={point} key={index} />
                   ))}
