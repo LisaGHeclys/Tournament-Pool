@@ -30,6 +30,7 @@ import { useFetch } from "@/app/api/_helpers/useFetch";
 import { Skeleton } from "@/components/ui/skeleton";
 import PieChartComponent from "@/components/ui/pie-chart";
 import Autoplay from "embla-carousel-autoplay";
+import PointsPreview from "@/components/ui/points-preview";
 
 export default function ShowTournament() {
   const router = useRouter();
@@ -42,11 +43,11 @@ export default function ShowTournament() {
       {
         name: "",
         color: "",
-        points: [],
       },
     ],
     createdBy: "",
     createdAt: new Date(),
+    points: [],
   });
 
   async function handleGetTournamentById() {
@@ -64,11 +65,11 @@ export default function ShowTournament() {
             {
               name: "",
               color: "",
-              points: [],
             },
           ],
           createdBy: "",
           createdAt: new Date(),
+          points: [],
         });
         return;
       }
@@ -83,11 +84,11 @@ export default function ShowTournament() {
             {
               name: "",
               color: "",
-              points: [],
             },
           ],
           createdBy: "",
           createdAt: new Date(),
+          points: [],
         });
         return;
       }
@@ -191,7 +192,10 @@ export default function ShowTournament() {
           <CardContent className="flex flex-col h-full gap-8">
             <ScrollArea className="w-full h-[630px] rounded-md px-2">
               <div className="flex flex-col gap-4 p-2">
-                {/*TODO: create a PointsPreview component*/}
+                {Array.isArray(tournament.points) &&
+                  tournament?.points?.map((point, index) => (
+                    <PointsPreview point={point} key={index} />
+                  ))}
               </div>
             </ScrollArea>
           </CardContent>
