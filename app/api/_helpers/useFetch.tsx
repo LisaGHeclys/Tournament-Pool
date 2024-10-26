@@ -26,8 +26,8 @@ export function useFetch() {
 
       setIsLoading(false);
       return response;
-    } catch (err: any) {
-      setIsError(err.message || "An unexpected error occurred");
+    } catch (error) {
+      setIsError("An unexpected error occurred :" + error);
       setIsLoading(false);
       return null;
     }

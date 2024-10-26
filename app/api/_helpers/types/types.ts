@@ -4,10 +4,17 @@ export type useFetchOptions = {
   body?: object;
 };
 
+export type pointsBody = {
+  reason: string;
+  points: number;
+  team: teamBody;
+  createdBy: string;
+  createdAt: Date;
+};
+
 export type teamBody = {
   name: string;
   color: string;
-  points?: number[];
 };
 
 export type tournamentBody = {
@@ -15,7 +22,8 @@ export type tournamentBody = {
   name: string;
   teams: teamBody[];
   createdBy: string;
-  createdAt?: object;
+  createdAt: Date;
+  points?: pointsBody[];
 };
 
 export enum Method {

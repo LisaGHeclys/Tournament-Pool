@@ -10,18 +10,27 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { tournamentBody } from "@/app/api/_helpers/types/types";
-import Autoplay from "embla-carousel-autoplay";
 
 type PieChartProps = {
   tournament: tournamentBody;
 };
 
 export default function PieChartComponent({ tournament }: PieChartProps) {
-  const chartData = tournament.teams.map((team) => ({
-    teamName: team.name,
-    teamPoints: team.points?.reduce((a, b) => a + b, 0) || 50,
-    fill: team.color,
-  }));
+  console.log(tournament.points);
+
+  const chartData = tournament.teams.map((team) => {
+    const totalPoints = Array.isArray(tournament.points)
+      ? tournament.points
+          .filter((point) => point.team.name === team.name)
+          .reduce((acc, curr) => acc + curr.points, 0)
+      : 0;
+    return {
+      teamName: team.name,
+      teamPoints: totalPoints,
+      fill: team.color,
+    };
+  });
+  console.log(chartData);
 
   const chartConfig = tournament.teams.reduce((config, team) => {
     config[team.name.toLowerCase().replace(/\s+/g, "")] = {
@@ -36,7 +45,7 @@ export default function PieChartComponent({ tournament }: PieChartProps) {
       <CardContent className="h-full w-full flex-auto justify-center pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto max-w-lg aspect-square pb-0 [&_.recharts-pie-label-text]:fill-foreground"
+          className="h-full w-full max-w-lg flex justify-center aspect-square pb-0 [&_.recharts-pie-label-text]:fill-foreground"
         >
           <PieChart>
             <ChartTooltip

@@ -46,10 +46,12 @@ export default function User() {
   const [tournament, setTournament] = React.useState<tournamentBody>({
     name: "",
     teams: [
-      { name: "", color: "", points: [] },
-      { name: "", color: "", points: [] },
+      { name: "", color: "" },
+      { name: "", color: "" },
     ],
     createdBy: session?.user?.name ?? "",
+    createdAt: new Date(),
+    points: [],
   });
   const [teamNumber, setTeamNumber] = React.useState<number>(2);
   const [tournaments, setTournaments] = React.useState<tournamentBody[]>([]);
@@ -74,7 +76,6 @@ export default function User() {
           ...Array.from({ length: number - updatedTeams.length }, () => ({
             name: "",
             color: "",
-            points: [],
           })),
         );
       } else {
@@ -153,7 +154,9 @@ export default function User() {
         setTournaments([]);
         return;
       }
-      if (!isLoading && !isError) setTournaments(resToJSON.tournaments);
+      if (!isLoading && !isError) {
+        setTournaments(resToJSON.tournaments);
+      }
     } catch (error) {
       console.error("Unexpected error during creation of tournament:", error);
     }
@@ -167,10 +170,12 @@ export default function User() {
     setTournament({
       name: "",
       teams: [
-        { name: "", color: "", points: [] },
-        { name: "", color: "", points: [] },
+        { name: "", color: "" },
+        { name: "", color: "" },
       ],
       createdBy: session?.user?.name ?? "",
+      createdAt: new Date(),
+      points: [],
     });
     setOpen(false);
   };
@@ -235,7 +240,7 @@ export default function User() {
               </div>
               <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                  <Button>
+                  <Button className="hover:scale-105 transition ease-in-out delay-250">
                     <Plus />
                   </Button>
                 </DialogTrigger>
@@ -321,7 +326,6 @@ export default function User() {
                       <ChartPreview
                         key={index}
                         tournament={tournament}
-                        height="380"
                         link={"/user/tournament/"}
                       />
                     ))}
