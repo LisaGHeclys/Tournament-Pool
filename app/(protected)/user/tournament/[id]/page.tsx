@@ -56,8 +56,10 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "next-auth/react";
 import PointsPreview from "@/components/ui/points-preview";
+import { useWindowSize } from "@/app/api/_helpers/useWindowSize";
 
 export default function Tournament() {
+  const size = useWindowSize();
   const router = useRouter();
   const { data: session } = useSession();
   const id = useParams().id;
@@ -229,7 +231,7 @@ export default function Tournament() {
             router.push("/user");
           }}
         >
-          <ChevronLeft />
+          <ChevronLeft size={size.width <= 425 ? 18 : 32} />
         </Button>
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
           Tournament : {tournament.name}
