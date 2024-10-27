@@ -114,16 +114,16 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-        <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
+      <div className="min-h-screen gap-2 sm:p-16 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+        <header className="md:p-8 w-full h-full md:h-fit flex flex-row items-center justify-between">
           <div />
-          <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-            <Skeleton className="h-12 w-[450px]" />
+          <h1 className="scroll-m-20 tracking-tight">
+            <Skeleton className="h-8 sm:h-12 w-[180px] sm:w-[450px]" />
           </h1>
-          <Skeleton className="h-8 w-8 rounded-full" />
+          <Skeleton className="h-6 w-6 sm:h-8 sm:w-8 rounded-full" />
         </header>
         <main className="w-full h-full flex gap-8 items-center">
-          <Skeleton className="h-full w-full" />
+          <Skeleton className="h-[600px] md:h-full w-full flex" />
         </main>
         <Footer />
       </div>
