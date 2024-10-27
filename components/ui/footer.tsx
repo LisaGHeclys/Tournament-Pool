@@ -9,10 +9,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Footer() {
   return (
-    <footer className="h-fit row-start-3 flex gap-6 flex-wrap items-center justify-center">
+    <footer className="h-fit row-start-3 flex gap-2 flex-wrap items-center justify-center">
       <HoverCard>
         <HoverCardTrigger asChild>
-          <Button className="flex items-center gap-2" variant="link">
+          <Button
+            className="px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm flex items-center gap-2"
+            variant="link"
+          >
             <Copyright width={16} height={16} />
             All rights reserved
           </Button>
@@ -43,7 +46,7 @@ export default function Footer() {
         </HoverCardContent>
       </HoverCard>
       <a
-        className="px-4 py-2 rounded-md h-full flex items-center gap-2 hover:underline hover:underline-offset-4"
+        className="px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm rounded-md h-full flex items-center gap-2 hover:underline hover:underline-offset-4 font-medium"
         href="https://github.com/LisaGHeclys"
         target="_blank"
         rel="noopener noreferrer"
@@ -52,7 +55,7 @@ export default function Footer() {
         Github
       </a>
       <a
-        className="px-4 py-2 rounded-md h-full flex items-center gap-2 hover:underline hover:underline-offset-4"
+        className="px-2 py-1 sm:px-4 sm:py-2 text-xs md:text-sm rounded-md h-full flex items-center gap-2 hover:underline hover:underline-offset-4 font-medium"
         href="https://lisamlglaziou.fr"
         target="_blank"
         rel="noopener noreferrer"

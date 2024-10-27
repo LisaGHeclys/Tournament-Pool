@@ -26,7 +26,10 @@ export function UserNav() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+        <Button
+          variant="ghost"
+          className="relative h-4 w-4 sm:h-8 sm:w-8 rounded-full"
+        >
           <Avatar>
             <AvatarImage
               src={
@@ -39,7 +42,7 @@ export function UserNav() {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mt-2 w-56" align="end" forceMount>
+      <DropdownMenuContent className="mt-2 w-46 sm:w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-2">
             <p className="text-sm font-bold leading-none">
@@ -52,13 +55,13 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => router.push("/user")}>
-          <User className="mr-2 size-4" />
-          <span>Your page</span>
+          <User className="mr-2 size-3 md:size-4" />
+          <span className="text-xs md:text-sm">Your page</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut}>
-          <LogOut className="mr-2 size-4" />
-          <span>Log out</span>
+          <LogOut className="mr-2 size-3 md:size-4" />
+          <span className="text-xs md:text-sm">Log out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

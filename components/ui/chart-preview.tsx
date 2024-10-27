@@ -21,20 +21,18 @@ export default function ChartPreview({ tournament, link }: ChartPreviewProps) {
 
   return (
     <Button
-      className={`w-full h-[330px] flex hover:scale-[102%] transition ease-in-out delay-50`}
+      className="w-full h-[460px] sm:h-[330px] flex hover:scale-[102%] transition ease-in-out delay-50"
       variant="ghost"
       onClick={() => {
         router.push(link + tournament.id);
       }}
     >
-      <Card
-        className={`w-full h-full flex flex-row justify-between drop-shadow-md`}
-      >
-        <CardHeader className="w-1/2 gap-2 items-start justify-between flex">
+      <Card className="w-full h-full flex flex-col sm:flex-row justify-between drop-shadow-md">
+        <CardHeader className="h-1/2 sm:h-full w-full sm:w-1/2 pb-2 sm:pb-6 gap-1 sm:gap-2 items-start justify-between flex">
           <div className="w-full flex gap-2 items-start flex-col">
             <CardTitle>{tournament.name}</CardTitle>
             <Separator />
-            <CardDescription className="flex gap-2 flex-col font-medium">
+            <CardDescription className="flex gap-1 sm:gap-2 flex-col font-medium">
               {tournament.teams.map((team, index) => (
                 <span key={index} className="flex">
                   Team {index + 1} : {team.name}
@@ -44,7 +42,7 @@ export default function ChartPreview({ tournament, link }: ChartPreviewProps) {
           </div>
           <span className="flex">Created by : {tournament.createdBy}</span>
         </CardHeader>
-        <div className="flex h-full w-1/2 p-4">
+        <div className="flex h-1/2 sm:h-full w-full sm:w-1/2 p-2 sm:p-4">
           <PieChartComponent tournament={tournament} />
         </div>
       </Card>
