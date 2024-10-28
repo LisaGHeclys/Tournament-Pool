@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/firebase/firebase";
 import withSession from "@/app/api/_helpers/middleware/with-session";
 import { Session } from "next-auth";
+import { tournamentBody } from "@/app/api/_helpers/types/types";
 
 async function getHandler(req: NextRequest, session?: Session) {
   try {
@@ -12,13 +13,18 @@ async function getHandler(req: NextRequest, session?: Session) {
 
     if (tournamentsData.empty) return NextResponse.json({ tournaments: [] });
 
-    const tournaments = tournamentsData.docs
-      .map((doc) => ({
+    const tournaments = tournamentsData.docs.map((doc) => {
+      const data = doc.data() as tournamentBody;
+      return {
         id: doc.id,
-        ...doc.data(),
-      }))
-      .sort((a, b) => b.createdAt - a.createdAt);
-
+        ...data,
+        createdAt: new Date(data.createdAt),
+      };
+    });
+    tournaments.sort(
+      (a: tournamentBody, b: tournamentBody) =>
+        b.createdAt.getTime() - a.createdAt.getTime(),
+    );
     return NextResponse.json({ tournaments: tournaments });
   } catch (e) {
     console.error("Error fetching tournaments of one user:", e);

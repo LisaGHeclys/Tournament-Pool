@@ -4,12 +4,11 @@ import withSession from "@/app/api/_helpers/middleware/with-session";
 import { tournamentBody } from "@/app/api/_helpers/types/types";
 import { Session } from "next-auth";
 
-async function getHandler(
+export async function GET(
   req: NextRequest,
-  session?: Session,
-  argument?: string,
+  { params }: { params: { id: string } },
 ) {
-  const id = argument;
+  const id = params.id;
 
   if (!id)
     return NextResponse.json({ error: "Internal error" }, { status: 500 });
@@ -21,13 +20,37 @@ async function getHandler(
       .get()
       .then((doc) => ({ id: doc.id, ...doc.data() }) as tournamentBody);
 
-    if (!tournament)
+    if (!tournament.name)
       return NextResponse.json(
         { error: "Tournament not found" },
         { status: 404 },
       );
 
     return NextResponse.json({ ...tournament });
+  } catch (e) {
+    return NextResponse.json({ error: e }, { status: 500 });
+  }
+}
+
+async function patchHandler(
+  req: NextRequest,
+  session?: Session,
+  argument?: string,
+) {
+  const id = argument;
+  const body: tournamentBody = JSON.parse(await req?.text());
+  const { name, teams, points } = body;
+
+  if (!id)
+    return NextResponse.json({ error: "Internal error" }, { status: 500 });
+
+  try {
+    await getDb().collection("tournaments").doc(id).update({
+      name,
+      teams,
+      points,
+    });
+    return NextResponse.json({});
   } catch (e) {
     return NextResponse.json({ error: e }, { status: 500 });
   }
@@ -51,11 +74,11 @@ async function deleteHandler(
   }
 }
 
-export async function GET(
+export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } },
 ) {
-  return withSession(req, getHandler, params.id);
+  return withSession(req, patchHandler, params.id);
 }
 
 export async function DELETE(

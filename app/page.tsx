@@ -36,7 +36,14 @@ export default function Home() {
       case "loading":
         return <Skeleton className="h-8 w-8 rounded-full" />;
       default:
-        return <Button onClick={() => router.push("/login")}>Login</Button>;
+        return (
+          <Button
+            className="hover:scale-105 transition ease-in-out delay-250"
+            onClick={() => router.push("/login")}
+          >
+            <span>Login</span>
+          </Button>
+        );
     }
   }
 
@@ -141,7 +148,7 @@ export default function Home() {
             className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
           />
         </div>
-        <div className="grid md:grid-rows-2 grid-cols-1 md:gap-4 lg:grid-cols-2 w-full">
+        <div className="grid md:grid-rows-2 grid-cols-1 md:gap-4 lg:grid-cols-2 w-full h-full">
           {tournaments &&
             tournaments.map((tournament, index) => (
               <ChartPreview
@@ -169,9 +176,11 @@ export default function Home() {
                 </PaginationLink>
               </PaginationItem>
             ))}
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
+            {totalPages > 3 && (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
             <PaginationItem>
               <PaginationNext
                 className={isActive === totalPages ? "pointer-events-none" : ""}

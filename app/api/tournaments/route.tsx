@@ -68,7 +68,7 @@ async function putHandler(req: NextRequest, session?: Session) {
   }
 }
 
-async function getHandler(req: NextRequest) {
+export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "9");
@@ -111,8 +111,4 @@ async function getHandler(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   return withSession(req, putHandler);
-}
-
-export async function GET(req: NextRequest) {
-  return withSession(req, getHandler);
 }

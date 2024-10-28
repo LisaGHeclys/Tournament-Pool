@@ -7,8 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ChevronLeft, Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -25,21 +24,18 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
 import { useFetch } from "@/app/api/_helpers/useFetch";
 import { Skeleton } from "@/components/ui/skeleton";
-import { object } from "prop-types";
 import PieChartComponent from "@/components/ui/pie-chart";
 import Autoplay from "embla-carousel-autoplay";
+import PointsPreview from "@/components/ui/points-preview";
 
 export default function ShowTournament() {
   const router = useRouter();
   const id = useParams().id;
   const { executeFetch, isLoading, isError } = useFetch();
-  const [activeIndex, setActiveIndex] = useState(0);
-  const totalItems = 2;
-
   const [tournament, setTournament] = React.useState<tournamentBody>({
     id: "",
     name: "",
@@ -47,11 +43,11 @@ export default function ShowTournament() {
       {
         name: "",
         color: "",
-        points: [],
       },
     ],
     createdBy: "",
-    createdAt: object,
+    createdAt: new Date(),
+    points: [],
   });
 
   async function handleGetTournamentById() {
@@ -69,11 +65,11 @@ export default function ShowTournament() {
             {
               name: "",
               color: "",
-              points: [],
             },
           ],
           createdBy: "",
-          createdAt: object,
+          createdAt: new Date(),
+          points: [],
         });
         return;
       }
@@ -88,11 +84,11 @@ export default function ShowTournament() {
             {
               name: "",
               color: "",
-              points: [],
             },
           ],
           createdBy: "",
-          createdAt: object,
+          createdAt: new Date(),
+          points: [],
         });
         return;
       }
@@ -101,7 +97,10 @@ export default function ShowTournament() {
         setTournament(resToJSON);
       }
     } catch (error) {
-      console.error("Unexpected error during creation of tournament:", error);
+      console.error(
+        "Unexpected error during the retrieval of a tournament:",
+        error,
+      );
     }
   }
 
@@ -191,19 +190,12 @@ export default function ShowTournament() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col h-full gap-8">
-            <div className="h-fit w-full flex flex-row gap-8">
-              <div className="relative w-full">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Search points..."
-                  className="w-full rounded-lg bg-background pl-8"
-                />
-              </div>
-            </div>
-            <ScrollArea className="w-full h-[500px] px-2">
+            <ScrollArea className="w-full h-[630px] rounded-md px-2">
               <div className="flex flex-col gap-4 p-2">
-                {/*TODO: create a PointsPreview component*/}
+                {Array.isArray(tournament.points) &&
+                  tournament?.points?.map((point, index) => (
+                    <PointsPreview point={point} key={index} />
+                  ))}
               </div>
             </ScrollArea>
           </CardContent>

@@ -1,7 +1,6 @@
 import {
   Card,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -13,21 +12,16 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 type ChartPreviewProps = {
-  height?: string;
   tournament: tournamentBody;
   link: string;
 };
 
-export default function ChartPreview({
-  height,
-  tournament,
-  link,
-}: ChartPreviewProps) {
+export default function ChartPreview({ tournament, link }: ChartPreviewProps) {
   const router = useRouter();
 
   return (
     <Button
-      className={`w-full h-[${height ?? "320"}px] flex`}
+      className={`w-full h-[330px] flex hover:scale-[102%] transition ease-in-out delay-50`}
       variant="ghost"
       onClick={() => {
         router.push(link + tournament.id);
@@ -50,7 +44,7 @@ export default function ChartPreview({
           </div>
           <span className="flex">Created by : {tournament.createdBy}</span>
         </CardHeader>
-        <div className="flex p-4 w-1/2">
+        <div className="flex h-full w-1/2 p-4">
           <PieChartComponent tournament={tournament} />
         </div>
       </Card>
