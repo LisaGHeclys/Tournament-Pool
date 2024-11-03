@@ -21,7 +21,7 @@ export default function ChartPreview({ tournament, link }: ChartPreviewProps) {
 
   return (
     <Button
-      className="w-full h-[460px] sm:h-[330px] flex hover:scale-[102%] transition ease-in-out delay-50"
+      className="w-full h-[460px] p-1 px-2 md:p-2 md:px-4 sm:h-[330px] flex hover:scale-[102%] transition ease-in-out delay-50"
       variant="ghost"
       onClick={() => {
         router.push(link + tournament.id);

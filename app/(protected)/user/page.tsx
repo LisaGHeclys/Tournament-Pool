@@ -38,8 +38,10 @@ import ChartPreview from "@/components/ui/chart-preview";
 import { useFetch } from "@/app/api/_helpers/useFetch";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useWindowSize } from "@/app/api/_helpers/useWindowSize";
 
 export default function User() {
+  const size = useWindowSize();
   const { executeFetch, isLoading, isError } = useFetch();
   const { data: session } = useSession();
   const [open, setOpen] = React.useState(false);
@@ -186,15 +188,15 @@ export default function User() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen md:max-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-        <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
-          <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-            <Skeleton className="h-12 w-[450px]" />
+      <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+        <header className="md:p-8 w-full h-full md:h-fit flex flex-row items-center justify-between">
+          <h1 className="scroll-m-20 tracking-tight">
+            <Skeleton className="h-8 sm:h-12 w-[180px] sm:w-[450px]" />
           </h1>
-          <Skeleton className="h-8 w-8 rounded-full" />
+          <Skeleton className="h-6 w-6 sm:h-8 sm:w-8 rounded-full" />
         </header>
         <main className="w-full h-full flex gap-8 items-center">
-          <Skeleton className="h-full w-full" />
+          <Skeleton className="h-[600px] md:h-full w-full flex" />
         </main>
         <Footer />
       </div>
@@ -203,14 +205,14 @@ export default function User() {
 
   return (
     <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+      <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
+        <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl">
           Welcome back {session?.user?.name} !
         </h1>
         <UserNav />
       </header>
-      <main className="w-full h-full flex gap-8 items-center">
-        <Card className="flex flex-col p-2 px-16 w-full h-full">
+      <main className="w-full h-full flex gap-2 md:gap-6 items-center">
+        <Card className="flex flex-col p-2 md:px-16 w-full h-full">
           <CardHeader>
             <Breadcrumb>
               <BreadcrumbList>
@@ -228,13 +230,13 @@ export default function User() {
               You can create tournaments here and find your previous ones.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col h-full gap-8">
-            <div className="lg:px-32 w-full flex flex-row gap-8">
+          <CardContent className="flex flex-col h-full p-2 md:p-6 gap-4 md:gap-8">
+            <div className="lg:px-32 w-full flex flex-col-reverse md:flex-row gap-2 md:gap-8">
               <div className="relative w-full">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder="Search a pool..."
+                  placeholder="Search for a pool..."
                   className="w-full rounded-lg bg-background pl-8"
                 />
               </div>
@@ -244,7 +246,7 @@ export default function User() {
                     <Plus />
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="flex flex-col sm:max-w-[425px]">
+                <DialogContent className="flex flex-col rounded-md max-w-[280px] sm:max-w-[425px]">
                   <DialogHeader>
                     <DialogTitle>Add a tournament</DialogTitle>
                     <DialogDescription>
@@ -319,8 +321,8 @@ export default function User() {
               </Dialog>
             </div>
             <div className="flex w-full justify-center">
-              <ScrollArea className="w-2/3 h-[580px] px-2">
-                <div className="flex flex-col gap-4 p-2">
+              <ScrollArea className="w-full lg:w-2/3 h-[580px] md:px-2">
+                <div className="flex flex-col gap-2 md:gap-4 md:p-2">
                   {tournaments &&
                     tournaments.map((tournament, index) => (
                       <ChartPreview
