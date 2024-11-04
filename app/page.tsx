@@ -159,7 +159,7 @@ export default function Home() {
             ))}
           </div>
         ) : (
-          <h1 className="flex items-center justify-center text-sm md:text-xl font-extrabold lg:text-2xl text-muted-foreground ">
+          <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
             No tournaments yet !
           </h1>
         )}

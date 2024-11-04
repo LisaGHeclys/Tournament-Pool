@@ -319,18 +319,24 @@ export default function User() {
               </Dialog>
             </div>
             <div className="flex w-full justify-center">
-              <ScrollArea className="w-full lg:w-2/3 h-[560px] md:px-2">
-                <div className="flex flex-col gap-2 md:gap-4 md:p-2">
-                  {tournaments &&
-                    tournaments.map((tournament, index) => (
-                      <ChartPreview
-                        key={index}
-                        tournament={tournament}
-                        link={"/user/tournament/"}
-                      />
-                    ))}
-                </div>
-              </ScrollArea>
+              {tournaments ? (
+                <ScrollArea className="w-full lg:w-2/3 h-[560px] md:px-2">
+                  <div className="flex flex-col gap-2 md:gap-4 md:p-2">
+                    {tournaments &&
+                      tournaments.map((tournament, index) => (
+                        <ChartPreview
+                          key={index}
+                          tournament={tournament}
+                          link={"/user/tournament/"}
+                        />
+                      ))}
+                  </div>
+                </ScrollArea>
+              ) : (
+                <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
+                  You have no tournaments yet !
+                </h1>
+              )}
             </div>
           </CardContent>
         </Card>
