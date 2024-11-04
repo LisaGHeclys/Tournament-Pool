@@ -371,12 +371,18 @@ export default function Tournament() {
               </Dialog>
             </div>
             <ScrollArea className="w-full h-[380px] md:h-[550px] rounded-md p-0 md:px-2">
-              <div className="flex flex-col gap-4 p-2">
-                {Array.isArray(tournament.points) &&
-                  tournament?.points?.map((point, index) => (
-                    <PointsPreview point={point} key={index} />
-                  ))}
-              </div>
+              {Array.isArray(tournament.points) ? (
+                <div className="flex flex-col gap-4 p-2">
+                  {Array.isArray(tournament.points) &&
+                    tournament?.points?.map((point, index) => (
+                      <PointsPreview point={point} key={index} />
+                    ))}
+                </div>
+              ) : (
+                <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
+                  This tournament has no points set yet !
+                </h1>
+              )}
             </ScrollArea>
           </CardContent>
         </Card>
