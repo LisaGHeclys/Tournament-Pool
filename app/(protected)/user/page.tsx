@@ -41,7 +41,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useWindowSize } from "@/app/api/_helpers/useWindowSize";
 
 export default function User() {
-  const size = useWindowSize();
   const { executeFetch, isLoading, isError } = useFetch();
   const { data: session } = useSession();
   const [open, setOpen] = React.useState(false);
@@ -213,7 +212,7 @@ export default function User() {
       </header>
       <main className="w-full h-full flex gap-2 md:gap-6 items-center">
         <Card className="flex flex-col p-2 md:px-16 w-full h-full">
-          <CardHeader>
+          <CardHeader className="p-0 md:p-6">
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -230,7 +229,7 @@ export default function User() {
               You can create tournaments here and find your previous ones.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col h-full p-2 md:p-6 gap-4 md:gap-8">
+          <CardContent className="flex flex-col h-full p-0 md:p-6 gap-4 md:gap-8">
             <div className="lg:px-32 w-full flex flex-col-reverse md:flex-row gap-2 md:gap-8">
               <div className="relative w-full">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
