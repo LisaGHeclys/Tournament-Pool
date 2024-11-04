@@ -210,13 +210,13 @@ export default function Tournament() {
 
   if (isLoading || tournament.name == "") {
     return (
-      <div className="min-h-screen sm:p-14 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-        <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
+      <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+        <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
           <Skeleton className="h-12 w-full" />
         </header>
-        <main className="w-full h-full flex gap-8 items-center">
-          <Skeleton className="h-full w-2/3" />
-          <Skeleton className="h-full w-1/3" />
+        <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-between">
+          <Skeleton className="flex flex-col h-[400px] md:h-[440px] p-2r md:px-16 w-full lg:w-2/3 lg:h-full" />
+          <Skeleton className="py-2 px-4 lg:py-8 lg:px-16 w-full lg:w-1/3 lg:h-full flex flex-col" />
         </main>
         <Footer />
       </div>
