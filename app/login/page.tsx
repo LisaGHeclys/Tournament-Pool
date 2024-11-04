@@ -12,14 +12,28 @@ import { Github } from "lucide-react";
 import React from "react";
 import { signIn, useSession } from "next-auth/react";
 import Footer from "@/components/ui/footer";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Home() {
   const router = useRouter();
+  const { toast } = useToast();
   const { status } = useSession();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signIn("github", { redirectTo: "/user" });
+    try {
+      await signIn("github", { redirectTo: "/user" });
+      toast({
+        title: "Welcome Back!",
+        description: "You’ve successfully logged in.",
+      });
+    } catch (e) {
+      toast({
+        title: "Login Failed :" + e,
+        description: "An error occurred during sign-in. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   if (status === "authenticated") redirect("/user");

@@ -17,7 +17,7 @@ import {
 import { UserNav } from "@/components/ui/user-nav";
 import React, { useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useFetch } from "@/hooks/useFetch";
+import { useFetch } from "@/hooks/use-fetch";
 import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
 import ChartPreview from "@/components/ui/chart-preview";
 
