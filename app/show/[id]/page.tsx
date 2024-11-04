@@ -112,7 +112,7 @@ export default function ShowTournament() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen gap-2 sm:p-16 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+      <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
         <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
           <Skeleton className="h-12 w-full" />
         </header>
@@ -126,10 +126,10 @@ export default function ShowTournament() {
   }
 
   return (
-    <div className="min-h-screen gap-2 sm:p-16 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+    <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
       <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
         <Button
-          className="rounded-full"
+          className="rounded-full hover:scale-[102%] transition ease-in-out delay-250"
           size="icon"
           onClick={() => {
             router.push("/");
@@ -188,7 +188,7 @@ export default function ShowTournament() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex w-full h-full p-2 md:p-6">
-            <ScrollArea className="w-full h-[460px] md:h-[630px] rounded-md p-0 md:px-2">
+            <ScrollArea className="w-full h-[460px] md:h-[600px] rounded-md p-0 md:px-2">
               <div className="flex flex-col gap-2 p-1 md:gap-4 md:p-2">
                 {Array.isArray(tournament.points) &&
                   tournament?.points?.map((point, index) => (

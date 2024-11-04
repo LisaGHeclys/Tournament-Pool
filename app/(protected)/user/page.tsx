@@ -38,7 +38,6 @@ import ChartPreview from "@/components/ui/chart-preview";
 import { useFetch } from "@/app/api/_helpers/useFetch";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useWindowSize } from "@/app/api/_helpers/useWindowSize";
 
 export default function User() {
   const { executeFetch, isLoading, isError } = useFetch();
@@ -187,7 +186,7 @@ export default function User() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+      <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
         <header className="md:p-8 w-full h-full md:h-fit flex flex-row items-center justify-between">
           <h1 className="scroll-m-20 tracking-tight">
             <Skeleton className="h-8 sm:h-12 w-[180px] sm:w-[450px]" />
@@ -212,7 +211,7 @@ export default function User() {
       </header>
       <main className="w-full h-full flex gap-2 md:gap-6 items-center">
         <Card className="flex flex-col p-2 md:px-16 w-full h-full">
-          <CardHeader className="p-0 md:p-6">
+          <CardHeader className="p-2 pb-4 md:p-6">
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -229,7 +228,7 @@ export default function User() {
               You can create tournaments here and find your previous ones.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col h-full p-0 md:p-6 gap-4 md:gap-8">
+          <CardContent className="flex flex-col h-full p-2 md:p-6 gap-4 md:gap-8">
             <div className="lg:px-32 w-full flex flex-col-reverse md:flex-row gap-2 md:gap-8">
               <div className="relative w-full">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -320,7 +319,7 @@ export default function User() {
               </Dialog>
             </div>
             <div className="flex w-full justify-center">
-              <ScrollArea className="w-full lg:w-2/3 h-[580px] md:px-2">
+              <ScrollArea className="w-full lg:w-2/3 h-[560px] md:px-2">
                 <div className="flex flex-col gap-2 md:gap-4 md:p-2">
                   {tournaments &&
                     tournaments.map((tournament, index) => (
