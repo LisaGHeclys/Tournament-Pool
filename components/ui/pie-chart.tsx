@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Pie, PieChart } from "recharts";
-import { Card, CardContent } from "@/components/ui/card";
+import { Pie, PieChart, ResponsiveContainer } from "recharts";
+import { Card } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -10,14 +10,14 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { tournamentBody } from "@/app/api/_helpers/types/types";
+import { useWindowSize } from "@/app/api/_helpers/useWindowSize";
 
 type PieChartProps = {
   tournament: tournamentBody;
 };
 
 export default function PieChartComponent({ tournament }: PieChartProps) {
-  console.log(tournament.points);
-
+  const size = useWindowSize();
   const chartData = tournament.teams.map((team) => {
     const totalPoints = Array.isArray(tournament.points)
       ? tournament.points
@@ -30,7 +30,6 @@ export default function PieChartComponent({ tournament }: PieChartProps) {
       fill: team.color,
     };
   });
-  console.log(chartData);
 
   const chartConfig = tournament.teams.reduce((config, team) => {
     config[team.name.toLowerCase().replace(/\s+/g, "")] = {
@@ -41,13 +40,13 @@ export default function PieChartComponent({ tournament }: PieChartProps) {
   }, {} as ChartConfig);
 
   return (
-    <Card className="w-full justify-center h-full flex flex-col p-4">
-      <CardContent className="h-full w-full flex-auto justify-center pb-0">
+    <Card className="w-full justify-center h-full flex flex-col p-1 sm:p-4">
+      <ResponsiveContainer className="w-full h-full flex">
         <ChartContainer
           config={chartConfig}
-          className="h-full w-full max-w-lg flex justify-center aspect-square pb-0 [&_.recharts-pie-label-text]:fill-foreground"
+          className="h-[96%] w-[96%] max-w-xs md:max-w-lg flex justify-center aspect-square pb-0 [&_.recharts-pie-label-text]:fill-foreground"
         >
-          <PieChart>
+          <PieChart className="h-[96%] w-[96%] p-4 sm:p-0">
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
@@ -57,11 +56,11 @@ export default function PieChartComponent({ tournament }: PieChartProps) {
               dataKey="teamPoints"
               label
               nameKey="teamName"
-              innerRadius={80}
+              innerRadius={size.width <= 425 ? 55 : 70}
             />
           </PieChart>
         </ChartContainer>
-      </CardContent>
+      </ResponsiveContainer>
     </Card>
   );
 }

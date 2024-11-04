@@ -56,8 +56,12 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "next-auth/react";
 import PointsPreview from "@/components/ui/points-preview";
+import { useWindowSize } from "@/app/api/_helpers/useWindowSize";
+import Autoplay from "embla-carousel-autoplay";
+import PieChartComponent from "@/components/ui/pie-chart";
 
 export default function Tournament() {
+  const size = useWindowSize();
   const router = useRouter();
   const { data: session } = useSession();
   const id = useParams().id;
@@ -206,13 +210,13 @@ export default function Tournament() {
 
   if (isLoading || tournament.name == "") {
     return (
-      <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-        <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
+      <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+        <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
           <Skeleton className="h-12 w-full" />
         </header>
-        <main className="w-full h-full flex gap-8 items-center">
-          <Skeleton className="h-full w-2/3" />
-          <Skeleton className="h-full w-1/3" />
+        <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-between">
+          <Skeleton className="flex flex-col h-[400px] md:h-[440px] p-2r md:px-16 w-full lg:w-2/3 lg:h-full" />
+          <Skeleton className="py-2 px-4 lg:py-8 lg:px-16 w-full lg:w-1/3 lg:h-full flex flex-col" />
         </main>
         <Footer />
       </div>
@@ -220,8 +224,8 @@ export default function Tournament() {
   }
 
   return (
-    <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
+    <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+      <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
         <Button
           className="rounded-full hover:scale-[102%] transition ease-in-out delay-250"
           size="icon"
@@ -229,15 +233,15 @@ export default function Tournament() {
             router.push("/user");
           }}
         >
-          <ChevronLeft />
+          <ChevronLeft size={size.width <= 425 ? 18 : 32} />
         </Button>
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Tournament : {tournament.name}
+        <h1 className="text-2xl md:text-4xl scroll-m-20 font-extrabold tracking-tight lg:text-5xl">
+          {tournament.name}
         </h1>
         <UserNav />
       </header>
-      <main className="w-full h-full flex gap-8 items-center">
-        <Card className="flex flex-col p-2 px-16 w-2/3 h-full">
+      <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-between">
+        <Card className="flex flex-col h-[400px] md:h-[440px] p-2r md:px-16 w-full lg:w-2/3 lg:h-full">
           <CardHeader>
             <Breadcrumb>
               <BreadcrumbList>
@@ -259,37 +263,34 @@ export default function Tournament() {
               Here you can see the different charts for this tournaments.
             </CardDescription>
           </CardHeader>
-          <CardContent className="w-full h-full items-center justify-center flex">
-            <Carousel className="w-full max-w-lg">
+          <div className="w-full h-full flex">
+            <Carousel
+              className="w-full h-full flex justify-center items-center"
+              opts={{ loop: true }}
+              plugins={[Autoplay({ delay: 10000 })]}
+            >
               <CarouselContent>
-                {Array.from({ length: 2 }).map((_, index) => (
-                  <CarouselItem key={index}>
-                    <div className="p-1">
-                      <Card>
-                        <CardContent className="flex aspect-square items-center justify-center p-6">
-                          <span className="text-4xl font-semibold">
-                            {index + 1}
-                          </span>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                ))}
+                <CarouselItem className="w-[238px] h-[240px]">
+                  <PieChartComponent tournament={tournament} />
+                </CarouselItem>
+                <CarouselItem className="bg-red-900 h-full">
+                  <div className="flex justify-center items-center h-full w-full">
+                    <span>2</span>
+                  </div>
+                </CarouselItem>
               </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
             </Carousel>
-          </CardContent>
+          </div>
         </Card>
-        <Card className="py-8 px-16 w-1/3 h-full flex flex-col">
+        <Card className="py-2 px-4 lg:py-8 lg:px-16 w-full lg:w-1/3 lg:h-full flex flex-col">
           <CardHeader>
             <CardTitle>Add more points ?</CardTitle>
             <CardDescription>
               You can add points depending on the team.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col h-full gap-8">
-            <div className="h-fit w-full flex flex-row gap-8">
+          <CardContent className="flex flex-col w-full gap-2 md:gap-8 h-full p-2 md:p-6">
+            <div className="h-fit w-full flex flex-col-reverse md:flex-row gap-2 md:gap-8">
               <div className="relative w-full">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -369,7 +370,7 @@ export default function Tournament() {
                 </DialogContent>
               </Dialog>
             </div>
-            <ScrollArea className="w-full h-[550px] px-2">
+            <ScrollArea className="w-full h-[380px] md:h-[550px] rounded-md p-0 md:px-2">
               <div className="flex flex-col gap-4 p-2">
                 {Array.isArray(tournament.points) &&
                   tournament?.points?.map((point, index) => (

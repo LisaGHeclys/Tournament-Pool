@@ -31,8 +31,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import PieChartComponent from "@/components/ui/pie-chart";
 import Autoplay from "embla-carousel-autoplay";
 import PointsPreview from "@/components/ui/points-preview";
+import { useWindowSize } from "@/app/api/_helpers/useWindowSize";
 
 export default function ShowTournament() {
+  const size = useWindowSize();
   const router = useRouter();
   const id = useParams().id;
   const { executeFetch, isLoading, isError } = useFetch();
@@ -110,13 +112,13 @@ export default function ShowTournament() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-        <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
+      <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+        <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
           <Skeleton className="h-12 w-full" />
         </header>
-        <main className="w-full h-full flex gap-8 items-center">
-          <Skeleton className="h-full w-2/3" />
-          <Skeleton className="h-full w-1/3" />
+        <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-between">
+          <Skeleton className="flex flex-col h-[400px] md:h-[440px] p-2r md:px-16 w-full lg:w-2/3 lg:h-full" />
+          <Skeleton className="py-2 px-4 lg:py-8 lg:px-16 w-full lg:w-1/3 lg:h-full flex flex-col" />
         </main>
         <Footer />
       </div>
@@ -124,24 +126,24 @@ export default function ShowTournament() {
   }
 
   return (
-    <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
+    <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+      <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
         <Button
-          className="rounded-full"
+          className="rounded-full hover:scale-[102%] transition ease-in-out delay-250"
           size="icon"
           onClick={() => {
             router.push("/");
           }}
         >
-          <ChevronLeft />
+          <ChevronLeft size={size.width <= 425 ? 18 : 32} />
         </Button>
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Tournament : {tournament.name}
+        <h1 className="text-2xl md:text-4xl scroll-m-20 font-extrabold tracking-tight lg:text-5xl">
+          {tournament.name}
         </h1>
         <div />
       </header>
-      <main className="w-full h-full flex gap-8 items-center">
-        <Card className="flex flex-col p-2 px-16 w-2/3 h-full">
+      <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-between">
+        <Card className="flex flex-col h-[400px] md:h-[440px] p-2r md:px-16 w-full lg:w-2/3 lg:h-full">
           <CardHeader>
             <Breadcrumb>
               <BreadcrumbList>
@@ -150,9 +152,7 @@ export default function ShowTournament() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>
-                    Tournament : {tournament.name}
-                  </BreadcrumbPage>
+                  <BreadcrumbPage>{tournament.name}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -161,19 +161,17 @@ export default function ShowTournament() {
               Here you can see the different charts for this tournaments.
             </CardDescription>
           </CardHeader>
-          <div className="w-full h-full flex flex-col">
+          <div className="w-full h-full flex">
             <Carousel
-              className="h-full flex justify-center items-center"
+              className="w-full h-full flex justify-center items-center"
               opts={{ loop: true }}
               plugins={[Autoplay({ delay: 10000 })]}
             >
               <CarouselContent>
-                <CarouselItem className="flex justify-center items-center">
-                  <div className="flex justify-center items-center h-full w-full">
-                    <PieChartComponent tournament={tournament} />
-                  </div>
+                <CarouselItem className="w-[238px] h-[240px]">
+                  <PieChartComponent tournament={tournament} />
                 </CarouselItem>
-                <CarouselItem>
+                <CarouselItem className="bg-red-900 h-full">
                   <div className="flex justify-center items-center h-full w-full">
                     <span>2</span>
                   </div>
@@ -182,16 +180,16 @@ export default function ShowTournament() {
             </Carousel>
           </div>
         </Card>
-        <Card className="py-8 px-16 w-1/3 h-full flex flex-col">
+        <Card className="py-2 px-4 lg:py-8 lg:px-16 w-full lg:w-1/3 lg:h-full flex flex-col">
           <CardHeader>
             <CardTitle>Team&#39;s points ?</CardTitle>
             <CardDescription>
               Here you can see the points from each teams.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col h-full gap-8">
-            <ScrollArea className="w-full h-[630px] rounded-md px-2">
-              <div className="flex flex-col gap-4 p-2">
+          <CardContent className="flex w-full h-full p-2 md:p-6">
+            <ScrollArea className="w-full h-[460px] md:h-[600px] rounded-md p-0 md:px-2">
+              <div className="flex flex-col gap-2 p-1 md:gap-4 md:p-2">
                 {Array.isArray(tournament.points) &&
                   tournament?.points?.map((point, index) => (
                     <PointsPreview point={point} key={index} />
