@@ -10,7 +10,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { tournamentBody } from "@/app/api/_helpers/types/types";
-import { useWindowSize } from "@/app/api/_helpers/useWindowSize";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 type PieChartProps = {
   tournament: tournamentBody;

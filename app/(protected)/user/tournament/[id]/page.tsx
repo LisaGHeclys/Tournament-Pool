@@ -45,7 +45,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useFetch } from "@/app/api/_helpers/useFetch";
+import { useFetch } from "@/hooks/useFetch";
 import React, { useEffect, useState } from "react";
 import {
   Method,
@@ -56,7 +56,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "next-auth/react";
 import PointsPreview from "@/components/ui/points-preview";
-import { useWindowSize } from "@/app/api/_helpers/useWindowSize";
+import { useWindowSize } from "@/hooks/useWindowSize";
 import Autoplay from "embla-carousel-autoplay";
 import PieChartComponent from "@/components/ui/pie-chart";
 
