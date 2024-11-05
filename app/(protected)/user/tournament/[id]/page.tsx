@@ -14,8 +14,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useParams, useRouter } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -59,6 +57,7 @@ import PointsPreview from "@/components/ui/points-preview";
 import { useWindowSize } from "@/hooks/use-window-size";
 import Autoplay from "embla-carousel-autoplay";
 import PieChartComponent from "@/components/ui/pie-chart";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Tournament() {
   const size = useWindowSize();
@@ -66,6 +65,7 @@ export default function Tournament() {
   const { data: session } = useSession();
   const id = useParams().id;
   const [open, setOpen] = React.useState(false);
+  const { toast } = useToast();
   const { executeFetch, isLoading, isError } = useFetch();
   const [point, setPoint] = useState<pointsBody>({
     reason: "",
@@ -143,7 +143,7 @@ export default function Tournament() {
     }
   }
 
-  async function handleUpdateTournament() {
+  async function handleAddPointsToTournament() {
     try {
       const updatedTournament = {
         ...tournament,
@@ -174,8 +174,25 @@ export default function Tournament() {
         });
         return;
       }
+      if (!isLoading && isError) {
+        toast({
+          title: "Couldn't add points to the tournaments",
+          description:
+            "An error occurred during the update of the points of the tournaments.",
+          variant: "destructive",
+        });
+      }
+      toast({
+        title: "Points added successfully !",
+        description: "You’ve successfully add points to the tournament.",
+      });
       handleGetTournamentById();
     } catch (error) {
+      toast({
+        title: "Unexpected error: " + error,
+        description: "Unexpected error during the update of a tournament.",
+        variant: "destructive",
+      });
       console.error(
         "Unexpected error during the update of a tournament:",
         error,
@@ -186,7 +203,7 @@ export default function Tournament() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    handleUpdateTournament();
+    handleAddPointsToTournament();
     setPoint({
       reason: "",
       points: 1,

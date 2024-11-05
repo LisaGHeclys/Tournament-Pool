@@ -125,15 +125,31 @@ export default function User() {
       });
 
       if (res === null) {
+        toast({
+          title: "Couldn't create tournament",
+          description:
+            "An error occurred during creation of tournament. Please try again.",
+          variant: "destructive",
+        });
         console.error("Couldn't create tournament", res);
         return;
       }
 
       const resToJSON = await res.json();
 
-      if (!isLoading && !isError)
+      if (!isLoading && !isError) {
         router.push("/user/tournament/" + resToJSON.id);
+        toast({
+          title: "Creation successful !",
+          description: "You’ve successfully created a tournament.",
+        });
+      }
     } catch (error) {
+      toast({
+        title: "Unexpected error: " + error,
+        description: "An error occurred during creation of tournament.",
+        variant: "destructive",
+      });
       console.error("Unexpected error during creation of tournament:", error);
     }
   };
