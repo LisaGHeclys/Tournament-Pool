@@ -7,7 +7,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/components/ui/charts/chart";
 import { useWindowSize } from "@/hooks/use-window-size";
 import {
   ChartProps,

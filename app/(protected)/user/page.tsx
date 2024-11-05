@@ -34,7 +34,7 @@ import React, { useEffect } from "react";
 import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import ChartPreview from "@/components/ui/chart-preview";
+import ChartPreview from "@/components/ui/charts/chart-preview";
 import { useFetch } from "@/hooks/use-fetch";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";

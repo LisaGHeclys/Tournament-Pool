@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ChevronLeft, Plus, Search } from "lucide-react";
+import { ChevronLeft, Plus, Search, SquarePen } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -61,6 +61,12 @@ import { useToast } from "@/hooks/use-toast";
 import { LineChartMultipleComponent } from "@/components/ui/charts/line-chart-multiple";
 import { BarChartComponent } from "@/components/ui/charts/bar-chart";
 import { RadialChartComponent } from "@/components/ui/charts/radial-chart";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Tournament() {
   const size = useWindowSize();
@@ -255,9 +261,22 @@ export default function Tournament() {
         >
           <ChevronLeft size={size.width <= 425 ? 18 : 32} />
         </Button>
-        <h1 className="text-2xl md:text-4xl scroll-m-20 font-extrabold tracking-tight lg:text-5xl">
-          {tournament.name}
-        </h1>
+        <div className="flex flex-row gap-2 items-center">
+          <h1 className="text-2xl md:text-4xl scroll-m-20 font-extrabold tracking-tight lg:text-5xl">
+            {tournament.name}
+          </h1>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <SquarePen className="h-4 w-4 md:h-6 md:w-6" />
+                  <span className="sr-only">Edit tournament's information</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Edit tournament's information</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
         <UserNav />
       </header>
       <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-between">
