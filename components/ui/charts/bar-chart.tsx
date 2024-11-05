@@ -19,10 +19,10 @@ export function BarChartComponent({ tournament }: ChartProps) {
 
   return (
     <Card className="w-full justify-center h-full flex">
-      <CardContent className="h-full w-full flex justify-center">
+      <CardContent className="md:w-full md:h-full flex justify-center">
         <ChartContainer
           config={chartConfig}
-          className="h-[96%] w-[96%] max-w-xs md:max-w-sm flex items-center justify-center aspect-square pb-0"
+          className="w-full max-w-xs md:max-w-xl flex items-center justify-center aspect-square pb-0"
         >
           <BarChart
             accessibilityLayer
@@ -38,7 +38,6 @@ export function BarChartComponent({ tournament }: ChartProps) {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
             />
             <ChartTooltip
               cursor={false}

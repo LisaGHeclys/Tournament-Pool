@@ -5,8 +5,6 @@ import { Pie, PieChart, ResponsiveContainer } from "recharts";
 import { Card } from "@/components/ui/card";
 import {
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";

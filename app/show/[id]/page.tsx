@@ -33,6 +33,7 @@ import Autoplay from "embla-carousel-autoplay";
 import PointsPreview from "@/components/ui/points-preview";
 import { useWindowSize } from "@/hooks/use-window-size";
 import { BarChartComponent } from "@/components/ui/charts/bar-chart";
+import { RadialChartComponent } from "@/components/ui/charts/radial-chart";
 
 export default function ShowTournament() {
   const size = useWindowSize();
@@ -144,7 +145,7 @@ export default function ShowTournament() {
         <div />
       </header>
       <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-between">
-        <Card className="flex flex-col h-[400px] md:h-[440px] p-2 md:px-16 w-full lg:w-2/3 lg:h-full">
+        <Card className="flex flex-col h-[440px] md:h-[440px] p-2 md:px-16 w-full lg:w-2/3 lg:h-full">
           <CardHeader>
             <Breadcrumb>
               <BreadcrumbList>
@@ -169,11 +170,14 @@ export default function ShowTournament() {
               plugins={[Autoplay({ delay: 10000 })]}
             >
               <CarouselContent className="flex md:w-full md:h-full gap-4">
-                <CarouselItem className="w-[238px] h-[240px] md:h-full md:w-full">
+                <CarouselItem className="w-[160px] h-[240px] md:h-full md:w-full">
                   <PieChartComponent tournament={tournament} />
                 </CarouselItem>
-                <CarouselItem className="w-[40px] h-[240px] md:h-full md:w-full">
+                <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
                   <BarChartComponent tournament={tournament} />
+                </CarouselItem>
+                <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
+                  <RadialChartComponent tournament={tournament} />
                 </CarouselItem>
               </CarouselContent>
             </Carousel>
