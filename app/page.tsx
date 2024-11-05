@@ -17,7 +17,7 @@ import {
 import { UserNav } from "@/components/ui/user-nav";
 import React, { useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useFetch } from "@/app/api/_helpers/useFetch";
+import { useFetch } from "@/hooks/use-fetch";
 import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
 import ChartPreview from "@/components/ui/chart-preview";
 
@@ -148,16 +148,21 @@ export default function Home() {
             className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
           />
         </div>
-        <div className="grid md:grid-rows-2 grid-cols-1 md:gap-4 xl:grid-cols-2 w-full h-full">
-          {tournaments &&
-            tournaments.map((tournament, index) => (
+        {tournaments ? (
+          <div className="grid md:grid-rows-2 grid-cols-1 md:gap-4 xl:grid-cols-2 w-full h-full">
+            {tournaments.map((tournament, index) => (
               <ChartPreview
                 key={index}
                 tournament={tournament}
                 link={"/show/"}
               />
             ))}
-        </div>
+          </div>
+        ) : (
+          <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
+            No tournaments yet !
+          </h1>
+        )}
         <Pagination>
           <PaginationContent>
             <PaginationItem>

@@ -35,12 +35,14 @@ import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ChartPreview from "@/components/ui/chart-preview";
-import { useFetch } from "@/app/api/_helpers/useFetch";
+import { useFetch } from "@/hooks/use-fetch";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useToast } from "@/hooks/use-toast";
 
 export default function User() {
   const { executeFetch, isLoading, isError } = useFetch();
+  const { toast } = useToast();
   const { data: session } = useSession();
   const [open, setOpen] = React.useState(false);
   const [tournament, setTournament] = React.useState<tournamentBody>({
@@ -123,15 +125,31 @@ export default function User() {
       });
 
       if (res === null) {
+        toast({
+          title: "Couldn't create tournament",
+          description:
+            "An error occurred during creation of tournament. Please try again.",
+          variant: "destructive",
+        });
         console.error("Couldn't create tournament", res);
         return;
       }
 
       const resToJSON = await res.json();
 
-      if (!isLoading && !isError)
+      if (!isLoading && !isError) {
         router.push("/user/tournament/" + resToJSON.id);
+        toast({
+          title: "Creation successful !",
+          description: "You’ve successfully created a tournament.",
+        });
+      }
     } catch (error) {
+      toast({
+        title: "Unexpected error: " + error,
+        description: "An error occurred during creation of tournament.",
+        variant: "destructive",
+      });
       console.error("Unexpected error during creation of tournament:", error);
     }
   };
@@ -320,16 +338,21 @@ export default function User() {
             </div>
             <div className="flex w-full justify-center">
               <ScrollArea className="w-full lg:w-2/3 h-[560px] md:px-2">
-                <div className="flex flex-col gap-2 md:gap-4 md:p-2">
-                  {tournaments &&
-                    tournaments.map((tournament, index) => (
+                {tournaments ? (
+                  <div className="flex flex-col gap-2 md:gap-4 md:p-2">
+                    {tournaments.map((tournament, index) => (
                       <ChartPreview
                         key={index}
                         tournament={tournament}
                         link={"/user/tournament/"}
                       />
                     ))}
-                </div>
+                  </div>
+                ) : (
+                  <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
+                    You have no tournaments yet !
+                  </h1>
+                )}
               </ScrollArea>
             </div>
           </CardContent>

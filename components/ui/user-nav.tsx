@@ -13,15 +13,30 @@ import React from "react";
 import { signOut, useSession } from "next-auth/react";
 import { LogOut, User } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 export function UserNav() {
+  const { toast } = useToast();
   const router = useRouter();
   const { data: session } = useSession();
 
-  const handleSignOut = async (e: React.FormEvent) => {
+  async function handleSignOut(e: React.FormEvent) {
     e.preventDefault();
-    await signOut({ redirectTo: "/" });
-  };
+
+    try {
+      await signOut({ redirectTo: "/" });
+      toast({
+        title: "See You Soon !",
+        description: "You’ve been logged out of your account.",
+      });
+    } catch (e) {
+      toast({
+        title: "Logout Failed :" + e,
+        description: "An error occurred during sign-out. Please try again.",
+        variant: "destructive",
+      });
+    }
+  }
 
   return (
     <DropdownMenu>

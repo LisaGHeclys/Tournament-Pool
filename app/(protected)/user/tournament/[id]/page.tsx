@@ -14,8 +14,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useParams, useRouter } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -45,7 +43,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useFetch } from "@/app/api/_helpers/useFetch";
+import { useFetch } from "@/hooks/use-fetch";
 import React, { useEffect, useState } from "react";
 import {
   Method,
@@ -56,9 +54,10 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "next-auth/react";
 import PointsPreview from "@/components/ui/points-preview";
-import { useWindowSize } from "@/app/api/_helpers/useWindowSize";
+import { useWindowSize } from "@/hooks/use-window-size";
 import Autoplay from "embla-carousel-autoplay";
 import PieChartComponent from "@/components/ui/pie-chart";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Tournament() {
   const size = useWindowSize();
@@ -66,6 +65,7 @@ export default function Tournament() {
   const { data: session } = useSession();
   const id = useParams().id;
   const [open, setOpen] = React.useState(false);
+  const { toast } = useToast();
   const { executeFetch, isLoading, isError } = useFetch();
   const [point, setPoint] = useState<pointsBody>({
     reason: "",
@@ -143,7 +143,7 @@ export default function Tournament() {
     }
   }
 
-  async function handleUpdateTournament() {
+  async function handleAddPointsToTournament() {
     try {
       const updatedTournament = {
         ...tournament,
@@ -174,8 +174,25 @@ export default function Tournament() {
         });
         return;
       }
+      if (!isLoading && isError) {
+        toast({
+          title: "Couldn't add points to the tournaments",
+          description:
+            "An error occurred during the update of the points of the tournaments.",
+          variant: "destructive",
+        });
+      }
+      toast({
+        title: "Points added successfully !",
+        description: "You’ve successfully add points to the tournament.",
+      });
       handleGetTournamentById();
     } catch (error) {
+      toast({
+        title: "Unexpected error: " + error,
+        description: "Unexpected error during the update of a tournament.",
+        variant: "destructive",
+      });
       console.error(
         "Unexpected error during the update of a tournament:",
         error,
@@ -186,7 +203,7 @@ export default function Tournament() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    handleUpdateTournament();
+    handleAddPointsToTournament();
     setPoint({
       reason: "",
       points: 1,
@@ -371,12 +388,18 @@ export default function Tournament() {
               </Dialog>
             </div>
             <ScrollArea className="w-full h-[380px] md:h-[550px] rounded-md p-0 md:px-2">
-              <div className="flex flex-col gap-4 p-2">
-                {Array.isArray(tournament.points) &&
-                  tournament?.points?.map((point, index) => (
-                    <PointsPreview point={point} key={index} />
-                  ))}
-              </div>
+              {Array.isArray(tournament.points) ? (
+                <div className="flex flex-col gap-4 p-2">
+                  {Array.isArray(tournament.points) &&
+                    tournament?.points?.map((point, index) => (
+                      <PointsPreview point={point} key={index} />
+                    ))}
+                </div>
+              ) : (
+                <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
+                  This tournament has no points set yet !
+                </h1>
+              )}
             </ScrollArea>
           </CardContent>
         </Card>

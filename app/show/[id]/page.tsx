@@ -26,12 +26,12 @@ import {
 } from "@/components/ui/breadcrumb";
 import React, { useEffect } from "react";
 import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
-import { useFetch } from "@/app/api/_helpers/useFetch";
+import { useFetch } from "@/hooks/use-fetch";
 import { Skeleton } from "@/components/ui/skeleton";
 import PieChartComponent from "@/components/ui/pie-chart";
 import Autoplay from "embla-carousel-autoplay";
 import PointsPreview from "@/components/ui/points-preview";
-import { useWindowSize } from "@/app/api/_helpers/useWindowSize";
+import { useWindowSize } from "@/hooks/use-window-size";
 
 export default function ShowTournament() {
   const size = useWindowSize();
@@ -189,12 +189,18 @@ export default function ShowTournament() {
           </CardHeader>
           <CardContent className="flex w-full h-full p-2 md:p-6">
             <ScrollArea className="w-full h-[460px] md:h-[600px] rounded-md p-0 md:px-2">
-              <div className="flex flex-col gap-2 p-1 md:gap-4 md:p-2">
-                {Array.isArray(tournament.points) &&
-                  tournament?.points?.map((point, index) => (
-                    <PointsPreview point={point} key={index} />
-                  ))}
-              </div>
+              {Array.isArray(tournament.points) ? (
+                <div className="flex flex-col gap-2 p-1 md:gap-4 md:p-2">
+                  {Array.isArray(tournament.points) &&
+                    tournament?.points?.map((point, index) => (
+                      <PointsPreview point={point} key={index} />
+                    ))}
+                </div>
+              ) : (
+                <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
+                  This tournament has no points set yet !
+                </h1>
+              )}
             </ScrollArea>
           </CardContent>
         </Card>
