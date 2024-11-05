@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/card";
 import React from "react";
 import { tournamentBody } from "@/app/api/_helpers/types/types";
-import PieChartComponent from "@/components/ui/pie-chart";
+import PieChartComponent from "@/components/ui/charts/pie-chart";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";

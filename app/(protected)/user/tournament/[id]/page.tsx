@@ -56,8 +56,10 @@ import { useSession } from "next-auth/react";
 import PointsPreview from "@/components/ui/points-preview";
 import { useWindowSize } from "@/hooks/use-window-size";
 import Autoplay from "embla-carousel-autoplay";
-import PieChartComponent from "@/components/ui/pie-chart";
+import PieChartComponent from "@/components/ui/charts/pie-chart";
 import { useToast } from "@/hooks/use-toast";
+import { LineChartMultipleComponent } from "@/components/ui/charts/line-chart-multiple";
+import { BarChartComponent } from "@/components/ui/charts/bar-chart";
 
 export default function Tournament() {
   const size = useWindowSize();
@@ -286,15 +288,16 @@ export default function Tournament() {
               opts={{ loop: true }}
               plugins={[Autoplay({ delay: 10000 })]}
             >
-              <CarouselContent>
-                <CarouselItem className="w-[238px] h-[240px]">
+              <CarouselContent className="flex md:w-full md:h-full md:gap-4">
+                <CarouselItem className="w-[238px] h-[240px] md:h-full md:w-full">
                   <PieChartComponent tournament={tournament} />
                 </CarouselItem>
-                <CarouselItem className="bg-red-900 h-full">
-                  <div className="flex justify-center items-center h-full w-full">
-                    <span>2</span>
-                  </div>
+                <CarouselItem className="w-[40px] h-[240px] md:h-full md:w-full">
+                  <BarChartComponent tournament={tournament} />
                 </CarouselItem>
+                {/*<CarouselItem className="w-[238px] h-[240px] md:h-full md:w-full">*/}
+                {/*  <LineChartMultipleComponent tournament={tournament} />*/}
+                {/*</CarouselItem>*/}
               </CarouselContent>
             </Carousel>
           </div>
@@ -366,7 +369,6 @@ export default function Tournament() {
                               defaultValue={1}
                               id="points"
                               type="number"
-                              min={1}
                               placeholder="How many points do you want to add ?"
                               onChange={handleOnChange}
                               required
