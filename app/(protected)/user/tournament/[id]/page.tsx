@@ -58,7 +58,6 @@ import { useWindowSize } from "@/hooks/use-window-size";
 import Autoplay from "embla-carousel-autoplay";
 import PieChartComponent from "@/components/ui/charts/pie-chart";
 import { useToast } from "@/hooks/use-toast";
-import { LineChartMultipleComponent } from "@/components/ui/charts/line-chart-multiple";
 import { BarChartComponent } from "@/components/ui/charts/bar-chart";
 import { RadialChartComponent } from "@/components/ui/charts/radial-chart";
 import {

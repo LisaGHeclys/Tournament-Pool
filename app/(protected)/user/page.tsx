@@ -69,26 +69,29 @@ export default function User() {
 
   const handleTeamNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const number = parseInt(e.target.value, 10);
-    setTeamNumber(number);
-    setTournament((prev) => {
-      let updatedTeams = [...prev.teams];
 
-      if (number > updatedTeams.length) {
-        updatedTeams.push(
-          ...Array.from({ length: number - updatedTeams.length }, () => ({
-            name: "",
-            color: "",
-          })),
-        );
-      } else {
-        updatedTeams = updatedTeams.slice(0, number);
-      }
+    if (number >= 2 && number <= 5) {
+      setTeamNumber(number);
+      setTournament((prev) => {
+        let updatedTeams = [...prev.teams];
 
-      return {
-        ...prev,
-        teams: updatedTeams,
-      };
-    });
+        if (number > updatedTeams.length) {
+          updatedTeams.push(
+            ...Array.from({ length: number - updatedTeams.length }, () => ({
+              name: "",
+              color: "",
+            })),
+          );
+        } else {
+          updatedTeams = updatedTeams.slice(0, number);
+        }
+
+        return {
+          ...prev,
+          teams: updatedTeams,
+        };
+      });
+    }
   };
 
   const handleTeamChange = (
