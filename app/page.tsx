@@ -17,7 +17,7 @@ import {
 import { UserNav } from "@/components/ui/user-nav";
 import React, { useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useFetch } from "@/app/api/_helpers/useFetch";
+import { useFetch } from "@/hooks/use-fetch";
 import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
 import ChartPreview from "@/components/ui/chart-preview";
 
@@ -114,16 +114,16 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-        <header className="p-8 w-full h-fit flex flex-wrap items-center sm:flex-row justify-between">
+      <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+        <header className="md:p-8 w-full h-full md:h-fit flex flex-row items-center justify-between">
           <div />
-          <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-            <Skeleton className="h-12 w-[450px]" />
+          <h1 className="scroll-m-20 tracking-tight">
+            <Skeleton className="h-8 sm:h-12 w-[180px] sm:w-[450px]" />
           </h1>
-          <Skeleton className="h-8 w-8 rounded-full" />
+          <Skeleton className="h-6 w-6 sm:h-8 sm:w-8 rounded-full" />
         </header>
         <main className="w-full h-full flex gap-8 items-center">
-          <Skeleton className="h-full w-full" />
+          <Skeleton className="h-[600px] md:h-full w-full flex" />
         </main>
         <Footer />
       </div>
@@ -131,15 +131,15 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+    <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
       <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
         <div />
-        <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
+        <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl">
           Welcome to Tournament Pool !
         </h1>
         {handleUserNav()}
       </header>
-      <main className="h-full w-full flex flex-col md:gap-6 row-start-2 items-center justify-between">
+      <main className="gap-2 h-full w-full flex flex-col md:gap-6 row-start-2 items-center justify-between">
         <div className="flex relative mt-4">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
@@ -148,21 +148,26 @@ export default function Home() {
             className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
           />
         </div>
-        <div className="grid md:grid-rows-2 grid-cols-1 md:gap-4 lg:grid-cols-2 w-full h-full">
-          {tournaments &&
-            tournaments.map((tournament, index) => (
+        {tournaments ? (
+          <div className="grid md:grid-rows-2 grid-cols-1 md:gap-4 xl:grid-cols-2 w-full h-full">
+            {tournaments.map((tournament, index) => (
               <ChartPreview
                 key={index}
                 tournament={tournament}
                 link={"/show/"}
               />
             ))}
-        </div>
+          </div>
+        ) : (
+          <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
+            No tournaments yet !
+          </h1>
+        )}
         <Pagination>
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
-                className={isActive === 1 ? "pointer-events-none" : ""}
+                className={`${isActive === 1 ? "pointer-events-none" : ""} text-xs md:text-sm`}
                 onClick={() => handlePageClick(isActive - 1)}
               />
             </PaginationItem>
@@ -170,6 +175,7 @@ export default function Home() {
               <PaginationItem key={pageNum}>
                 <PaginationLink
                   isActive={isActive === pageNum}
+                  className="text-xs md:text-sm w-8 h-8 sm:w-10 sm:h-10"
                   onClick={() => handlePageClick(pageNum)}
                 >
                   {pageNum}
@@ -178,12 +184,12 @@ export default function Home() {
             ))}
             {totalPages > 3 && (
               <PaginationItem>
-                <PaginationEllipsis />
+                <PaginationEllipsis className="text-xs md:text-sm w-8 h-8 sm:w-10 sm:h-10" />
               </PaginationItem>
             )}
             <PaginationItem>
               <PaginationNext
-                className={isActive === totalPages ? "pointer-events-none" : ""}
+                className={`${isActive === totalPages ? "pointer-events-none" : ""} text-xs md:text-sm`}
                 onClick={() => handlePageClick(isActive + 1)}
               />
             </PaginationItem>

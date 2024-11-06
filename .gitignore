@@ -16,8 +16,47 @@
 # production
 /build
 
-# misc
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs (WebStorm, IntelliJ, etc.)
+.idea/
+*.iml
+*.iws
+out/
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Eclipse
+.metadata/
+bin/
+tmp/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Vim
+*.swp
+*.swo
+*.swn
+
+# MacOS
 .DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# misc
 *.pem
 
 # debug
