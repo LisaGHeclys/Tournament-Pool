@@ -497,23 +497,25 @@ export default function Tournament() {
             </CardDescription>
           </CardHeader>
           <div className="w-full h-full flex">
-            <Carousel
-              className="w-full h-full flex justify-center items-center"
-              opts={{ loop: true }}
-              plugins={[Autoplay({ delay: 10000 })]}
-            >
-              <CarouselContent className="flex md:w-full md:h-full gap-4">
-                <CarouselItem className="w-[160px] h-[240px] md:h-full md:w-full">
-                  <PieChartComponent tournament={tournament} />
-                </CarouselItem>
-                <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
-                  <BarChartComponent tournament={tournament} />
-                </CarouselItem>
-                <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
-                  <RadialChartComponent tournament={tournament} />
-                </CarouselItem>
-              </CarouselContent>
-            </Carousel>
+            {Array.isArray(tournament.points) && (
+              <Carousel
+                className="w-full h-full flex justify-center items-center"
+                opts={{ loop: true }}
+                plugins={[Autoplay({ delay: 10000 })]}
+              >
+                <CarouselContent className="flex md:w-full md:h-full gap-4">
+                  <CarouselItem className="w-[160px] h-[240px] md:h-full md:w-full">
+                    <PieChartComponent tournament={tournament} />
+                  </CarouselItem>
+                  <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
+                    <BarChartComponent tournament={tournament} />
+                  </CarouselItem>
+                  <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
+                    <RadialChartComponent tournament={tournament} />
+                  </CarouselItem>
+                </CarouselContent>
+              </Carousel>
+            )}
           </div>
         </Card>
         <Card className="py-2 px-4 lg:py-8 lg:px-16 w-full lg:w-1/3 lg:h-full flex flex-col">
