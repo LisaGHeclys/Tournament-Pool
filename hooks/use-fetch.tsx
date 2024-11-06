@@ -10,7 +10,7 @@ export function useFetch() {
     setIsError(null);
 
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + url, {
+      const response = await fetch(url, {
         method: method,
         headers: {
           Accept: "application/json, text/plain, */*",
