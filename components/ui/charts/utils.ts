@@ -1,5 +1,5 @@
 import { tournamentBody } from "@/app/api/_helpers/types/types";
-import { ChartConfig } from "@/components/ui/chart";
+import { ChartConfig } from "@/components/ui/charts/chart";
 
 export type ChartProps = {
   tournament: tournamentBody;
