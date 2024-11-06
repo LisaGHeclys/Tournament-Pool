@@ -75,6 +75,7 @@ export default function Tournament() {
   const id = useParams().id;
   const [openPoints, setOpenPoints] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
+  const [openDelete, setOpenDelete] = React.useState(false);
   const { toast } = useToast();
   const { executeFetch, isLoading, isError } = useFetch();
   const [point, setPoint] = useState<pointsBody>({
@@ -250,7 +251,7 @@ export default function Tournament() {
 
       if (!isLoading && isError) {
         toast({
-          title: "Couldn't add update the tournaments",
+          title: "Couldn't update the tournaments",
           description:
             "An error occurred during the update of the tournaments.",
           variant: "destructive",
@@ -272,6 +273,43 @@ export default function Tournament() {
         error,
       );
       router.push("/user/");
+    }
+  }
+
+  async function handleDeleteTournament() {
+    try {
+      const res = await executeFetch({
+        url: `/api/tournaments/${id}`,
+        method: Method.DELETE,
+      });
+
+      if (res === null) {
+        return;
+      }
+
+      if (!isLoading && isError) {
+        toast({
+          title: "Couldn't delete the tournaments",
+          description:
+            "An error occurred during the suppression of the tournaments.",
+          variant: "destructive",
+        });
+      }
+      router.push("/user/");
+      toast({
+        title: "Deleted successfully !",
+        description: "You’ve successfully deleted the tournament.",
+      });
+    } catch (error) {
+      toast({
+        title: "Unexpected error: " + error,
+        description: "Unexpected error during the suppression of a tournament.",
+        variant: "destructive",
+      });
+      console.error(
+        "Unexpected error during the suppression of a tournament:",
+        error,
+      );
     }
   }
 
@@ -453,9 +491,33 @@ export default function Tournament() {
                       ))}
                     </div>
                     <DialogFooter className="sm:justify-between">
-                      <Button variant="destructive" disabled>
-                        Delete
-                      </Button>
+                      <Dialog open={openDelete} onOpenChange={setOpenDelete}>
+                        <DialogTrigger asChild>
+                          <Button variant="destructive">Delete</Button>
+                        </DialogTrigger>
+                        <DialogContent className="flex flex-col rounded-md max-w-[280px] sm:max-w-[425px]">
+                          <DialogHeader>
+                            <DialogTitle>Delete {tournament.name}</DialogTitle>
+                            <DialogDescription>
+                              Are you sure you want to delete this tournament ?
+                            </DialogDescription>
+                          </DialogHeader>
+                          <DialogFooter className="sm:justify-between">
+                            <Button
+                              variant="outline"
+                              onClick={() => setOpenDelete(false)}
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              variant="destructive"
+                              onClick={handleDeleteTournament}
+                            >
+                              Confirm delete
+                            </Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
                       <Button
                         type="submit"
                         variant="outline"
@@ -497,23 +559,25 @@ export default function Tournament() {
             </CardDescription>
           </CardHeader>
           <div className="w-full h-full flex">
-            <Carousel
-              className="w-full h-full flex justify-center items-center"
-              opts={{ loop: true }}
-              plugins={[Autoplay({ delay: 10000 })]}
-            >
-              <CarouselContent className="flex md:w-full md:h-full gap-4">
-                <CarouselItem className="w-[160px] h-[240px] md:h-full md:w-full">
-                  <PieChartComponent tournament={tournament} />
-                </CarouselItem>
-                <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
-                  <BarChartComponent tournament={tournament} />
-                </CarouselItem>
-                <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
-                  <RadialChartComponent tournament={tournament} />
-                </CarouselItem>
-              </CarouselContent>
-            </Carousel>
+            {Array.isArray(tournament.points) && (
+              <Carousel
+                className="w-full h-full flex justify-center items-center"
+                opts={{ loop: true }}
+                plugins={[Autoplay({ delay: 10000 })]}
+              >
+                <CarouselContent className="flex md:w-full md:h-full gap-4">
+                  <CarouselItem className="w-[160px] h-[240px] md:h-full md:w-full">
+                    <PieChartComponent tournament={tournament} />
+                  </CarouselItem>
+                  <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
+                    <BarChartComponent tournament={tournament} />
+                  </CarouselItem>
+                  <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
+                    <RadialChartComponent tournament={tournament} />
+                  </CarouselItem>
+                </CarouselContent>
+              </Carousel>
+            )}
           </div>
         </Card>
         <Card className="py-2 px-4 lg:py-8 lg:px-16 w-full lg:w-1/3 lg:h-full flex flex-col">
