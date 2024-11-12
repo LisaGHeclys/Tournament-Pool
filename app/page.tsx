@@ -3,8 +3,6 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Footer from "@/components/ui/footer";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 import {
   Pagination,
   PaginationContent,
@@ -66,6 +64,7 @@ export default function Home() {
         return;
       }
       if (!isLoading && !isError) {
+        console.log(resToJSON.tournaments);
         setTournaments(resToJSON.tournaments);
         setTotalPages(resToJSON.totalPages);
       }
@@ -140,14 +139,7 @@ export default function Home() {
         {handleUserNav()}
       </header>
       <main className="gap-2 h-full w-full flex flex-col md:gap-6 row-start-2 items-center justify-between">
-        <div className="flex relative mt-4">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            type="search"
-            placeholder="Search for a pool..."
-            className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
-          />
-        </div>
+        <div className="flex relative mt-4"></div>
         {tournaments ? (
           <div className="grid md:grid-rows-2 grid-cols-1 md:gap-4 xl:grid-cols-2 w-full h-full">
             {tournaments.map((tournament, index) => (
