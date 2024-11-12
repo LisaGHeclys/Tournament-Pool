@@ -163,7 +163,7 @@ export default function ShowTournament() {
               Here you can see the different charts for this tournaments.
             </CardDescription>
           </CardHeader>
-          <div className="w-full h-full flex">
+          <div className="w-full bg-red-900 h-full flex">
             {Array.isArray(tournament.points) && (
               <Carousel
                 className="w-full h-full flex justify-center items-center"
