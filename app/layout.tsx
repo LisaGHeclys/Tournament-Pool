@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/toaster";
+import CookieConsentBanner from "@/components/ui/cookie-consent-banner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,6 +36,7 @@ export default function RootLayout({
       >
         <SessionProvider>{children}</SessionProvider>
         <Toaster />
+        <CookieConsentBanner />
       </body>
     </html>
   );

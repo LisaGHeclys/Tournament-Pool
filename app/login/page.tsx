@@ -14,7 +14,7 @@ import { signIn, useSession } from "next-auth/react";
 import Footer from "@/components/ui/footer";
 import { useToast } from "@/hooks/use-toast";
 
-export default function Home() {
+export default function Login() {
   const router = useRouter();
   const { toast } = useToast();
   const { status } = useSession();
