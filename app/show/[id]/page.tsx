@@ -114,7 +114,7 @@ export default function ShowTournament() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+      <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
         <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
           <Skeleton className="h-12 w-full" />
         </header>
@@ -128,7 +128,7 @@ export default function ShowTournament() {
   }
 
   return (
-    <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+    <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
       <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
         <Button
           className="rounded-full hover:scale-[102%] transition ease-in-out delay-250"
@@ -163,7 +163,7 @@ export default function ShowTournament() {
               Here you can see the different charts for this tournaments.
             </CardDescription>
           </CardHeader>
-          <div className="w-full bg-red-900 h-full flex">
+          <div className="w-full h-full flex">
             {Array.isArray(tournament.points) && (
               <Carousel
                 className="w-full h-full flex justify-center items-center"

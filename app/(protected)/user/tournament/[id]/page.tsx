@@ -411,7 +411,7 @@ export default function Tournament() {
 
   if (isLoading || tournament.name == "") {
     return (
-      <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+      <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
         <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
           <Skeleton className="h-12 w-full" />
         </header>
@@ -425,7 +425,7 @@ export default function Tournament() {
   }
 
   return (
-    <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+    <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
       <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
         <Button
           className="rounded-full hover:scale-[102%] transition ease-in-out delay-250"
