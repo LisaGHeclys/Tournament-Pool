@@ -24,7 +24,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
 import { useFetch } from "@/hooks/use-fetch";
 import { Skeleton } from "@/components/ui/skeleton";
