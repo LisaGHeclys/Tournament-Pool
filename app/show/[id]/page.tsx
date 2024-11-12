@@ -24,7 +24,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
 import { useFetch } from "@/hooks/use-fetch";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -193,14 +193,26 @@ export default function ShowTournament() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex w-full h-full p-2 md:p-6">
-            <ScrollArea className="w-full h-[460px] md:h-[600px] rounded-md p-0 md:px-2">
+            <ScrollArea className="w-full h-[460px] md:h-[600px] flex-nowrap rounded-md p-0 md:px-2">
               {Array.isArray(tournament.points) ? (
-                <div className="flex flex-col gap-2 p-1 md:gap-4 md:p-2">
-                  {Array.isArray(tournament.points) &&
-                    tournament?.points?.map((point, index) => (
-                      <PointsPreview point={point} key={index} />
-                    ))}
-                </div>
+                <>
+                  <div
+                    className={`flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 ${tournament.points.length > 3 && "animate-infinite-scroll"}`}
+                  >
+                    {Array.isArray(tournament.points) &&
+                      tournament?.points?.map((point, index) => (
+                        <PointsPreview point={point} key={index} />
+                      ))}
+                  </div>
+                  <div
+                    className={`flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 ${tournament.points.length > 3 && "animate-infinite-scroll"}`}
+                  >
+                    {Array.isArray(tournament.points) &&
+                      tournament?.points?.map((point, index) => (
+                        <PointsPreview point={point} key={index} />
+                      ))}
+                  </div>
+                </>
               ) : (
                 <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
                   This tournament has no points set yet !
