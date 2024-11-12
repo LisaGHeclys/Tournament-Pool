@@ -30,8 +30,12 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
-import React, { useEffect } from "react";
-import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
+import React, { useEffect, useState } from "react";
+import {
+  Method,
+  pointsBody,
+  tournamentBody,
+} from "@/app/api/_helpers/types/types";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ChartPreview from "@/components/ui/charts/chart-preview";
@@ -45,6 +49,9 @@ export default function User() {
   const { toast } = useToast();
   const { data: session } = useSession();
   const [open, setOpen] = React.useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredTournaments, setFilteredTournaments] =
+    useState<tournamentBody[]>();
   const [tournament, setTournament] = React.useState<tournamentBody>({
     name: "",
     teams: [
@@ -205,6 +212,15 @@ export default function User() {
     handleGetTournaments();
   }, []);
 
+  useEffect(() => {
+    if (tournaments) {
+      const results = tournaments.filter((tournament) =>
+        tournament.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+      setFilteredTournaments(results);
+    }
+  }, [tournaments, searchTerm]);
+
   if (isLoading) {
     return (
       <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
@@ -250,13 +266,15 @@ export default function User() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col h-full p-2 md:p-6 gap-4 md:gap-8">
-            <div className="lg:px-32 w-full flex flex-col-reverse md:flex-row gap-2 md:gap-8">
-              <div className="relative w-full">
+            <div className="lg:px-32 w-full flex items-center justify-center flex-col-reverse md:flex-row gap-2 md:gap-8">
+              <div className="relative w-full md:w-2/3">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
                   placeholder="Search for a pool..."
                   className="w-full rounded-lg bg-background pl-8"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
               <Dialog open={open} onOpenChange={setOpen}>
@@ -341,9 +359,9 @@ export default function User() {
             </div>
             <div className="flex w-full justify-center">
               <ScrollArea className="w-full lg:w-2/3 h-[560px] md:px-2">
-                {tournaments ? (
+                {tournaments && filteredTournaments ? (
                   <div className="flex flex-col gap-2 md:gap-4 md:p-2">
-                    {tournaments.map((tournament, index) => (
+                    {filteredTournaments.map((tournament, index) => (
                       <ChartPreview
                         key={index}
                         tournament={tournament}
