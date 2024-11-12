@@ -204,14 +204,14 @@ export default function ShowTournament() {
                         <PointsPreview point={point} key={index} />
                       ))}
                   </div>
-                  <div
-                    className={`flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 ${tournament.points.length > 3 && "animate-infinite-scroll"}`}
-                  >
-                    {Array.isArray(tournament.points) &&
-                      tournament?.points?.map((point, index) => (
-                        <PointsPreview point={point} key={index} />
-                      ))}
-                  </div>
+                  {tournament.points.length > 3 && (
+                    <div className="flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 animate-infinite-scroll">
+                      {Array.isArray(tournament.points) &&
+                        tournament?.points?.map((point, index) => (
+                          <PointsPreview point={point} key={index} />
+                        ))}
+                    </div>
+                  )}
                 </>
               ) : (
                 <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
