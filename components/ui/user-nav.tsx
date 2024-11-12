@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import React from "react";
 import { signOut, useSession } from "next-auth/react";
-import { LogOut, User } from "lucide-react";
+import { BookLock, LifeBuoy, LogOut, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 
@@ -72,6 +72,15 @@ export function UserNav() {
         <DropdownMenuItem onClick={() => router.push("/user")}>
           <User className="mr-2 size-3 md:size-4" />
           <span className="text-xs md:text-sm">Your page</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => router.push("/")}>
+          <LifeBuoy className="mr-2 size-3 md:size-4" />
+          <span className="text-xs md:text-sm">Support</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push("/privacy-policy")}>
+          <BookLock className="mr-2 size-3 md:size-4" />
+          <span className="text-xs md:text-sm">Privacy Policy</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut}>
