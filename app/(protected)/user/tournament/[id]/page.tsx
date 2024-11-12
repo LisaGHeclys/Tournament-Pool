@@ -78,6 +78,8 @@ export default function Tournament() {
   const [openDelete, setOpenDelete] = React.useState(false);
   const { toast } = useToast();
   const { executeFetch, isLoading, isError } = useFetch();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredPoints, setFilteredPoints] = useState<pointsBody[]>();
   const [point, setPoint] = useState<pointsBody>({
     reason: "",
     points: 1,
@@ -398,6 +400,15 @@ export default function Tournament() {
     handleGetTournamentById();
   }, []);
 
+  useEffect(() => {
+    if (Array.isArray(tournament.points)) {
+      const results = tournament?.points.filter((point) =>
+        point.reason.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+      setFilteredPoints(results);
+    }
+  }, [tournament, searchTerm, tournament.points]);
+
   if (isLoading || tournament.name == "") {
     return (
       <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
@@ -595,6 +606,8 @@ export default function Tournament() {
                   type="search"
                   placeholder="Search points..."
                   className="w-full rounded-lg bg-background pl-8"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
               <Dialog open={openPoints} onOpenChange={setOpenPoints}>
@@ -668,12 +681,11 @@ export default function Tournament() {
               </Dialog>
             </div>
             <ScrollArea className="w-full h-[380px] md:h-[550px] rounded-md p-0 md:px-2">
-              {Array.isArray(tournament.points) ? (
+              {Array.isArray(tournament.points) && filteredPoints ? (
                 <div className="flex flex-col gap-4 p-2">
-                  {Array.isArray(tournament.points) &&
-                    tournament?.points?.map((point, index) => (
-                      <PointsPreview point={point} key={index} />
-                    ))}
+                  {filteredPoints.map((point, index) => (
+                    <PointsPreview point={point} key={index} />
+                  ))}
                 </div>
               ) : (
                 <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
