@@ -80,6 +80,7 @@ export async function GET(req: NextRequest) {
       .collection("tournaments")
       .count()
       .get();
+
     const totalCount = tournamentsCountData.data().count;
 
     const totalPages = Math.ceil(totalCount / limit);

@@ -114,7 +114,7 @@ export default function ShowTournament() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+      <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
         <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
           <Skeleton className="h-12 w-full" />
         </header>
@@ -128,7 +128,7 @@ export default function ShowTournament() {
   }
 
   return (
-    <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+    <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
       <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
         <Button
           className="rounded-full hover:scale-[102%] transition ease-in-out delay-250"
@@ -204,14 +204,14 @@ export default function ShowTournament() {
                         <PointsPreview point={point} key={index} />
                       ))}
                   </div>
-                  <div
-                    className={`flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 ${tournament.points.length > 3 && "animate-infinite-scroll"}`}
-                  >
-                    {Array.isArray(tournament.points) &&
-                      tournament?.points?.map((point, index) => (
-                        <PointsPreview point={point} key={index} />
-                      ))}
-                  </div>
+                  {tournament.points.length > 3 && (
+                    <div className="flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 animate-infinite-scroll">
+                      {Array.isArray(tournament.points) &&
+                        tournament?.points?.map((point, index) => (
+                          <PointsPreview point={point} key={index} />
+                        ))}
+                    </div>
+                  )}
                 </>
               ) : (
                 <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
