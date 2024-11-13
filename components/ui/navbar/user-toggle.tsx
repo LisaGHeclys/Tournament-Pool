@@ -6,7 +6,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./dropdown-menu";
+} from "../dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import React from "react";
@@ -15,7 +15,7 @@ import { BookLock, LifeBuoy, LogOut, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 
-export function UserNav() {
+export function UserToggle() {
   const { toast } = useToast();
   const router = useRouter();
   const { data: session } = useSession();
@@ -43,7 +43,7 @@ export function UserNav() {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="relative h-4 w-4 sm:h-8 sm:w-8 rounded-full"
+          className="relative h-4 w-4 sm:h-8 sm:w-8 md:h-10 md:w-10 rounded-full"
         >
           <Avatar>
             <AvatarImage

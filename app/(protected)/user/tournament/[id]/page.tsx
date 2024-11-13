@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/carousel";
 import { useParams, useRouter } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { UserNav } from "@/components/ui/user-nav";
+import { UserToggle } from "@/components/ui/navbar/user-toggle";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -549,7 +549,7 @@ export default function Tournament() {
             </Tooltip>
           </TooltipProvider>
         </div>
-        <UserNav />
+        <UserToggle />
       </header>
       <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-between">
         <Card className="flex flex-col h-[440px] md:h-[440px] p-2r md:px-16 w-full lg:w-2/3 lg:h-full">

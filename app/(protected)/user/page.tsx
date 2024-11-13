@@ -18,7 +18,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { UserNav } from "@/components/ui/user-nav";
+import { UserToggle } from "@/components/ui/navbar/user-toggle";
 import {
   Dialog,
   DialogContent,
@@ -244,7 +244,7 @@ export default function User() {
         <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl">
           Welcome back {session?.user?.name} !
         </h1>
-        <UserNav />
+        <UserToggle />
       </header>
       <main className="w-full h-full flex gap-2 md:gap-6 items-center">
         <Card className="flex flex-col p-2 md:px-16 w-full h-full">
