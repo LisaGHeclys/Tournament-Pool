@@ -178,7 +178,12 @@ export default function Tournament() {
         points: Array.isArray(tournament.points)
           ? [
               { ...point, createdAt: new Date(), team: team },
-              ...tournament.points,
+              ...tournament.points.map((existingPoint) => ({
+                ...existingPoint,
+                createdAt: existingPoint.createdAt
+                  ? new Date(existingPoint.createdAt)
+                  : null,
+              })),
             ]
           : [{ ...point, createdAt: new Date(), team: team }],
       };
