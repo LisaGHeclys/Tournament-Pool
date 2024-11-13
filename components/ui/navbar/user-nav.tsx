@@ -5,12 +5,23 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/ui/navbar/theme/theme-toggle";
+import { ChevronLeft } from "lucide-react";
+import { useWindowSize } from "@/hooks/use-window-size";
 
 interface UserNavProps {
   title: string;
+  isBack?: boolean;
+  backPath?: string;
+  avatar?: boolean;
 }
 
-export function UserNav({ title }: UserNavProps): JSX.Element {
+export function UserNav({
+  title,
+  isBack = false,
+  backPath,
+  avatar = false,
+}: UserNavProps): JSX.Element {
+  const size = useWindowSize();
   const router = useRouter();
   const { status } = useSession();
 
@@ -20,7 +31,7 @@ export function UserNav({ title }: UserNavProps): JSX.Element {
         return (
           <div className="w-full md:w-fit flex flex-row gap-4 md:gap-6 items-center justify-end md:justify-center">
             <ThemeToggle />
-            <UserToggle />
+            {avatar && <UserToggle />}
           </div>
         );
       case "loading":
@@ -38,7 +49,19 @@ export function UserNav({ title }: UserNavProps): JSX.Element {
   }
   return (
     <header className="gap-2 md:gap-0 md:p-8 w-full md:h-fit flex flex-col md:flex-row items-center justify-between">
-      <div />
+      {isBack && backPath ? (
+        <Button
+          className="rounded-full hover:scale-[102%] transition ease-in-out delay-250"
+          size="icon"
+          onClick={() => {
+            router.push(backPath);
+          }}
+        >
+          <ChevronLeft size={size.width <= 425 ? 18 : 32} />
+        </Button>
+      ) : (
+        <div />
+      )}
       <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl">
         {title}
       </h1>

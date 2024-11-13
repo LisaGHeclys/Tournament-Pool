@@ -9,7 +9,7 @@ type PointsPreviewProps = {
 
 export default function PointsPreview({ point }: PointsPreviewProps) {
   return (
-    <Card className="w-full h-full flex justify-between drop-shadow-md">
+    <Card className="w-full h-full flex justify-between drop-shadow-lg dark:shadow-white">
       <CardHeader className="w-full gap-2 items-start justify-between flex">
         <div className="w-[160px] sm:w-full flex gap-2 items-start flex-col">
           <div className="w-full flex gap-2 items-start flex-col md:flex-row justify-between">
