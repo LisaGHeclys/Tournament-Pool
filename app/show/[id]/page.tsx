@@ -125,7 +125,7 @@ export default function ShowTournament() {
 
   return (
     <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <UserNav title={tournament.name} isBack backPath={"/"} />
+      <UserNav title={tournament.name} isBack backPath={"/"} centered />
       <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-between">
         <Card className="flex flex-col h-[440px] md:h-[440px] p-2 md:px-16 w-full lg:w-2/3 lg:h-full">
           <CardHeader>
