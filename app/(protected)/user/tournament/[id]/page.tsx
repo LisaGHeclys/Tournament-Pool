@@ -232,6 +232,63 @@ export default function Tournament() {
     }
   }
 
+  async function handleRemovePointsToTournament(targetCreatedAt: Date) {
+    try {
+      const newTournament = {
+        ...tournament,
+        points: Array.isArray(tournament.points)
+          ? tournament.points.filter(
+              (existingPoint) => existingPoint.createdAt !== targetCreatedAt,
+            )
+          : [],
+      };
+
+      const res = await executeFetch({
+        url: `/api/tournaments/${id}`,
+        method: Method.PATCH,
+        body: newTournament,
+      });
+
+      if (res === null) {
+        setPoint({
+          reason: "",
+          points: 1,
+          createdBy: session?.user?.name ?? "",
+          team: {
+            name: "",
+            color: "",
+          },
+          createdAt: new Date(),
+        });
+        return;
+      }
+      if (!isLoading && isError) {
+        toast({
+          title: "Couldn't delete the points to the tournaments",
+          description:
+            "An error occurred during the suppression of the points of the tournaments.",
+          variant: "destructive",
+        });
+      }
+      toast({
+        title: "Points successfully deleted !",
+        description: "You’ve successfully deleted points of the tournament.",
+      });
+      handleGetTournamentById();
+    } catch (error) {
+      toast({
+        title: "Unexpected error: " + error,
+        description: "Unexpected error during the update of a tournament.",
+        variant: "destructive",
+      });
+      console.error(
+        "Unexpected error during the update of a tournament:",
+        error,
+      );
+      router.push("/user/");
+    }
+  }
+
   async function handleUpdateTournament() {
     try {
       const res = await executeFetch({
@@ -679,7 +736,13 @@ export default function Tournament() {
               {Array.isArray(tournament.points) && filteredPoints ? (
                 <div className="flex flex-col gap-4 p-2">
                   {filteredPoints.map((point, index) => (
-                    <PointsPreview point={point} key={index} />
+                    <PointsPreview
+                      point={point}
+                      key={index}
+                      handleRemovePointsToTournament={
+                        handleRemovePointsToTournament
+                      }
+                    />
                   ))}
                 </div>
               ) : (
