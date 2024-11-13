@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/firebase/firebase";
 import withSession from "@/app/api/_helpers/middleware/with-session";
-import { tournamentBody } from "@/app/api/_helpers/types/types";
+import { pointsBody, tournamentBody } from "@/app/api/_helpers/types/types";
 import { Session } from "next-auth";
+import { firestoreTimestampToDate } from "@/app/api/_helpers/getDates";
 
 export async function GET(
   req: NextRequest,
@@ -18,7 +19,17 @@ export async function GET(
       .collection("tournaments")
       .doc(id)
       .get()
-      .then((doc) => ({ id: doc.id, ...doc.data() }) as tournamentBody);
+      .then((doc) => {
+        const data = doc.data() as tournamentBody;
+        return {
+          id: doc.id,
+          ...data,
+          createdAt: firestoreTimestampToDate(data.createdAt),
+          points: data.points?.map((point) => ({
+            ...point,
+          })) as pointsBody[],
+        };
+      });
 
     if (!tournament.name)
       return NextResponse.json(

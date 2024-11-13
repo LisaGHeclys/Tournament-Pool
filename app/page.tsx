@@ -64,7 +64,6 @@ export default function Home() {
         return;
       }
       if (!isLoading && !isError) {
-        console.log(resToJSON.tournaments);
         setTournaments(resToJSON.tournaments);
         setTotalPages(resToJSON.totalPages);
       }
