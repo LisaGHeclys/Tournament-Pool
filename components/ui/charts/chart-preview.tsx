@@ -27,7 +27,7 @@ export default function ChartPreview({ tournament, link }: ChartPreviewProps) {
         router.push(link + tournament.id);
       }}
     >
-      <Card className="w-full h-full flex flex-col sm:flex-row justify-between drop-shadow-md">
+      <Card className="w-full h-full flex flex-col sm:flex-row justify-between drop-shadow-lg">
         <CardHeader className="h-1/2 sm:h-full w-full sm:w-1/2 pb-2 sm:pb-6 gap-1 sm:gap-2 items-start justify-between flex">
           <div className="w-full flex gap-2 items-start flex-col">
             <CardTitle>{tournament.name}</CardTitle>

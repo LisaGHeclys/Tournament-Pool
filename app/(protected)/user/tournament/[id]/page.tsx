@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ChevronLeft, Plus, Search, SquarePen } from "lucide-react";
+import { Plus, Search, SquarePen } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/carousel";
 import { useParams, useRouter } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { UserNav } from "@/components/ui/user-nav";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -54,7 +53,6 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "next-auth/react";
 import PointsPreview from "@/components/ui/points-preview";
-import { useWindowSize } from "@/hooks/use-window-size";
 import Autoplay from "embla-carousel-autoplay";
 import PieChartComponent from "@/components/ui/charts/pie-chart";
 import { useToast } from "@/hooks/use-toast";
@@ -67,9 +65,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ColorPicker } from "@/components/ui/color-picker";
+import { UserNav } from "@/components/ui/navbar/user-nav";
 
 export default function Tournament() {
-  const size = useWindowSize();
   const router = useRouter();
   const { data: session } = useSession();
   const id = useParams().id;
@@ -431,126 +429,118 @@ export default function Tournament() {
 
   return (
     <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
-        <Button
-          className="rounded-full hover:scale-[102%] transition ease-in-out delay-250"
-          size="icon"
-          onClick={() => {
-            router.push("/user");
-          }}
-        >
-          <ChevronLeft size={size.width <= 425 ? 18 : 32} />
-        </Button>
-        <div className="flex flex-row gap-2 items-center">
-          <h1 className="text-2xl md:text-4xl scroll-m-20 font-extrabold tracking-tight lg:text-5xl">
-            {tournament.name}
-          </h1>
-          <TooltipProvider>
-            <Tooltip>
-              <Dialog open={openEdit} onOpenChange={setOpenEdit}>
-                <DialogTrigger asChild>
-                  <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <SquarePen className="h-4 w-4 md:h-6 md:w-6" />
-                      <span className="sr-only">
-                        Edit tournament's information
-                      </span>
-                    </Button>
-                  </TooltipTrigger>
-                </DialogTrigger>
-                <DialogContent className="flex flex-col rounded-md max-w-[280px] sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>Edit your tournament</DialogTitle>
-                    <DialogDescription>
-                      You can edit your tournament here.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <form onSubmit={handleUpdate} className="grid gap-4">
-                    <div className="grid w-full items-center gap-4">
-                      <div className="flex flex-col space-y-1.5">
-                        <Label htmlFor="name">Tournament Name</Label>
-                        <Input
-                          id="name"
-                          value={updatedTournament.name}
-                          disabled
-                        />
-                      </div>
-                      {updatedTournament.teams.map((team, index) => (
-                        <div
-                          key={index}
-                          className="flex w-full flex-col space-y-1.5"
-                        >
-                          <Label htmlFor={`update-team-name-${index}`}>
-                            Team {index + 1} : Name and Color
-                          </Label>
-                          <div key={index} className="flex flex-row gap-4">
-                            <Input
-                              id={`update-team-name-${index}`}
-                              value={team.name}
-                              onChange={(e) =>
-                                handleTeamChange(index, "name", e.target.value)
+      <UserNav
+        title={tournament.name}
+        isBack
+        backPath={"/user"}
+        centered
+        avatar
+        isEdit
+      >
+        <TooltipProvider>
+          <Tooltip>
+            <Dialog open={openEdit} onOpenChange={setOpenEdit}>
+              <DialogTrigger asChild>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <SquarePen className="h-4 w-4 md:h-6 md:w-6" />
+                    <span className="sr-only">
+                      Edit tournament's information
+                    </span>
+                  </Button>
+                </TooltipTrigger>
+              </DialogTrigger>
+              <DialogContent className="flex flex-col rounded-md max-w-[280px] sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Edit your tournament</DialogTitle>
+                  <DialogDescription>
+                    You can edit your tournament here.
+                  </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={handleUpdate} className="grid gap-4">
+                  <div className="grid w-full items-center gap-4">
+                    <div className="flex flex-col space-y-1.5">
+                      <Label htmlFor="name">Tournament Name</Label>
+                      <Input
+                        id="name"
+                        value={updatedTournament.name}
+                        disabled
+                      />
+                    </div>
+                    {updatedTournament.teams.map((team, index) => (
+                      <div
+                        key={index}
+                        className="flex w-full flex-col space-y-1.5"
+                      >
+                        <Label htmlFor={`update-team-name-${index}`}>
+                          Team {index + 1} : Name and Color
+                        </Label>
+                        <div key={index} className="flex flex-row gap-4">
+                          <Input
+                            id={`update-team-name-${index}`}
+                            value={team.name}
+                            onChange={(e) =>
+                              handleTeamChange(index, "name", e.target.value)
+                            }
+                            placeholder="Team name"
+                            required
+                          />
+                          <div>
+                            <ColorPicker
+                              id={`update-team-color-${index}`}
+                              value={team.color}
+                              onChange={(v) =>
+                                handleTeamChange(index, "color", v)
                               }
-                              placeholder="Team name"
-                              required
                             />
-                            <div>
-                              <ColorPicker
-                                id={`update-team-color-${index}`}
-                                value={team.color}
-                                onChange={(v) =>
-                                  handleTeamChange(index, "color", v)
-                                }
-                              />
-                            </div>
                           </div>
                         </div>
-                      ))}
-                    </div>
-                    <DialogFooter className="sm:justify-between">
-                      <Dialog open={openDelete} onOpenChange={setOpenDelete}>
-                        <DialogTrigger asChild>
-                          <Button variant="destructive">Delete</Button>
-                        </DialogTrigger>
-                        <DialogContent className="flex flex-col rounded-md max-w-[280px] sm:max-w-[425px]">
-                          <DialogHeader>
-                            <DialogTitle>Delete {tournament.name}</DialogTitle>
-                            <DialogDescription>
-                              Are you sure you want to delete this tournament ?
-                            </DialogDescription>
-                          </DialogHeader>
-                          <DialogFooter className="sm:justify-between">
-                            <Button
-                              variant="outline"
-                              onClick={() => setOpenDelete(false)}
-                            >
-                              Cancel
-                            </Button>
-                            <Button
-                              variant="destructive"
-                              onClick={handleDeleteTournament}
-                            >
-                              Confirm delete
-                            </Button>
-                          </DialogFooter>
-                        </DialogContent>
-                      </Dialog>
-                      <Button
-                        type="submit"
-                        variant="outline"
-                        disabled={handleDisabled()}
-                      >
-                        Update
-                      </Button>
-                    </DialogFooter>
-                  </form>
-                </DialogContent>
-              </Dialog>
-              <TooltipContent>Edit tournament's information</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-        <UserNav />
-      </header>
+                      </div>
+                    ))}
+                  </div>
+                  <DialogFooter className="sm:justify-between">
+                    <Dialog open={openDelete} onOpenChange={setOpenDelete}>
+                      <DialogTrigger asChild>
+                        <Button variant="destructive">Delete</Button>
+                      </DialogTrigger>
+                      <DialogContent className="flex flex-col rounded-md max-w-[280px] sm:max-w-[425px]">
+                        <DialogHeader>
+                          <DialogTitle>Delete {tournament.name}</DialogTitle>
+                          <DialogDescription>
+                            Are you sure you want to delete this tournament ?
+                          </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter className="sm:justify-between">
+                          <Button
+                            variant="outline"
+                            onClick={() => setOpenDelete(false)}
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            variant="destructive"
+                            onClick={handleDeleteTournament}
+                          >
+                            Confirm delete
+                          </Button>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
+                    <Button
+                      type="submit"
+                      variant="outline"
+                      disabled={handleDisabled()}
+                    >
+                      Update
+                    </Button>
+                  </DialogFooter>
+                </form>
+              </DialogContent>
+            </Dialog>
+            <TooltipContent>Edit tournament's information</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </UserNav>
       <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-between">
         <Card className="flex flex-col h-[440px] md:h-[440px] p-2r md:px-16 w-full lg:w-2/3 lg:h-full">
           <CardHeader>

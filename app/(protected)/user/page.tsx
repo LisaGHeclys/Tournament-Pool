@@ -18,7 +18,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { UserNav } from "@/components/ui/user-nav";
 import {
   Dialog,
   DialogContent,
@@ -31,11 +30,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import {
-  Method,
-  pointsBody,
-  tournamentBody,
-} from "@/app/api/_helpers/types/types";
+import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ChartPreview from "@/components/ui/charts/chart-preview";
@@ -43,6 +38,7 @@ import { useFetch } from "@/hooks/use-fetch";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
+import { UserNav } from "@/components/ui/navbar/user-nav";
 
 export default function User() {
   const { executeFetch, isLoading, isError } = useFetch();
@@ -240,12 +236,7 @@ export default function User() {
 
   return (
     <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
-        <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Welcome back {session?.user?.name} !
-        </h1>
-        <UserNav />
-      </header>
+      <UserNav title={`Welcome back ${session?.user?.name} !`} avatar />
       <main className="w-full h-full flex gap-2 md:gap-6 items-center">
         <Card className="flex flex-col p-2 md:px-16 w-full h-full">
           <CardHeader className="p-2 pb-4 md:p-6">
