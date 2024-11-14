@@ -3,7 +3,7 @@ import React from "react";
 import CookieConsent from "react-cookie-consent";
 import { Cookie } from "lucide-react";
 
-export default function CookieConsentBanner() {
+export default function CookieConsentProvider() {
   return (
     <CookieConsent
       location="bottom"
