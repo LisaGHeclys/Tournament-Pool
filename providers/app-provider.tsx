@@ -3,7 +3,7 @@ import { ToasterProvider } from "@/providers/toaster-provider";
 import CookieConsentProvider from "@/providers/cookie-consent-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { SessionProvider } from "next-auth/react";
-import { ReactQueryProvider } from "@/providers/tanstack-query-provider";
+import { TanstackQueryProvider } from "@/providers/tanstack-query-provider";
 
 export default function AppProvider({
   children,
@@ -11,7 +11,7 @@ export default function AppProvider({
   children: React.ReactNode;
 }>) {
   return (
-    <ReactQueryProvider>
+    <TanstackQueryProvider>
       <SessionProvider>
         <ThemeProvider
           attribute="class"
@@ -24,6 +24,6 @@ export default function AppProvider({
       </SessionProvider>
       <ToasterProvider />
       <CookieConsentProvider />
-    </ReactQueryProvider>
+    </TanstackQueryProvider>
   );
 }
