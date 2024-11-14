@@ -1,3 +1,4 @@
+"use client";
 import { ToasterProvider } from "@/providers/toaster-provider";
 import CookieConsentProvider from "@/providers/cookie-consent-provider";
 import { ThemeProvider } from "@/providers/theme-provider";

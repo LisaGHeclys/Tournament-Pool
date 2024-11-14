@@ -1,13 +1,10 @@
 export const tournamentsQueryKeys = {
   all: ["tournament"],
-  tournament: (id: string) => [...tournamentsQueryKeys.all, id],
-  tournaments: (page: number) => [
-    ...tournamentsQueryKeys.all,
-    "pagination",
-    page,
-  ],
+  tournaments: () => [...tournamentsQueryKeys.all, "tournament"],
+  tournament: (id: string) => [...tournamentsQueryKeys.tournaments(), id],
+  pagination: (page: number) => [...tournamentsQueryKeys.tournaments(), page],
   userTournaments: (userId: string | number) => [
-    ...tournamentsQueryKeys.all,
+    ...tournamentsQueryKeys.tournaments(),
     "user",
     userId,
   ],
