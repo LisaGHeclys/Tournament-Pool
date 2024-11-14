@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import React, { ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { ThemeToggle } from "@/components/ui/navbar/theme/theme-toggle";
+import { ThemeToggle } from "@/components/ui/navbar/theme-toggle";
 import { ChevronLeft } from "lucide-react";
 import { useWindowSize } from "@/hooks/use-window-size";
 

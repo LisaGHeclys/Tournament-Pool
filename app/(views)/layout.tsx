@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
-import { Toaster } from "@/components/ui/toaster";
-import CookieConsentBanner from "@/components/ui/cookie-consent-banner";
-import { ThemeProvider } from "@/components/ui/navbar/theme/theme-provider";
+import AppProvider from "@/providers/app-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,18 +32,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SessionProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-        </SessionProvider>
-        <Toaster />
-        <CookieConsentBanner />
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );
