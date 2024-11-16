@@ -8,7 +8,9 @@ type Props = {
 
 export function usePaginatedTournaments({ page, pageLimit }: Props) {
   async function getPaginatedTournamentsFn(page: number) {
-    const response = await apiClient.get(`?page=${page}&limit=${pageLimit}`);
+    const response = await apiClient.get(
+      `/tournaments?page=${page}&limit=${pageLimit}`,
+    );
     return response.data;
   }
   return useQuery({

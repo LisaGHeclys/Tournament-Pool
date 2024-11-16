@@ -4,11 +4,12 @@ import CookieConsentProvider from "@/providers/cookie-consent-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { SessionProvider } from "next-auth/react";
 import { TanstackQueryProvider } from "@/providers/tanstack-query-provider";
+import { ReactNode } from "react";
 
 export default function AppProvider({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <TanstackQueryProvider>

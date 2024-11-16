@@ -15,12 +15,17 @@ import { useFetch } from "@/hooks/use-fetch";
 import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
 import ChartPreview from "@/components/ui/charts/chart-preview";
 import { UserNav } from "@/components/ui/navbar/user-nav";
+import { usePaginatedTournaments } from "@/api";
 
 export default function Home() {
   const { executeFetch, isLoading, isError } = useFetch();
   const [tournaments, setTournaments] = React.useState<tournamentBody[]>([]);
   const [isActive, setIsActive] = React.useState<number>(1);
   const [totalPages, setTotalPages] = React.useState<number>(1);
+  const { data, isPending, isFetching } = usePaginatedTournaments({
+    pageLimit: 4,
+    page: 1,
+  });
 
   async function handleGetTournaments(page: number) {
     try {
