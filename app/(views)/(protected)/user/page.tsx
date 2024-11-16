@@ -39,6 +39,7 @@ import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { UserNav } from "@/components/ui/navbar/user-nav";
+import { useUserTournaments } from "@/api";
 
 export default function User() {
   const { executeFetch, isLoading, isError } = useFetch();
@@ -61,6 +62,7 @@ export default function User() {
   const [teamNumber, setTeamNumber] = React.useState<number>(2);
   const [tournaments, setTournaments] = React.useState<tournamentBody[]>([]);
   const router = useRouter();
+  const { data, isFetching } = useUserTournaments();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -160,32 +162,6 @@ export default function User() {
     }
   };
 
-  const handleGetTournaments = async () => {
-    try {
-      const res = await executeFetch({
-        url: "/api/tournaments/my",
-        method: Method.GET,
-      });
-
-      if (res === null) {
-        setTournaments([]);
-        return;
-      }
-
-      const resToJSON = await res.json();
-
-      if (!resToJSON) {
-        setTournaments([]);
-        return;
-      }
-      if (!isLoading && !isError) {
-        setTournaments(resToJSON.tournaments);
-      }
-    } catch (error) {
-      console.error("Unexpected error during creation of tournament:", error);
-    }
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setTeamNumber(2);
@@ -205,19 +181,15 @@ export default function User() {
   };
 
   useEffect(() => {
-    handleGetTournaments();
-  }, []);
-
-  useEffect(() => {
-    if (tournaments) {
-      const results = tournaments.filter((tournament) =>
+    if (data) {
+      const results = data.filter((tournament) =>
         tournament.name.toLowerCase().includes(searchTerm.toLowerCase()),
       );
       setFilteredTournaments(results);
     }
-  }, [tournaments, searchTerm]);
+  }, [data, searchTerm]);
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
         <header className="md:p-8 w-full h-full md:h-fit flex flex-row items-center justify-between">
@@ -350,7 +322,7 @@ export default function User() {
             </div>
             <div className="flex w-full justify-center">
               <ScrollArea className="w-full lg:w-2/3 h-[560px] md:px-2">
-                {tournaments && filteredTournaments ? (
+                {data && filteredTournaments ? (
                   <div className="flex flex-col gap-2 md:gap-4 md:p-2">
                     {filteredTournaments.map((tournament, index) => (
                       <ChartPreview

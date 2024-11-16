@@ -17,7 +17,6 @@ export function usePaginatedTournaments({ page, pageLimit }: Props) {
     const response = await apiClient.get(
       `/tournaments?page=${page}&limit=${pageLimit}`,
     );
-    console.log(response.data);
     return response.data as Response;
   }
   return useQuery({
