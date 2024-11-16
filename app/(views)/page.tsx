@@ -9,58 +9,26 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import React, { useEffect } from "react";
+import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useFetch } from "@/hooks/use-fetch";
-import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
 import ChartPreview from "@/components/ui/charts/chart-preview";
 import { UserNav } from "@/components/ui/navbar/user-nav";
 import { usePaginatedTournaments } from "@/api";
 
 export default function Home() {
-  const { executeFetch, isLoading, isError } = useFetch();
-  const [tournaments, setTournaments] = React.useState<tournamentBody[]>([]);
   const [isActive, setIsActive] = React.useState<number>(1);
-  const [totalPages, setTotalPages] = React.useState<number>(1);
-  const { data, isPending, isFetching } = usePaginatedTournaments({
+  const { data, isFetching, refetch } = usePaginatedTournaments({
     pageLimit: 4,
-    page: 1,
+    page: isActive,
   });
 
-  async function handleGetTournaments(page: number) {
-    try {
-      const res = await executeFetch({
-        url: `/api/tournaments?page=${page}&limit=4`,
-        method: Method.GET,
-      });
-
-      if (res === null) {
-        setTournaments([]);
-        return;
-      }
-
-      const resToJSON = await res.json();
-
-      if (!resToJSON) {
-        setTournaments([]);
-        return;
-      }
-      if (!isLoading && !isError) {
-        setTournaments(resToJSON.tournaments);
-        setTotalPages(resToJSON.totalPages);
-      }
-    } catch (error) {
-      console.error("Unexpected error during creation of tournament:", error);
-    }
-  }
-
-  function handlePageClick(page: number) {
+  function handlePageClick(page: number, totalPages: number) {
     if (page < 1 || page > totalPages) return;
-    handleGetTournaments(page);
+    refetch();
     setIsActive(page);
   }
 
-  function getVisiblePageNumbers() {
+  function getVisiblePageNumbers(totalPages: number) {
     if (totalPages <= 3) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
@@ -88,11 +56,7 @@ export default function Home() {
     return pages;
   }
 
-  useEffect(() => {
-    handleGetTournaments(isActive);
-  }, []);
-
-  if (isLoading) {
+  if (isFetching) {
     return (
       <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
         <header className="md:p-8 w-full h-full md:h-fit flex flex-row items-center justify-between">
@@ -115,9 +79,9 @@ export default function Home() {
       <UserNav title="Welcome to Tournament Pool!" avatar centered />
       <main className="gap-2 h-full w-full flex flex-col md:gap-6 row-start-2 items-center justify-between">
         <div className="flex relative mt-4"></div>
-        {tournaments ? (
+        {data ? (
           <div className="grid md:grid-rows-2 grid-cols-1 md:gap-4 xl:grid-cols-2 w-full h-full">
-            {tournaments.map((tournament, index) => (
+            {data.tournaments.map((tournament, index) => (
               <ChartPreview
                 key={index}
                 tournament={tournament}
@@ -135,29 +99,35 @@ export default function Home() {
             <PaginationItem>
               <PaginationPrevious
                 className={`${isActive === 1 ? "pointer-events-none" : ""} text-xs md:text-sm`}
-                onClick={() => handlePageClick(isActive - 1)}
+                onClick={() =>
+                  handlePageClick(isActive - 1, data?.totalPages ?? 1)
+                }
               />
             </PaginationItem>
-            {getVisiblePageNumbers().map((pageNum) => (
+            {getVisiblePageNumbers(data?.totalPages ?? 1).map((pageNum) => (
               <PaginationItem key={pageNum}>
                 <PaginationLink
                   isActive={isActive === pageNum}
                   className="text-xs md:text-sm w-8 h-8 sm:w-10 sm:h-10"
-                  onClick={() => handlePageClick(pageNum)}
+                  onClick={() =>
+                    handlePageClick(pageNum, data?.totalPages ?? 1)
+                  }
                 >
                   {pageNum}
                 </PaginationLink>
               </PaginationItem>
             ))}
-            {totalPages > 3 && (
+            {(data?.totalPages ?? 1) > 3 && (
               <PaginationItem>
                 <PaginationEllipsis className="text-xs md:text-sm w-8 h-8 sm:w-10 sm:h-10" />
               </PaginationItem>
             )}
             <PaginationItem>
               <PaginationNext
-                className={`${isActive === totalPages ? "pointer-events-none" : ""} text-xs md:text-sm`}
-                onClick={() => handlePageClick(isActive + 1)}
+                className={`${isActive === data?.totalPages ? "pointer-events-none" : ""} text-xs md:text-sm`}
+                onClick={() =>
+                  handlePageClick(isActive + 1, data?.totalPages ?? 1)
+                }
               />
             </PaginationItem>
           </PaginationContent>
