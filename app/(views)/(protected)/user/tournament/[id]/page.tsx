@@ -43,7 +43,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useFetch } from "@/hooks/use-fetch";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Method,
   pointsBody,
@@ -67,6 +67,7 @@ import {
 import { ColorPicker } from "@/components/ui/color-picker";
 import { UserNav } from "@/components/ui/navbar/user-nav";
 import { useTournamentsById } from "@/api";
+import { useDeleteTournament } from "@/api/tournaments/use-delete-tournament";
 
 export default function Tournament() {
   const router = useRouter();
@@ -81,6 +82,10 @@ export default function Tournament() {
   const [filteredPoints, setFilteredPoints] = useState<pointsBody[]>();
   const { data, isFetching } = useTournamentsById({
     id: Array.isArray(id) ? id[0] : id,
+  });
+  const deleteTournamentMutation = useDeleteTournament({
+    router: router,
+    closeModal: () => setOpenDelete(false),
   });
   const [point, setPoint] = useState<pointsBody>({
     reason: "",
@@ -342,41 +347,8 @@ export default function Tournament() {
     }
   }
 
-  async function handleDeleteTournament() {
-    try {
-      const res = await executeFetch({
-        url: `/api/tournaments/${id}`,
-        method: Method.DELETE,
-      });
-
-      if (res === null) {
-        return;
-      }
-
-      if (!isLoading && isError) {
-        toast({
-          title: "Couldn't delete the tournaments",
-          description:
-            "An error occurred during the suppression of the tournaments.",
-          variant: "destructive",
-        });
-      }
-      router.push("/user/");
-      toast({
-        title: "Deleted successfully !",
-        description: "You’ve successfully deleted the tournament.",
-      });
-    } catch (error) {
-      toast({
-        title: "Unexpected error: " + error,
-        description: "Unexpected error during the suppression of a tournament.",
-        variant: "destructive",
-      });
-      console.error(
-        "Unexpected error during the suppression of a tournament:",
-        error,
-      );
-    }
+  async function handleDeleteTournament(id: string) {
+    deleteTournamentMutation.mutateAsync(id);
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -580,7 +552,11 @@ export default function Tournament() {
                           </Button>
                           <Button
                             variant="destructive"
-                            onClick={handleDeleteTournament}
+                            onClick={() =>
+                              handleDeleteTournament(
+                                Array.isArray(id) ? id[0] : id,
+                              )
+                            }
                           >
                             Confirm delete
                           </Button>
@@ -626,7 +602,7 @@ export default function Tournament() {
             </CardDescription>
           </CardHeader>
           <div className="w-full h-full flex">
-            {Array.isArray(data?.points ?? []) && (
+            {data && Array.isArray(data?.points) && (
               <Carousel
                 className="w-full h-full flex justify-center items-center"
                 opts={{ loop: true }}
@@ -634,13 +610,13 @@ export default function Tournament() {
               >
                 <CarouselContent className="flex md:w-full md:h-full gap-4">
                   <CarouselItem className="w-[160px] h-[240px] md:h-full md:w-full">
-                    <PieChartComponent tournament={tournament} />
+                    <PieChartComponent tournament={data} />
                   </CarouselItem>
                   <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
-                    <BarChartComponent tournament={tournament} />
+                    <BarChartComponent tournament={data} />
                   </CarouselItem>
                   <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
-                    <RadialChartComponent tournament={tournament} />
+                    <RadialChartComponent tournament={data} />
                   </CarouselItem>
                 </CarouselContent>
               </Carousel>
@@ -737,9 +713,10 @@ export default function Tournament() {
               </Dialog>
             </div>
             <ScrollArea className="w-full h-[380px] md:h-[550px] rounded-md p-0 md:px-2">
-              {data && Array.isArray(data?.points) && filteredPoints ? (
+              {/*Add filters*/}
+              {data && Array.isArray(data?.points) ? (
                 <div className="flex flex-col gap-4 p-2">
-                  {filteredPoints.map((point, index) => (
+                  {data.points.map((point, index) => (
                     <PointsPreview
                       point={point}
                       key={index}

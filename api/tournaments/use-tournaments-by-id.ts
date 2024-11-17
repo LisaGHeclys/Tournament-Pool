@@ -8,7 +8,7 @@ type Props = {
 
 export function useTournamentsById({ id }: Props) {
   async function getTournamentsByIdFn(id: string) {
-    const response = await apiClient.get("/tournaments/" + id);
+    const response = await apiClient.get(`/tournaments/${id}`);
     return response.data as tournamentBody;
   }
   return useQuery({
