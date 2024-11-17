@@ -153,13 +153,13 @@ export default function ShowTournament() {
                 plugins={[Autoplay({ delay: 10000 })]}
               >
                 <CarouselContent className="flex md:w-full md:h-full gap-4">
-                  <CarouselItem className="w-[160px] h-[240px] md:h-full md:w-full">
+                  <CarouselItem className="w-[160px] h-[240px] md:h-full">
                     <PieChartComponent tournament={tournament} />
                   </CarouselItem>
-                  <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
+                  <CarouselItem className="w-[160px] h-[240px] md:h-full">
                     <BarChartComponent tournament={tournament} />
                   </CarouselItem>
-                  <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
+                  <CarouselItem className="w-[160px] h-[240px] md:h-full">
                     <RadialChartComponent tournament={tournament} />
                   </CarouselItem>
                 </CarouselContent>

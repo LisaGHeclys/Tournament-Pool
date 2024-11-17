@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
+import "../styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/toaster";
 import CookieConsentBanner from "@/components/ui/cookie-consent-banner";
@@ -33,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
+        id="root"
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SessionProvider>
