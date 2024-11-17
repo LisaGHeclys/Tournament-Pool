@@ -22,9 +22,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import React, { useEffect } from "react";
-import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
-import { useFetch } from "@/hooks/use-fetch";
+import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import PieChartComponent from "@/components/ui/charts/pie-chart";
 import Autoplay from "embla-carousel-autoplay";
@@ -32,83 +30,15 @@ import PointsPreview from "@/components/ui/points-preview";
 import { BarChartComponent } from "@/components/ui/charts/bar-chart";
 import { RadialChartComponent } from "@/components/ui/charts/radial-chart";
 import { UserNav } from "@/components/ui/navbar/user-nav";
+import { useTournamentsById } from "@/api";
 
 export default function ShowTournament() {
   const id = useParams().id;
-  const { executeFetch, isLoading, isError } = useFetch();
-  const [tournament, setTournament] = React.useState<tournamentBody>({
-    id: "",
-    name: "",
-    teams: [
-      {
-        name: "",
-        color: "",
-      },
-    ],
-    createdBy: "",
-    createdAt: new Date(),
-    points: [],
+  const { data, isFetching } = useTournamentsById({
+    id: Array.isArray(id) ? id[0] : id,
   });
 
-  async function handleGetTournamentById() {
-    try {
-      const res = await executeFetch({
-        url: `/api/tournaments/${id}`,
-        method: Method.GET,
-      });
-
-      if (res === null) {
-        setTournament({
-          id: "",
-          name: "",
-          teams: [
-            {
-              name: "",
-              color: "",
-            },
-          ],
-          createdBy: "",
-          createdAt: new Date(),
-          points: [],
-        });
-        return;
-      }
-
-      const resToJSON = await res.json();
-
-      if (!resToJSON) {
-        setTournament({
-          id: "",
-          name: "",
-          teams: [
-            {
-              name: "",
-              color: "",
-            },
-          ],
-          createdBy: "",
-          createdAt: new Date(),
-          points: [],
-        });
-        return;
-      }
-
-      if (!isLoading && !isError) {
-        setTournament(resToJSON);
-      }
-    } catch (error) {
-      console.error(
-        "Unexpected error during the retrieval of a tournament:",
-        error,
-      );
-    }
-  }
-
-  useEffect(() => {
-    handleGetTournamentById();
-  }, []);
-
-  if (isLoading) {
+  if (isFetching) {
     return (
       <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
         <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
@@ -125,7 +55,7 @@ export default function ShowTournament() {
 
   return (
     <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <UserNav title={tournament.name} isBack backPath={"/"} centered />
+      <UserNav title={data?.name ?? ""} isBack backPath={"/"} centered />
       <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-between">
         <Card className="flex flex-col h-[440px] md:h-[440px] p-2 md:px-16 w-full lg:w-2/3 lg:h-full">
           <CardHeader>
@@ -136,7 +66,7 @@ export default function ShowTournament() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{tournament.name}</BreadcrumbPage>
+                  <BreadcrumbPage>{data?.name ?? ""}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -146,7 +76,7 @@ export default function ShowTournament() {
             </CardDescription>
           </CardHeader>
           <div className="w-full h-full flex">
-            {Array.isArray(tournament.points) && (
+            {data && Array.isArray(data?.points) && (
               <Carousel
                 className="w-full h-full flex justify-center items-center"
                 opts={{ loop: true }}
@@ -154,13 +84,13 @@ export default function ShowTournament() {
               >
                 <CarouselContent className="flex md:w-full md:h-full gap-4">
                   <CarouselItem className="w-[160px] h-[240px] md:h-full md:w-full">
-                    <PieChartComponent tournament={tournament} />
+                    <PieChartComponent tournament={data} />
                   </CarouselItem>
                   <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
-                    <BarChartComponent tournament={tournament} />
+                    <BarChartComponent tournament={data} />
                   </CarouselItem>
                   <CarouselItem className="w-[20px] h-[240px] md:h-full md:w-full">
-                    <RadialChartComponent tournament={tournament} />
+                    <RadialChartComponent tournament={data} />
                   </CarouselItem>
                 </CarouselContent>
               </Carousel>
@@ -176,20 +106,20 @@ export default function ShowTournament() {
           </CardHeader>
           <CardContent className="flex w-full h-full p-2 md:p-6">
             <ScrollArea className="w-full h-[460px] md:h-[600px] flex-nowrap rounded-md p-0 md:px-2">
-              {Array.isArray(tournament.points) ? (
+              {data && Array.isArray(data.points) ? (
                 <>
                   <div
-                    className={`flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 ${tournament.points.length > 3 && "animate-infinite-scroll"}`}
+                    className={`flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 ${data.points.length > 3 && "animate-infinite-scroll"}`}
                   >
-                    {Array.isArray(tournament.points) &&
-                      tournament?.points?.map((point, index) => (
+                    {Array.isArray(data.points) &&
+                      data?.points?.map((point, index) => (
                         <PointsPreview isShowing point={point} key={index} />
                       ))}
                   </div>
-                  {tournament.points.length > 3 && (
+                  {data.points.length > 3 && (
                     <div className="flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 animate-infinite-scroll">
-                      {Array.isArray(tournament.points) &&
-                        tournament?.points?.map((point, index) => (
+                      {Array.isArray(data.points) &&
+                        data?.points?.map((point, index) => (
                           <PointsPreview isShowing point={point} key={index} />
                         ))}
                     </div>

@@ -66,11 +66,12 @@ import {
 } from "@/components/ui/tooltip";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { UserNav } from "@/components/ui/navbar/user-nav";
+import { useTournamentsById } from "@/api";
 
 export default function Tournament() {
   const router = useRouter();
   const { data: session } = useSession();
-  const id = useParams().id;
+  const id: string | string[] = useParams().id;
   const [openPoints, setOpenPoints] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -78,6 +79,9 @@ export default function Tournament() {
   const { executeFetch, isLoading, isError } = useFetch();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredPoints, setFilteredPoints] = useState<pointsBody[]>();
+  const { data, isFetching } = useTournamentsById({
+    id: Array.isArray(id) ? id[0] : id,
+  });
   const [point, setPoint] = useState<pointsBody>({
     reason: "",
     points: 1,
@@ -456,20 +460,20 @@ export default function Tournament() {
     }));
   };
 
-  useEffect(() => {
-    handleGetTournamentById();
-  }, []);
+  // useEffect(() => {
+  //   handleGetTournamentById();
+  // }, []);
 
-  useEffect(() => {
-    if (Array.isArray(tournament.points)) {
-      const results = tournament?.points.filter((point) =>
-        point.reason.toLowerCase().includes(searchTerm.toLowerCase()),
-      );
-      setFilteredPoints(results);
-    }
-  }, [tournament, searchTerm, tournament.points]);
+  // useEffect(() => {
+  //   if (Array.isArray(data.points) && data) {
+  //     const results = data?.points.filter((point) =>
+  //       point.reason.toLowerCase().includes(searchTerm.toLowerCase()),
+  //     );
+  //     setFilteredPoints(results);
+  //   }
+  // }, [data, searchTerm, data.points]);
 
-  if (isLoading || tournament.name == "") {
+  if (isLoading || isFetching) {
     return (
       <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
         <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
@@ -487,7 +491,7 @@ export default function Tournament() {
   return (
     <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
       <UserNav
-        title={tournament.name}
+        title={data?.name ?? ""}
         isBack
         backPath={"/user"}
         centered
@@ -612,7 +616,7 @@ export default function Tournament() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{tournament.name}</BreadcrumbPage>
+                  <BreadcrumbPage>{data?.name ?? ""}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -622,7 +626,7 @@ export default function Tournament() {
             </CardDescription>
           </CardHeader>
           <div className="w-full h-full flex">
-            {Array.isArray(tournament.points) && (
+            {Array.isArray(data?.points ?? []) && (
               <Carousel
                 className="w-full h-full flex justify-center items-center"
                 opts={{ loop: true }}
@@ -733,7 +737,7 @@ export default function Tournament() {
               </Dialog>
             </div>
             <ScrollArea className="w-full h-[380px] md:h-[550px] rounded-md p-0 md:px-2">
-              {Array.isArray(tournament.points) && filteredPoints ? (
+              {data && Array.isArray(data?.points) && filteredPoints ? (
                 <div className="flex flex-col gap-4 p-2">
                   {filteredPoints.map((point, index) => (
                     <PointsPreview
