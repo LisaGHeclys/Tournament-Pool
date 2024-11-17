@@ -40,6 +40,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { UserNav } from "@/components/ui/navbar/user-nav";
 import { useUserTournaments } from "@/api";
+import { useCreateTournament } from "@/api/tournaments/use-create-tournament";
+import { CreateTournamentForm } from "@/components/ui/forms/create-tournament-form";
 
 export default function User() {
   const { executeFetch, isLoading, isError } = useFetch();
@@ -63,6 +65,10 @@ export default function User() {
   const [tournaments, setTournaments] = React.useState<tournamentBody[]>([]);
   const router = useRouter();
   const { data, isFetching } = useUserTournaments();
+  const createTournamentMutation = useCreateTournament({
+    router: router,
+    closeModal: () => setOpen(false),
+  });
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -124,42 +130,43 @@ export default function User() {
     });
   };
 
-  const handleCreateTournament = async () => {
-    try {
-      const res = await executeFetch({
-        url: "/api/tournaments",
-        method: Method.PUT,
-        body: tournament,
-      });
-
-      if (res === null) {
-        toast({
-          title: "Couldn't create tournament",
-          description:
-            "An error occurred during creation of tournament. Please try again.",
-          variant: "destructive",
-        });
-        console.error("Couldn't create tournament", res);
-        return;
-      }
-
-      const resToJSON = await res.json();
-
-      if (!isLoading && !isError) {
-        router.push("/user/tournament/" + resToJSON.id);
-        toast({
-          title: "Creation successful !",
-          description: "You’ve successfully created a tournament.",
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Unexpected error: " + error,
-        description: "An error occurred during creation of tournament.",
-        variant: "destructive",
-      });
-      console.error("Unexpected error during creation of tournament:", error);
-    }
+  const handleCreateTournament = async (data) => {
+    // try {
+    //   const res = await executeFetch({
+    //     url: "/api/tournaments",
+    //     method: Method.PUT,
+    //     body: tournament,
+    //   });
+    //
+    //   if (res === null) {
+    //     toast({
+    //       title: "Couldn't create tournament",
+    //       description:
+    //         "An error occurred during creation of tournament. Please try again.",
+    //       variant: "destructive",
+    //     });
+    //     console.error("Couldn't create tournament", res);
+    //     return;
+    //   }
+    //
+    //   const resToJSON = await res.json();
+    //
+    //   if (!isLoading && !isError) {
+    //     router.push("/user/tournament/" + resToJSON.id);
+    //     toast({
+    //       title: "Creation successful !",
+    //       description: "You’ve successfully created a tournament.",
+    //     });
+    //   }
+    // } catch (error) {
+    //   toast({
+    //     title: "Unexpected error: " + error,
+    //     description: "An error occurred during creation of tournament.",
+    //     variant: "destructive",
+    //   });
+    //   console.error("Unexpected error during creation of tournament:", error);
+    // }
+    createTournamentMutation.mutate(data);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -253,6 +260,7 @@ export default function User() {
                       You can create your own tournament here.
                     </DialogDescription>
                   </DialogHeader>
+                  <CreateTournamentForm />
                   <form onSubmit={handleSubmit} className="grid gap-4">
                     <div className="grid w-full items-center gap-4">
                       <div className="flex flex-col space-y-1.5">
