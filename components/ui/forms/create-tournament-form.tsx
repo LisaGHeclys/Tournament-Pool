@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import createTournamentSchema from "@/schema/createTournamentSchema";
+import createTournamentSchema from "@/schema/create-tournament-schema";
 import {
   Form,
   FormControl,

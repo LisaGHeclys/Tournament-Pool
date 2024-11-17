@@ -1,5 +1,4 @@
 "use client";
-
 import { z } from "zod";
 
 const updateTournamentSchema = z.object({

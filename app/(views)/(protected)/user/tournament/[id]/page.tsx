@@ -35,13 +35,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useFetch } from "@/hooks/use-fetch";
 import React, { useState } from "react";
 import {
@@ -68,6 +61,7 @@ import { ColorPicker } from "@/components/ui/color-picker";
 import { UserNav } from "@/components/ui/navbar/user-nav";
 import { useTournamentsById } from "@/api";
 import { useDeleteTournament } from "@/api/tournaments/use-delete-tournament";
+import { AddPointsForm } from "@/components/ui/forms/add-points-form";
 
 export default function Tournament() {
   const router = useRouter();
@@ -129,25 +123,6 @@ export default function Tournament() {
       points: [],
     });
 
-  function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
-    setPoint((prev) => ({
-      ...prev,
-      [e.target.id]:
-        e.target.id == "points" ? Number(e.target.value) : e.target.value,
-    }));
-  }
-
-  function handleOnChangeTeam(value: string) {
-    const tempTeam: teamBody = tournament.teams.find(
-      (team) => team.name == value,
-    ) || {
-      name: "",
-      color: "",
-    };
-    setTeam(tempTeam);
-  }
-
   async function handleGetTournamentById() {
     try {
       const res = await executeFetch({
@@ -172,69 +147,6 @@ export default function Tournament() {
     } catch (error) {
       console.error(
         "Unexpected error during the retrieval of a tournament:",
-        error,
-      );
-      router.push("/user/");
-    }
-  }
-
-  async function handleAddPointsToTournament() {
-    try {
-      const newTournament = {
-        ...tournament,
-        points: Array.isArray(tournament.points)
-          ? [
-              { ...point, createdAt: new Date(), team: team },
-              ...tournament.points.map((existingPoint) => ({
-                ...existingPoint,
-                createdAt: existingPoint.createdAt
-                  ? new Date(existingPoint.createdAt)
-                  : null,
-              })),
-            ]
-          : [{ ...point, createdAt: new Date(), team: team }],
-      };
-
-      const res = await executeFetch({
-        url: `/api/tournaments/${id}`,
-        method: Method.PATCH,
-        body: newTournament,
-      });
-
-      if (res === null) {
-        setPoint({
-          reason: "",
-          points: 1,
-          createdBy: session?.user?.name ?? "",
-          team: {
-            name: "",
-            color: "",
-          },
-          createdAt: new Date(),
-        });
-        return;
-      }
-      if (!isLoading && isError) {
-        toast({
-          title: "Couldn't add points to the tournaments",
-          description:
-            "An error occurred during the update of the points of the tournaments.",
-          variant: "destructive",
-        });
-      }
-      toast({
-        title: "Points added successfully !",
-        description: "You’ve successfully add points to the tournament.",
-      });
-      handleGetTournamentById();
-    } catch (error) {
-      toast({
-        title: "Unexpected error: " + error,
-        description: "Unexpected error during the update of a tournament.",
-        variant: "destructive",
-      });
-      console.error(
-        "Unexpected error during the update of a tournament:",
         error,
       );
       router.push("/user/");
@@ -351,26 +263,6 @@ export default function Tournament() {
     deleteTournamentMutation.mutateAsync(id);
   }
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    handleAddPointsToTournament();
-    setPoint({
-      reason: "",
-      points: 1,
-      createdBy: session?.user?.name ?? "",
-      team: {
-        name: "",
-        color: "",
-      },
-      createdAt: new Date(),
-    });
-    setTeam({
-      name: "",
-      color: "",
-    });
-    setOpenPoints(false);
-  }
-
   function handleUpdate(e: React.FormEvent) {
     e.preventDefault();
     handleUpdateTournament();
@@ -431,10 +323,6 @@ export default function Tournament() {
       points: newUpdatedPoints,
     }));
   };
-
-  // useEffect(() => {
-  //   handleGetTournamentById();
-  // }, []);
 
   // useEffect(() => {
   //   if (Array.isArray(data.points) && data) {
@@ -655,60 +543,9 @@ export default function Tournament() {
                       You can add points for your teams here.
                     </DialogDescription>
                   </DialogHeader>
-                  <form onSubmit={handleSubmit} className="grid gap-4">
-                    <div className="grid w-full items-center gap-4">
-                      <div className="flex flex-col space-y-1.5">
-                        <Label htmlFor="team-number">For which team ?</Label>
-                        <Select onValueChange={handleOnChangeTeam}>
-                          <SelectTrigger id="team-number">
-                            <SelectValue placeholder="Choose a team" />
-                          </SelectTrigger>
-                          <SelectContent position="popper">
-                            {tournament.teams &&
-                              tournament.teams.map((team, index) => {
-                                return (
-                                  <SelectItem key={index} value={team.name}>
-                                    {team.name}
-                                  </SelectItem>
-                                );
-                              })}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      {team.name !== "" && (
-                        <>
-                          <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="reason">What reason ?</Label>
-                            <Input
-                              id="reason"
-                              placeholder="Write the reason to add points"
-                              onChange={handleOnChange}
-                              required
-                            />
-                          </div>
-                          <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="points">How many points?</Label>
-                            <Input
-                              defaultValue={1}
-                              id="points"
-                              type="number"
-                              placeholder="How many points do you want to add ?"
-                              onChange={handleOnChange}
-                              required
-                            />
-                          </div>
-                        </>
-                      )}
-                    </div>
-                    <DialogFooter className="flex">
-                      <Button
-                        type="submit"
-                        disabled={point.reason === "" && point.team.name === ""}
-                      >
-                        Add points
-                      </Button>
-                    </DialogFooter>
-                  </form>
+                  {data && (
+                    <AddPointsForm data={data} setOpenPoints={setOpenPoints} />
+                  )}
                 </DialogContent>
               </Dialog>
             </div>
