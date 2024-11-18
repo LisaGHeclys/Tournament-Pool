@@ -7,14 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ChevronLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Breadcrumb,
@@ -31,13 +29,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import PieChartComponent from "@/components/ui/charts/pie-chart";
 import Autoplay from "embla-carousel-autoplay";
 import PointsPreview from "@/components/ui/points-preview";
-import { useWindowSize } from "@/hooks/use-window-size";
 import { BarChartComponent } from "@/components/ui/charts/bar-chart";
 import { RadialChartComponent } from "@/components/ui/charts/radial-chart";
+import { UserNav } from "@/components/ui/navbar/user-nav";
 
 export default function ShowTournament() {
-  const size = useWindowSize();
-  const router = useRouter();
   const id = useParams().id;
   const { executeFetch, isLoading, isError } = useFetch();
   const [tournament, setTournament] = React.useState<tournamentBody>({
@@ -114,7 +110,7 @@ export default function ShowTournament() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+      <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
         <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
           <Skeleton className="h-12 w-full" />
         </header>
@@ -128,22 +124,8 @@ export default function ShowTournament() {
   }
 
   return (
-    <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
-        <Button
-          className="rounded-full hover:scale-[102%] transition ease-in-out delay-250"
-          size="icon"
-          onClick={() => {
-            router.push("/");
-          }}
-        >
-          <ChevronLeft size={size.width <= 425 ? 18 : 32} />
-        </Button>
-        <h1 className="text-2xl md:text-4xl scroll-m-20 font-extrabold tracking-tight lg:text-5xl">
-          {tournament.name}
-        </h1>
-        <div />
-      </header>
+    <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
+      <UserNav title={tournament.name} isBack backPath={"/"} centered />
       <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-between">
         <Card className="flex flex-col h-[440px] md:h-[440px] p-2 md:px-16 w-full lg:w-2/3 lg:h-full">
           <CardHeader>
@@ -201,17 +183,17 @@ export default function ShowTournament() {
                   >
                     {Array.isArray(tournament.points) &&
                       tournament?.points?.map((point, index) => (
-                        <PointsPreview point={point} key={index} />
+                        <PointsPreview isShowing point={point} key={index} />
                       ))}
                   </div>
-                  <div
-                    className={`flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 ${tournament.points.length > 3 && "animate-infinite-scroll"}`}
-                  >
-                    {Array.isArray(tournament.points) &&
-                      tournament?.points?.map((point, index) => (
-                        <PointsPreview point={point} key={index} />
-                      ))}
-                  </div>
+                  {tournament.points.length > 3 && (
+                    <div className="flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 animate-infinite-scroll">
+                      {Array.isArray(tournament.points) &&
+                        tournament?.points?.map((point, index) => (
+                          <PointsPreview isShowing point={point} key={index} />
+                        ))}
+                    </div>
+                  )}
                 </>
               ) : (
                 <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">

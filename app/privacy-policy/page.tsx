@@ -1,30 +1,14 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import React from "react";
 import Footer from "@/components/ui/footer";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
+import { UserNav } from "@/components/ui/navbar/user-nav";
 
 export default function PrivacyPolicy() {
-  const router = useRouter();
-
   return (
     <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
-        <Button
-          className="hover:scale-105 transition ease-in-out delay-150"
-          onClick={() => {
-            router.push("/");
-          }}
-        >
-          Homepage
-        </Button>
-        <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Privacy Policy
-        </h1>
-        <div />
-      </header>
+      <UserNav title="Privacy Policy" isBack backPath={"/"} centered />
       <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-center">
         <Card className="w-full md:w-2/3 pt-4">
           <CardContent className="flex flex-col gap-2">
@@ -46,7 +30,7 @@ export default function PrivacyPolicy() {
             <h1 className="pt-3 text-xl font-semibold">
               1. Information Collection and Use
             </h1>
-            <p>
+            <h3>
               We collect information using OAuth 2.0 authentication with GitHub.
               When you log in or sign up via GitHub, we access certain
               information associated with your GitHub account, such as:
@@ -66,7 +50,7 @@ export default function PrivacyPolicy() {
               This includes but is not limited to page views, session duration,
               and user interactions to help improve our platform’s performance
               and user experience.
-            </p>
+            </h3>
             <h1 className="pt-3 text-xl font-semibold">2. Cookies</h1>
             <p>
               Cookies are files containing a small amount of data, which may

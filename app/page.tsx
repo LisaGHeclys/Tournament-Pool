@@ -1,10 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import Footer from "@/components/ui/footer";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 import {
   Pagination,
   PaginationContent,
@@ -14,38 +9,18 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { UserNav } from "@/components/ui/user-nav";
 import React, { useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useFetch } from "@/hooks/use-fetch";
 import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
 import ChartPreview from "@/components/ui/charts/chart-preview";
+import { UserNav } from "@/components/ui/navbar/user-nav";
 
 export default function Home() {
-  const router = useRouter();
   const { executeFetch, isLoading, isError } = useFetch();
-  const { status } = useSession();
   const [tournaments, setTournaments] = React.useState<tournamentBody[]>([]);
   const [isActive, setIsActive] = React.useState<number>(1);
   const [totalPages, setTotalPages] = React.useState<number>(1);
-
-  function handleUserNav() {
-    switch (status) {
-      case "authenticated":
-        return <UserNav />;
-      case "loading":
-        return <Skeleton className="h-8 w-8 rounded-full" />;
-      default:
-        return (
-          <Button
-            className="hover:scale-105 transition ease-in-out delay-250"
-            onClick={() => router.push("/login")}
-          >
-            <span>Login</span>
-          </Button>
-        );
-    }
-  }
 
   async function handleGetTournaments(page: number) {
     try {
@@ -132,22 +107,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
-        <div />
-        <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Welcome to Tournament Pool !
-        </h1>
-        {handleUserNav()}
-      </header>
+      <UserNav title="Welcome to Tournament Pool!" avatar centered />
       <main className="gap-2 h-full w-full flex flex-col md:gap-6 row-start-2 items-center justify-between">
-        <div className="flex relative mt-4">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            type="search"
-            placeholder="Search for a pool..."
-            className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
-          />
-        </div>
+        <div className="flex relative mt-4"></div>
         {tournaments ? (
           <div className="grid md:grid-rows-2 grid-cols-1 md:gap-4 xl:grid-cols-2 w-full h-full">
             {tournaments.map((tournament, index) => (

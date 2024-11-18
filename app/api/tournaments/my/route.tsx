@@ -3,6 +3,7 @@ import { getDb } from "@/lib/firebase/firebase";
 import withSession from "@/app/api/_helpers/middleware/with-session";
 import { Session } from "next-auth";
 import { tournamentBody } from "@/app/api/_helpers/types/types";
+import { firestoreTimestampToDate } from "@/app/api/_helpers/getDates";
 
 async function getHandler(req: NextRequest, session?: Session) {
   try {
@@ -18,9 +19,10 @@ async function getHandler(req: NextRequest, session?: Session) {
       return {
         id: doc.id,
         ...data,
-        createdAt: new Date(data.createdAt),
+        createdAt: firestoreTimestampToDate(data.createdAt),
       };
     });
+
     tournaments.sort(
       (a: tournamentBody, b: tournamentBody) =>
         b.createdAt.getTime() - a.createdAt.getTime(),
