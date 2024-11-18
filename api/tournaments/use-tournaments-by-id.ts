@@ -14,5 +14,6 @@ export function useTournamentsById({ id }: Props) {
   return useQuery({
     queryKey: tournamentsQueryKeys.tournament(id),
     queryFn: () => getTournamentsByIdFn(id),
+    refetchInterval: 30000,
   });
 }
