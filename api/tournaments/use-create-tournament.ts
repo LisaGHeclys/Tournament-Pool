@@ -4,7 +4,7 @@ import { tournamentBody } from "@/app/api/_helpers/types/types";
 import { toast } from "@/hooks/use-toast";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-export interface Props {
+interface Props {
   router: AppRouterInstance;
   closeModal: () => void;
 }

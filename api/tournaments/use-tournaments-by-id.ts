@@ -4,9 +4,10 @@ import { tournamentBody } from "@/app/api/_helpers/types/types";
 
 type Props = {
   id: string;
+  refetchInterval?: number;
 };
 
-export function useTournamentsById({ id }: Props) {
+export function useTournamentsById({ id, refetchInterval }: Props) {
   async function getTournamentsByIdFn(id: string) {
     const response = await apiClient.get(`/tournaments/${id}`);
     return response.data as tournamentBody;
@@ -14,6 +15,6 @@ export function useTournamentsById({ id }: Props) {
   return useQuery({
     queryKey: tournamentsQueryKeys.tournament(id),
     queryFn: () => getTournamentsByIdFn(id),
-    refetchInterval: 30000,
+    refetchInterval: refetchInterval ?? 0,
   });
 }

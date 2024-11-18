@@ -3,12 +3,11 @@ import { apiClient, tournamentsQueryKeys } from "@/api";
 import { toast } from "@/hooks/use-toast";
 import { tournamentBody } from "@/app/api/_helpers/types/types";
 
-export interface Props {
-  closeModal: () => void;
+interface Props {
   id: string;
 }
 
-export function useEditTournament({ closeModal, id }: Props) {
+export function useEditTournament({ id }: Props) {
   const queryClient = useQueryClient();
 
   const editTournamentFn = async (updatedTournament: tournamentBody) => {
@@ -50,7 +49,6 @@ export function useEditTournament({ closeModal, id }: Props) {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: tournamentsQueryKeys.all });
-      closeModal();
     },
   });
 }

@@ -30,7 +30,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import { Method, tournamentBody } from "@/app/api/_helpers/types/types";
+import { tournamentBody } from "@/app/api/_helpers/types/types";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ChartPreview from "@/components/ui/charts/chart-preview";
@@ -39,13 +39,11 @@ import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { UserNav } from "@/components/ui/navbar/user-nav";
-import { useUserTournaments } from "@/api";
-import { useCreateTournament } from "@/api/tournaments/use-create-tournament";
+import { useCreateTournament, useUserTournaments } from "@/api";
 import { CreateTournamentForm } from "@/components/ui/forms/create-tournament-form";
 
 export default function User() {
   const { executeFetch, isLoading, isError } = useFetch();
-  const { toast } = useToast();
   const { data: session } = useSession();
   const [open, setOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = useState("");

@@ -29,18 +29,15 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import { useFetch } from "@/hooks/use-fetch";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Method,
   pointsBody,
-  teamBody,
   tournamentBody,
 } from "@/app/api/_helpers/types/types";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -57,11 +54,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ColorPicker } from "@/components/ui/color-picker";
 import { UserNav } from "@/components/ui/navbar/user-nav";
 import { useTournamentsById } from "@/api";
-import { useDeleteTournament } from "@/api/tournaments/use-delete-tournament";
 import { AddPointsForm } from "@/components/ui/forms/add-points-form";
+import { EditTournamentForm } from "@/components/ui/forms/edit-tournament-form";
 
 export default function Tournament() {
   const router = useRouter();
@@ -69,17 +65,12 @@ export default function Tournament() {
   const id: string | string[] = useParams().id;
   const [openPoints, setOpenPoints] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
-  const [openDelete, setOpenDelete] = React.useState(false);
   const { toast } = useToast();
   const { executeFetch, isLoading, isError } = useFetch();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredPoints, setFilteredPoints] = useState<pointsBody[]>();
   const { data, isFetching } = useTournamentsById({
     id: Array.isArray(id) ? id[0] : id,
-  });
-  const deleteTournamentMutation = useDeleteTournament({
-    router: router,
-    closeModal: () => setOpenDelete(false),
   });
   const [point, setPoint] = useState<pointsBody>({
     reason: "",
@@ -90,10 +81,6 @@ export default function Tournament() {
       color: "",
     },
     createdAt: new Date(),
-  });
-  const [team, setTeam] = useState<teamBody>({
-    name: "",
-    color: "",
   });
   const [tournament, setTournament] = React.useState<tournamentBody>({
     id: "",
@@ -210,128 +197,14 @@ export default function Tournament() {
     }
   }
 
-  async function handleUpdateTournament() {
-    try {
-      const res = await executeFetch({
-        url: `/api/tournaments/${id}`,
-        method: Method.PATCH,
-        body: updatedTournament,
-      });
-
-      if (res === null) {
-        setPoint({
-          reason: "",
-          points: 1,
-          createdBy: session?.user?.name ?? "",
-          team: {
-            name: "",
-            color: "",
-          },
-          createdAt: new Date(),
-        });
-        return;
-      }
-
-      if (!isLoading && isError) {
-        toast({
-          title: "Couldn't update the tournaments",
-          description:
-            "An error occurred during the update of the tournaments.",
-          variant: "destructive",
-        });
-      }
-      toast({
-        title: "Updated successfully !",
-        description: "You’ve successfully updated the tournament.",
-      });
-      handleGetTournamentById();
-    } catch (error) {
-      toast({
-        title: "Unexpected error: " + error,
-        description: "Unexpected error during the update of a tournament.",
-        variant: "destructive",
-      });
-      console.error(
-        "Unexpected error during the update of a tournament:",
-        error,
+  useEffect(() => {
+    if (data && Array.isArray(data.points) && data) {
+      const results = data?.points.filter((point) =>
+        point.reason.toLowerCase().includes(searchTerm.toLowerCase()),
       );
-      router.push("/user/");
+      setFilteredPoints(results);
     }
-  }
-
-  async function handleDeleteTournament(id: string) {
-    deleteTournamentMutation.mutateAsync(id);
-  }
-
-  function handleUpdate(e: React.FormEvent) {
-    e.preventDefault();
-    handleUpdateTournament();
-    setPoint({
-      reason: "",
-      points: 1,
-      createdBy: session?.user?.name ?? "",
-      team: {
-        name: "",
-        color: "",
-      },
-      createdAt: new Date(),
-    });
-    setTeam({
-      name: "",
-      color: "",
-    });
-    setOpenEdit(false);
-  }
-
-  const handleDisabled = () => {
-    if (updatedTournament.name == "") return true;
-
-    return updatedTournament.teams.some((team) => {
-      return (
-        team.name === "" ||
-        team.color.toLowerCase() === "#ffffff" ||
-        team.color === ""
-      );
-    });
-  };
-
-  const handleTeamChange = (
-    index: number,
-    field: "name" | "color",
-    value: string,
-  ) => {
-    const newUpdatedTeams = updatedTournament.teams.map((team, i) =>
-      i === index ? { ...team, [field]: value } : team,
-    );
-
-    const newUpdatedPoints = updatedTournament.points?.map((point) => {
-      if (point.team.name === updatedTournament.teams[index].name) {
-        return {
-          ...point,
-          team: {
-            ...point.team,
-            [field]: value,
-          },
-        };
-      }
-      return point;
-    });
-
-    setUpdatedTournament((prev) => ({
-      ...prev,
-      teams: newUpdatedTeams,
-      points: newUpdatedPoints,
-    }));
-  };
-
-  // useEffect(() => {
-  //   if (Array.isArray(data.points) && data) {
-  //     const results = data?.points.filter((point) =>
-  //       point.reason.toLowerCase().includes(searchTerm.toLowerCase()),
-  //     );
-  //     setFilteredPoints(results);
-  //   }
-  // }, [data, searchTerm, data.points]);
+  }, [data, searchTerm]);
 
   if (isLoading || isFetching) {
     return (
@@ -378,88 +251,9 @@ export default function Tournament() {
                     You can edit your tournament here.
                   </DialogDescription>
                 </DialogHeader>
-                <form onSubmit={handleUpdate} className="grid gap-4">
-                  <div className="grid w-full items-center gap-4">
-                    <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="name">Tournament Name</Label>
-                      <Input
-                        id="name"
-                        value={updatedTournament.name}
-                        disabled
-                      />
-                    </div>
-                    {updatedTournament.teams.map((team, index) => (
-                      <div
-                        key={index}
-                        className="flex w-full flex-col space-y-1.5"
-                      >
-                        <Label htmlFor={`update-team-name-${index}`}>
-                          Team {index + 1} : Name and Color
-                        </Label>
-                        <div key={index} className="flex flex-row gap-4">
-                          <Input
-                            id={`update-team-name-${index}`}
-                            value={team.name}
-                            onChange={(e) =>
-                              handleTeamChange(index, "name", e.target.value)
-                            }
-                            placeholder="Team name"
-                            required
-                          />
-                          <div>
-                            <ColorPicker
-                              id={`update-team-color-${index}`}
-                              value={team.color}
-                              onChange={(v) =>
-                                handleTeamChange(index, "color", v)
-                              }
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <DialogFooter className="sm:justify-between">
-                    <Dialog open={openDelete} onOpenChange={setOpenDelete}>
-                      <DialogTrigger asChild>
-                        <Button variant="destructive">Delete</Button>
-                      </DialogTrigger>
-                      <DialogContent className="flex flex-col rounded-md max-w-[280px] sm:max-w-[425px]">
-                        <DialogHeader>
-                          <DialogTitle>Delete {tournament.name}</DialogTitle>
-                          <DialogDescription>
-                            Are you sure you want to delete this tournament ?
-                          </DialogDescription>
-                        </DialogHeader>
-                        <DialogFooter className="sm:justify-between">
-                          <Button
-                            variant="outline"
-                            onClick={() => setOpenDelete(false)}
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            variant="destructive"
-                            onClick={() =>
-                              handleDeleteTournament(
-                                Array.isArray(id) ? id[0] : id,
-                              )
-                            }
-                          >
-                            Confirm delete
-                          </Button>
-                        </DialogFooter>
-                      </DialogContent>
-                    </Dialog>
-                    <Button
-                      type="submit"
-                      variant="outline"
-                      disabled={handleDisabled()}
-                    >
-                      Update
-                    </Button>
-                  </DialogFooter>
-                </form>
+                {data && (
+                  <EditTournamentForm data={data} setOpenEdit={setOpenEdit} />
+                )}
               </DialogContent>
             </Dialog>
             <TooltipContent>Edit tournament's information</TooltipContent>
@@ -550,10 +344,9 @@ export default function Tournament() {
               </Dialog>
             </div>
             <ScrollArea className="w-full h-[380px] md:h-[550px] rounded-md p-0 md:px-2">
-              {/*Add filters*/}
-              {data && Array.isArray(data?.points) ? (
+              {data && Array.isArray(data?.points) && filteredPoints ? (
                 <div className="flex flex-col gap-4 p-2">
-                  {data.points.map((point, index) => (
+                  {filteredPoints.map((point, index) => (
                     <PointsPreview
                       point={point}
                       key={index}

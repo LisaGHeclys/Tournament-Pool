@@ -3,19 +3,19 @@ import { apiClient, tournamentsQueryKeys } from "@/api";
 import { toast } from "@/hooks/use-toast";
 import { tournamentBody } from "@/app/api/_helpers/types/types";
 
-export interface Props {
+interface Props {
   id: string;
 }
 
-export function useAddPoints({ id }: Props) {
+export function useDeletePoints({ id }: Props) {
   const queryClient = useQueryClient();
 
-  const addPointsFn = async (updatedTournament: tournamentBody) => {
+  const deletePointsFn = async (updatedTournament: tournamentBody) => {
     return await apiClient.patch(`/tournaments/${id}`, updatedTournament);
   };
 
   return useMutation({
-    mutationFn: addPointsFn,
+    mutationFn: deletePointsFn,
     onMutate: async () => {
       await queryClient.cancelQueries({
         queryKey: tournamentsQueryKeys.tournament(id),
@@ -23,15 +23,15 @@ export function useAddPoints({ id }: Props) {
     },
     onSuccess: () => {
       toast({
-        title: "Points added successfully !",
-        description: "You’ve successfully add points to the tournament.",
+        title: "Points successfully deleted !",
+        description: "You’ve successfully deleted points of the tournament.",
       });
     },
     onError: () => {
       toast({
-        title: "Couldn't add points to the tournaments",
+        title: "Couldn't delete the points to the tournaments",
         description:
-          "An error occurred during the update of the points of the tournaments.",
+          "An error occurred during the suppression of the points of the tournaments.",
         variant: "destructive",
       });
       queryClient.invalidateQueries({ queryKey: tournamentsQueryKeys.all });

@@ -23,8 +23,8 @@ import {
 } from "@/components/ui/select";
 import { tournamentBody } from "@/app/api/_helpers/types/types";
 import { useSession } from "next-auth/react";
-import { useAddPoints } from "@/api/tournaments/use-add-points";
 import { useParams } from "next/navigation";
+import { useAddPoints } from "@/api";
 
 interface AddPointsFormProps {
   data: tournamentBody;

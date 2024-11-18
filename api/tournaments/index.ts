@@ -3,3 +3,7 @@ export * from "./use-paginated-tournaments";
 export * from "./use-user-tournaments";
 export * from "./use-tournaments-by-id";
 export * from "./use-add-points";
+export * from "./use-delete-points";
+export * from "./use-edit-tournament";
+export * from "./use-delete-tournament";
+export * from "./use-create-tournament";
