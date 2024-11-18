@@ -17,7 +17,10 @@ import {
 type PointsPreviewProps = {
   isShowing?: boolean;
   point: pointsBody;
-  handleRemovePointsToTournament?: (targetCreatedAt: Date) => Promise<void>;
+  handleRemovePointsToTournament?: (
+    targetCreatedAt: Date,
+    setOpenDeletePoint: React.Dispatch<React.SetStateAction<boolean>>,
+  ) => Promise<void>;
 };
 
 export default function PointsPreview({
@@ -25,7 +28,7 @@ export default function PointsPreview({
   point,
   handleRemovePointsToTournament,
 }: PointsPreviewProps) {
-  const [openDelete, setOpenDelete] = React.useState(false);
+  const [openDeletePoint, setOpenDeletePoint] = React.useState(false);
 
   return (
     <Card className="w-full h-full flex justify-between drop-shadow-lg dark:shadow-white">
@@ -40,7 +43,10 @@ export default function PointsPreview({
             <>
               <div className="w-full flex items-center justify-between rounded-sm ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
                 <CardTitle className="font-extrabold">{point.reason}</CardTitle>
-                <Dialog open={openDelete} onOpenChange={setOpenDelete}>
+                <Dialog
+                  open={openDeletePoint}
+                  onOpenChange={setOpenDeletePoint}
+                >
                   <DialogTrigger asChild>
                     <Button
                       className="rounded-full hover:scale-115 transition ease-in-out delay-250"
@@ -60,7 +66,7 @@ export default function PointsPreview({
                     <DialogFooter className="sm:justify-between">
                       <Button
                         variant="outline"
-                        onClick={() => setOpenDelete(false)}
+                        onClick={() => setOpenDeletePoint(false)}
                       >
                         Cancel
                       </Button>
@@ -68,7 +74,10 @@ export default function PointsPreview({
                         variant="destructive"
                         onClick={() =>
                           handleRemovePointsToTournament &&
-                          handleRemovePointsToTournament(point.createdAt)
+                          handleRemovePointsToTournament(
+                            point.createdAt,
+                            setOpenDeletePoint,
+                          )
                         }
                       >
                         Confirm delete

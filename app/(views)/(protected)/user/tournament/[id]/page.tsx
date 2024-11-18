@@ -15,7 +15,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Breadcrumb,
@@ -33,19 +33,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useFetch } from "@/hooks/use-fetch";
 import React, { useEffect, useState } from "react";
-import {
-  Method,
-  pointsBody,
-  tournamentBody,
-} from "@/app/api/_helpers/types/types";
+import { pointsBody } from "@/app/api/_helpers/types/types";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useSession } from "next-auth/react";
 import PointsPreview from "@/components/ui/points-preview";
 import Autoplay from "embla-carousel-autoplay";
 import PieChartComponent from "@/components/ui/charts/pie-chart";
-import { useToast } from "@/hooks/use-toast";
 import { BarChartComponent } from "@/components/ui/charts/bar-chart";
 import { RadialChartComponent } from "@/components/ui/charts/radial-chart";
 import {
@@ -55,145 +48,43 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { UserNav } from "@/components/ui/navbar/user-nav";
-import { useTournamentsById } from "@/api";
+import { useDeletePoints, useTournamentsById } from "@/api";
 import { AddPointsForm } from "@/components/ui/forms/add-points-form";
 import { EditTournamentForm } from "@/components/ui/forms/edit-tournament-form";
 
 export default function Tournament() {
-  const router = useRouter();
-  const { data: session } = useSession();
   const id: string | string[] = useParams().id;
   const [openPoints, setOpenPoints] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
-  const { toast } = useToast();
-  const { executeFetch, isLoading, isError } = useFetch();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredPoints, setFilteredPoints] = useState<pointsBody[]>();
-  const { data, isFetching } = useTournamentsById({
+  const { data, isFetching, refetch } = useTournamentsById({
     id: Array.isArray(id) ? id[0] : id,
   });
-  const [point, setPoint] = useState<pointsBody>({
-    reason: "",
-    points: 1,
-    createdBy: session?.user?.name ?? "",
-    team: {
-      name: "",
-      color: "",
-    },
-    createdAt: new Date(),
+  const deletePointsMutation = useDeletePoints({
+    id: Array.isArray(id) ? id[0] : id,
   });
-  const [tournament, setTournament] = React.useState<tournamentBody>({
-    id: "",
-    name: "",
-    teams: [
-      {
-        name: "",
-        color: "",
-      },
-    ],
-    createdBy: "",
-    createdAt: new Date(),
-    points: [],
-  });
-  const [updatedTournament, setUpdatedTournament] =
-    React.useState<tournamentBody>({
-      id: "",
-      name: "",
-      teams: [
-        {
-          name: "",
-          color: "",
-        },
-      ],
-      createdBy: "",
-      createdAt: new Date(),
-      points: [],
-    });
 
-  async function handleGetTournamentById() {
-    try {
-      const res = await executeFetch({
-        url: `/api/tournaments/${id}`,
-        method: Method.GET,
-      });
-
-      if (res === null) {
-        router.push("/user/");
-      } else {
-        const resToJSON = await res.json();
-
-        if (!resToJSON.name) {
-          router.push("/user/");
-        }
-
-        if (!isLoading && !isError) {
-          setUpdatedTournament(resToJSON);
-          setTournament(resToJSON);
-        }
-      }
-    } catch (error) {
-      console.error(
-        "Unexpected error during the retrieval of a tournament:",
-        error,
-      );
-      router.push("/user/");
-    }
-  }
-
-  async function handleRemovePointsToTournament(targetCreatedAt: Date) {
-    try {
+  async function handleRemovePointsToTournament(
+    targetCreatedAt: Date,
+    setOpenDeletePoint: React.Dispatch<React.SetStateAction<boolean>>,
+  ) {
+    if (data) {
       const newTournament = {
-        ...tournament,
-        points: Array.isArray(tournament.points)
-          ? tournament.points.filter(
-              (existingPoint) => existingPoint.createdAt !== targetCreatedAt,
-            )
-          : [],
+        ...data,
+        points:
+          data && Array.isArray(data.points)
+            ? data.points.filter(
+                (existingPoint) => existingPoint.createdAt !== targetCreatedAt,
+              )
+            : [],
       };
-
-      const res = await executeFetch({
-        url: `/api/tournaments/${id}`,
-        method: Method.PATCH,
-        body: newTournament,
+      deletePointsMutation.mutate(newTournament, {
+        onSuccess: () => {
+          setOpenDeletePoint(false);
+          refetch();
+        },
       });
-
-      if (res === null) {
-        setPoint({
-          reason: "",
-          points: 1,
-          createdBy: session?.user?.name ?? "",
-          team: {
-            name: "",
-            color: "",
-          },
-          createdAt: new Date(),
-        });
-        return;
-      }
-      if (!isLoading && isError) {
-        toast({
-          title: "Couldn't delete the points to the tournaments",
-          description:
-            "An error occurred during the suppression of the points of the tournaments.",
-          variant: "destructive",
-        });
-      }
-      toast({
-        title: "Points successfully deleted !",
-        description: "You’ve successfully deleted points of the tournament.",
-      });
-      handleGetTournamentById();
-    } catch (error) {
-      toast({
-        title: "Unexpected error: " + error,
-        description: "Unexpected error during the update of a tournament.",
-        variant: "destructive",
-      });
-      console.error(
-        "Unexpected error during the update of a tournament:",
-        error,
-      );
-      router.push("/user/");
     }
   }
 
@@ -206,7 +97,7 @@ export default function Tournament() {
     }
   }, [data, searchTerm]);
 
-  if (isLoading || isFetching) {
+  if (isFetching) {
     return (
       <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
         <header className="md:p-8 w-full md:h-fit flex flex-row items-center justify-between">
@@ -351,7 +242,7 @@ export default function Tournament() {
                       point={point}
                       key={index}
                       handleRemovePointsToTournament={
-                        handleRemovePointsToTournament
+                        data && handleRemovePointsToTournament
                       }
                     />
                   ))}

@@ -37,7 +37,6 @@ import ChartPreview from "@/components/ui/charts/chart-preview";
 import { useFetch } from "@/hooks/use-fetch";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useToast } from "@/hooks/use-toast";
 import { UserNav } from "@/components/ui/navbar/user-nav";
 import { useCreateTournament, useUserTournaments } from "@/api";
 import { CreateTournamentForm } from "@/components/ui/forms/create-tournament-form";
