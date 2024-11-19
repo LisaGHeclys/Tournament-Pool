@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { tournamentBody } from "@/app/api/_helpers/types/types";
+import { tournamentBody } from "@/types/types";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useAddPoints } from "@/api";

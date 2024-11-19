@@ -1,6 +1,6 @@
 import { apiClient, tournamentsQueryKeys } from "@/api";
 import { useQuery } from "@tanstack/react-query";
-import { tournamentBody } from "@/app/api/_helpers/types/types";
+import { tournamentBody } from "@/types/types";
 
 type Props = {
   page: number;

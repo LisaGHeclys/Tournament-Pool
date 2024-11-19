@@ -24,11 +24,11 @@ import {
 } from "@/components/ui/breadcrumb";
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import PieChartComponent from "@/components/ui/charts/pie-chart";
+import PieChartComponent from "@/components/charts/pie-chart";
 import Autoplay from "embla-carousel-autoplay";
 import PointsPreview from "@/components/ui/points-preview";
-import { BarChartComponent } from "@/components/ui/charts/bar-chart";
-import { UserNav } from "@/components/ui/navbar/user-nav";
+import { BarChartComponent } from "@/components/charts/bar-chart";
+import { UserNav } from "@/components/navbar/user-nav";
 import { useTournamentsById } from "@/api";
 
 export default function ShowTournament() {

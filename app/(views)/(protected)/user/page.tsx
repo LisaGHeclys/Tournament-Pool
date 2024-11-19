@@ -22,167 +22,27 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import { tournamentBody } from "@/app/api/_helpers/types/types";
-import { ColorPicker } from "@/components/ui/color-picker";
+import { tournamentBody } from "@/types/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import ChartPreview from "@/components/ui/charts/chart-preview";
-import { useFetch } from "@/hooks/use-fetch";
-import { useRouter } from "next/navigation";
+import ChartPreview from "@/components/charts/chart-preview";
 import { Skeleton } from "@/components/ui/skeleton";
-import { UserNav } from "@/components/ui/navbar/user-nav";
-import { useCreateTournament, useUserTournaments } from "@/api";
-import { CreateTournamentForm } from "@/components/ui/forms/create-tournament-form";
+import { UserNav } from "@/components/navbar/user-nav";
+import { useUserTournaments } from "@/api";
+import { CreateTournamentForm } from "@/components/forms/create-tournament-form";
 
 export default function User() {
-  const { executeFetch, isLoading, isError } = useFetch();
   const { data: session } = useSession();
   const [open, setOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredTournaments, setFilteredTournaments] =
     useState<tournamentBody[]>();
-  const [tournament, setTournament] = React.useState<tournamentBody>({
-    name: "",
-    teams: [
-      { name: "", color: "" },
-      { name: "", color: "" },
-    ],
-    createdBy: session?.user?.name ?? "",
-    createdAt: new Date(),
-    points: [],
-  });
-  const [teamNumber, setTeamNumber] = React.useState<number>(2);
-  const [tournaments, setTournaments] = React.useState<tournamentBody[]>([]);
-  const router = useRouter();
   const { data, isFetching } = useUserTournaments();
-  const createTournamentMutation = useCreateTournament({
-    router: router,
-    closeModal: () => setOpen(false),
-  });
-
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setTournament((prev) => ({
-      ...prev,
-      [e.target.id]: e.target.value,
-    }));
-  };
-
-  const handleTeamNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const number = parseInt(e.target.value, 10);
-
-    if (number >= 2 && number <= 5) {
-      setTeamNumber(number);
-      setTournament((prev) => {
-        let updatedTeams = [...prev.teams];
-
-        if (number > updatedTeams.length) {
-          updatedTeams.push(
-            ...Array.from({ length: number - updatedTeams.length }, () => ({
-              name: "",
-              color: "",
-            })),
-          );
-        } else {
-          updatedTeams = updatedTeams.slice(0, number);
-        }
-
-        return {
-          ...prev,
-          teams: updatedTeams,
-        };
-      });
-    }
-  };
-
-  const handleTeamChange = (
-    index: number,
-    field: "name" | "color",
-    value: string,
-  ) => {
-    const updatedTeams = [...tournament.teams];
-    updatedTeams[index][field] = value;
-    setTournament((prev) => ({
-      ...prev,
-      teams: updatedTeams,
-    }));
-  };
-
-  const handleDisabled = () => {
-    if (tournament.name == "") return true;
-
-    return tournament.teams.some((team) => {
-      return (
-        team.name === "" ||
-        team.color.toLowerCase() === "#ffffff" ||
-        team.color === ""
-      );
-    });
-  };
-
-  // const handleCreateTournament = async (data) => {
-  // try {
-  //   const res = await executeFetch({
-  //     url: "/api/tournaments",
-  //     method: Method.PUT,
-  //     body: tournament,
-  //   });
-  //
-  //   if (res === null) {
-  //     toast({
-  //       title: "Couldn't create tournament",
-  //       description:
-  //         "An error occurred during creation of tournament. Please try again.",
-  //       variant: "destructive",
-  //     });
-  //     console.error("Couldn't create tournament", res);
-  //     return;
-  //   }
-  //
-  //   const resToJSON = await res.json();
-  //
-  //   if (!isLoading && !isError) {
-  //     router.push("/user/tournament/" + resToJSON.id);
-  //     toast({
-  //       title: "Creation successful !",
-  //       description: "You’ve successfully created a tournament.",
-  //     });
-  //   }
-  // } catch (error) {
-  //   toast({
-  //     title: "Unexpected error: " + error,
-  //     description: "An error occurred during creation of tournament.",
-  //     variant: "destructive",
-  //   });
-  //   console.error("Unexpected error during creation of tournament:", error);
-  // }
-  // createTournamentMutation.mutate(data);
-  // };
-
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setTeamNumber(2);
-  //   setTournaments((prevState) => [tournament, ...prevState]);
-  //   // handleCreateTournament();
-  //   setTournament({
-  //     name: "",
-  //     teams: [
-  //       { name: "", color: "" },
-  //       { name: "", color: "" },
-  //     ],
-  //     createdBy: session?.user?.name ?? "",
-  //     createdAt: new Date(),
-  //     points: [],
-  //   });
-  //   setOpen(false);
-  // };
 
   useEffect(() => {
     if (data) {
@@ -193,7 +53,7 @@ export default function User() {
     }
   }, [data, searchTerm]);
 
-  if (isLoading || isFetching) {
+  if (isFetching) {
     return (
       <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
         <header className="md:p-8 w-full h-full md:h-fit flex flex-row items-center justify-between">
@@ -258,70 +118,6 @@ export default function User() {
                     </DialogDescription>
                   </DialogHeader>
                   <CreateTournamentForm setOpen={setOpen} />
-                  {/*<form onSubmit={handleSubmit} className="grid gap-4">*/}
-                  {/*  <div className="grid w-full items-center gap-4">*/}
-                  {/*    <div className="flex flex-col space-y-1.5">*/}
-                  {/*      <Label htmlFor="name">Tournament Name</Label>*/}
-                  {/*      <Input*/}
-                  {/*        id="name"*/}
-                  {/*        placeholder="Your tournament name"*/}
-                  {/*        onChange={handleOnChange}*/}
-                  {/*        required*/}
-                  {/*      />*/}
-                  {/*    </div>*/}
-                  {/*    <div className="flex flex-col space-y-1.5">*/}
-                  {/*      <Label htmlFor="team-number">*/}
-                  {/*        How many teams do you need ?*/}
-                  {/*      </Label>*/}
-                  {/*      <Input*/}
-                  {/*        id="team-number"*/}
-                  {/*        className="flex flex-grow"*/}
-                  {/*        type="number"*/}
-                  {/*        value={teamNumber.toString()}*/}
-                  {/*        min="2"*/}
-                  {/*        max="5"*/}
-                  {/*        onChange={handleTeamNumberChange}*/}
-                  {/*        placeholder="Your number of teams"*/}
-                  {/*        required*/}
-                  {/*      />*/}
-                  {/*    </div>*/}
-                  {/*    {tournament.teams.map((team, index) => (*/}
-                  {/*      <div*/}
-                  {/*        key={index}*/}
-                  {/*        className="flex w-full flex-col space-y-1.5"*/}
-                  {/*      >*/}
-                  {/*        <Label htmlFor={`team-name-${index}`}>*/}
-                  {/*          Team {index + 1} : Name and Color*/}
-                  {/*        </Label>*/}
-                  {/*        <div key={index} className="flex flex-row gap-4">*/}
-                  {/*          <Input*/}
-                  {/*            id={`team-name-${index}`}*/}
-                  {/*            value={team.name}*/}
-                  {/*            onChange={(e) =>*/}
-                  {/*              handleTeamChange(index, "name", e.target.value)*/}
-                  {/*            }*/}
-                  {/*            placeholder="Team name"*/}
-                  {/*            required*/}
-                  {/*          />*/}
-                  {/*          <div>*/}
-                  {/*            <ColorPicker*/}
-                  {/*              id={`team-color-${index}`}*/}
-                  {/*              value={team.color}*/}
-                  {/*              onChange={(v) =>*/}
-                  {/*                handleTeamChange(index, "color", v)*/}
-                  {/*              }*/}
-                  {/*            />*/}
-                  {/*          </div>*/}
-                  {/*        </div>*/}
-                  {/*      </div>*/}
-                  {/*    ))}*/}
-                  {/*  </div>*/}
-                  {/*  <DialogFooter>*/}
-                  {/*    <Button type="submit" disabled={handleDisabled()}>*/}
-                  {/*      Create a tournament*/}
-                  {/*    </Button>*/}
-                  {/*  </DialogFooter>*/}
-                  {/*</form>*/}
                 </DialogContent>
               </Dialog>
             </div>

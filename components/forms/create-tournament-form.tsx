@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import createTournamentSchema from "@/schema/create-tournament-schema";
 import {
@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { useSession } from "next-auth/react";
-import { tournamentBody } from "@/app/api/_helpers/types/types";
+import { tournamentBody } from "@/types/types";
 import { useCreateTournament } from "@/api";
 import { useRouter } from "next/navigation";
 
@@ -28,17 +28,6 @@ interface CreateTournamentFormProps {
 export function CreateTournamentForm({ setOpen }: CreateTournamentFormProps) {
   const { data: session } = useSession();
   const router = useRouter();
-  const [updatedTournament, setUpdatedTournament] =
-    React.useState<tournamentBody>({
-      name: "",
-      teams: [
-        { name: "", color: "" },
-        { name: "", color: "" },
-      ],
-      createdBy: session?.user?.name ?? "",
-      createdAt: new Date(),
-      points: [],
-    });
   const createTournamentMutation = useCreateTournament({
     router: router,
     closeModal: () => setOpen(false),
@@ -85,8 +74,7 @@ export function CreateTournamentForm({ setOpen }: CreateTournamentFormProps) {
       createdBy: session?.user?.name ?? "",
       createdAt: new Date(),
     };
-    console.log(newTournament);
-    // createTournamentMutation.mutate(newTournament);
+    createTournamentMutation.mutate(newTournament);
   }
 
   return (

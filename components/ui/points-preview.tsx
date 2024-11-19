@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
-import { pointsBody } from "@/app/api/_helpers/types/types";
+import { pointsBody } from "@/types/types";
 import { Separator } from "@/components/ui/separator";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 type PointsPreviewProps = {
   isShowing?: boolean;
@@ -93,8 +94,11 @@ export default function PointsPreview({
           )}
           <Separator />
         </div>
-        <span className="flex text-xs md:text-sm">
-          Team : {point.team.name}
+        <span className="flex items-center text-center text-xs md:text-sm gap-2">
+          <Avatar className="h-4 w-4 md:h-8 md:w-8">
+            <AvatarFallback style={{ backgroundColor: point.team.color }} />
+          </Avatar>
+          <span className="font-semibold">{point.team.name}</span>
         </span>
         <span className="flex text-xs md:text-sm">
           Created by : {point.createdBy}

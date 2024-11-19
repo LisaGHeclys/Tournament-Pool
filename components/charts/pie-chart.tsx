@@ -9,13 +9,13 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/charts/chart";
+} from "@/components/charts/chart";
 import { useWindowSize } from "@/hooks/use-window-size";
 import {
   ChartProps,
   createChartConfig,
   createChartData,
-} from "@/components/ui/charts/utils";
+} from "@/components/charts/utils";
 
 export default function PieChartComponent({ tournament }: ChartProps) {
   const size = useWindowSize();

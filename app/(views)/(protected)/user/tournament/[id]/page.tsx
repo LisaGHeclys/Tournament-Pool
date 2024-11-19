@@ -34,22 +34,22 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import React, { useEffect, useState } from "react";
-import { pointsBody } from "@/app/api/_helpers/types/types";
+import { pointsBody } from "@/types/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import PointsPreview from "@/components/ui/points-preview";
 import Autoplay from "embla-carousel-autoplay";
-import PieChartComponent from "@/components/ui/charts/pie-chart";
-import { BarChartComponent } from "@/components/ui/charts/bar-chart";
+import PieChartComponent from "@/components/charts/pie-chart";
+import { BarChartComponent } from "@/components/charts/bar-chart";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { UserNav } from "@/components/ui/navbar/user-nav";
+import { UserNav } from "@/components/navbar/user-nav";
 import { useDeletePoints, useTournamentsById } from "@/api";
-import { AddPointsForm } from "@/components/ui/forms/add-points-form";
-import { EditTournamentForm } from "@/components/ui/forms/edit-tournament-form";
+import { AddPointsForm } from "@/components/forms/add-points-form";
+import { EditTournamentForm } from "@/components/forms/edit-tournament-form";
 
 export default function Tournament() {
   const id: string | string[] = useParams().id;

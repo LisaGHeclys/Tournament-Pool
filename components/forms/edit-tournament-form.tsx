@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { tournamentBody } from "@/app/api/_helpers/types/types";
+import { tournamentBody } from "@/types/types";
 import { useParams, useRouter } from "next/navigation";
 import {
   Dialog,

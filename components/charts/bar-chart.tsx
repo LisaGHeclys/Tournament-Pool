@@ -6,12 +6,12 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/charts/chart";
+} from "@/components/charts/chart";
 import {
   ChartProps,
   createChartConfig,
   createChartData,
-} from "@/components/ui/charts/utils";
+} from "@/components/charts/utils";
 
 export function BarChartComponent({ tournament }: ChartProps) {
   const chartData = createChartData({ tournament });

@@ -1,9 +1,3 @@
-export type useFetchOptions = {
-  url: string;
-  method: Method;
-  body?: object;
-};
-
 export type pointsBody = {
   reason: string;
   points: number;
@@ -25,11 +19,3 @@ export type tournamentBody = {
   createdAt: Date;
   points?: pointsBody[];
 };
-
-export enum Method {
-  GET = "GET",
-  POST = "POST",
-  PUT = "PUT",
-  DELETE = "DELETE",
-  PATCH = "PATCH",
-}

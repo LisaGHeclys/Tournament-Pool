@@ -3,7 +3,7 @@ import React from "react";
 import Footer from "@/components/ui/footer";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
-import { UserNav } from "@/components/ui/navbar/user-nav";
+import { UserNav } from "@/components/navbar/user-nav";
 
 export default function PrivacyPolicy() {
   return (

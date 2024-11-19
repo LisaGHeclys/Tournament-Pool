@@ -5,12 +5,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import React from "react";
-import { tournamentBody } from "@/app/api/_helpers/types/types";
-import PieChartComponent from "@/components/ui/charts/pie-chart";
+import { tournamentBody } from "@/types/types";
+import PieChartComponent from "@/components/charts/pie-chart";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-
 type ChartPreviewProps = {
   tournament: tournamentBody;
   link: string;

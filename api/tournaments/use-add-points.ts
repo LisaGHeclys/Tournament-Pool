@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient, tournamentsQueryKeys } from "@/api";
 import { toast } from "@/hooks/use-toast";
-import { tournamentBody } from "@/app/api/_helpers/types/types";
+import { tournamentBody } from "@/types/types";
 
 export interface Props {
   id: string;

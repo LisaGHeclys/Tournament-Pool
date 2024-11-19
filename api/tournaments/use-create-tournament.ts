@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient, tournamentsQueryKeys } from "@/api";
-import { tournamentBody } from "@/app/api/_helpers/types/types";
+import { tournamentBody } from "@/types/types";
 import { toast } from "@/hooks/use-toast";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
@@ -34,7 +34,8 @@ export function useCreateTournament({ router, closeModal }: Props) {
     },
     onSettled: (data) => {
       queryClient.invalidateQueries({ queryKey: tournamentsQueryKeys.all });
-      // router.push("/user/tournament/" + data.id);
+      closeModal();
+      router.push("/user/tournament/" + data.id);
     },
   });
 }

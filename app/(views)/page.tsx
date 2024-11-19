@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/pagination";
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import ChartPreview from "@/components/ui/charts/chart-preview";
-import { UserNav } from "@/components/ui/navbar/user-nav";
+import ChartPreview from "@/components/charts/chart-preview";
+import { UserNav } from "@/components/navbar/user-nav";
 import { usePaginatedTournaments } from "@/api";
 
 export default function Home() {
