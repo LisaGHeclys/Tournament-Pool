@@ -127,62 +127,62 @@ export default function User() {
     });
   };
 
-  const handleCreateTournament = async (data) => {
-    // try {
-    //   const res = await executeFetch({
-    //     url: "/api/tournaments",
-    //     method: Method.PUT,
-    //     body: tournament,
-    //   });
-    //
-    //   if (res === null) {
-    //     toast({
-    //       title: "Couldn't create tournament",
-    //       description:
-    //         "An error occurred during creation of tournament. Please try again.",
-    //       variant: "destructive",
-    //     });
-    //     console.error("Couldn't create tournament", res);
-    //     return;
-    //   }
-    //
-    //   const resToJSON = await res.json();
-    //
-    //   if (!isLoading && !isError) {
-    //     router.push("/user/tournament/" + resToJSON.id);
-    //     toast({
-    //       title: "Creation successful !",
-    //       description: "You’ve successfully created a tournament.",
-    //     });
-    //   }
-    // } catch (error) {
-    //   toast({
-    //     title: "Unexpected error: " + error,
-    //     description: "An error occurred during creation of tournament.",
-    //     variant: "destructive",
-    //   });
-    //   console.error("Unexpected error during creation of tournament:", error);
-    // }
-    createTournamentMutation.mutate(data);
-  };
+  // const handleCreateTournament = async (data) => {
+  // try {
+  //   const res = await executeFetch({
+  //     url: "/api/tournaments",
+  //     method: Method.PUT,
+  //     body: tournament,
+  //   });
+  //
+  //   if (res === null) {
+  //     toast({
+  //       title: "Couldn't create tournament",
+  //       description:
+  //         "An error occurred during creation of tournament. Please try again.",
+  //       variant: "destructive",
+  //     });
+  //     console.error("Couldn't create tournament", res);
+  //     return;
+  //   }
+  //
+  //   const resToJSON = await res.json();
+  //
+  //   if (!isLoading && !isError) {
+  //     router.push("/user/tournament/" + resToJSON.id);
+  //     toast({
+  //       title: "Creation successful !",
+  //       description: "You’ve successfully created a tournament.",
+  //     });
+  //   }
+  // } catch (error) {
+  //   toast({
+  //     title: "Unexpected error: " + error,
+  //     description: "An error occurred during creation of tournament.",
+  //     variant: "destructive",
+  //   });
+  //   console.error("Unexpected error during creation of tournament:", error);
+  // }
+  // createTournamentMutation.mutate(data);
+  // };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setTeamNumber(2);
-    setTournaments((prevState) => [tournament, ...prevState]);
-    handleCreateTournament();
-    setTournament({
-      name: "",
-      teams: [
-        { name: "", color: "" },
-        { name: "", color: "" },
-      ],
-      createdBy: session?.user?.name ?? "",
-      createdAt: new Date(),
-      points: [],
-    });
-    setOpen(false);
-  };
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setTeamNumber(2);
+  //   setTournaments((prevState) => [tournament, ...prevState]);
+  //   // handleCreateTournament();
+  //   setTournament({
+  //     name: "",
+  //     teams: [
+  //       { name: "", color: "" },
+  //       { name: "", color: "" },
+  //     ],
+  //     createdBy: session?.user?.name ?? "",
+  //     createdAt: new Date(),
+  //     points: [],
+  //   });
+  //   setOpen(false);
+  // };
 
   useEffect(() => {
     if (data) {
@@ -257,71 +257,71 @@ export default function User() {
                       You can create your own tournament here.
                     </DialogDescription>
                   </DialogHeader>
-                  <CreateTournamentForm />
-                  <form onSubmit={handleSubmit} className="grid gap-4">
-                    <div className="grid w-full items-center gap-4">
-                      <div className="flex flex-col space-y-1.5">
-                        <Label htmlFor="name">Tournament Name</Label>
-                        <Input
-                          id="name"
-                          placeholder="Your tournament name"
-                          onChange={handleOnChange}
-                          required
-                        />
-                      </div>
-                      <div className="flex flex-col space-y-1.5">
-                        <Label htmlFor="team-number">
-                          How many teams do you need ?
-                        </Label>
-                        <Input
-                          id="team-number"
-                          className="flex flex-grow"
-                          type="number"
-                          value={teamNumber.toString()}
-                          min="2"
-                          max="5"
-                          onChange={handleTeamNumberChange}
-                          placeholder="Your number of teams"
-                          required
-                        />
-                      </div>
-                      {tournament.teams.map((team, index) => (
-                        <div
-                          key={index}
-                          className="flex w-full flex-col space-y-1.5"
-                        >
-                          <Label htmlFor={`team-name-${index}`}>
-                            Team {index + 1} : Name and Color
-                          </Label>
-                          <div key={index} className="flex flex-row gap-4">
-                            <Input
-                              id={`team-name-${index}`}
-                              value={team.name}
-                              onChange={(e) =>
-                                handleTeamChange(index, "name", e.target.value)
-                              }
-                              placeholder="Team name"
-                              required
-                            />
-                            <div>
-                              <ColorPicker
-                                id={`team-color-${index}`}
-                                value={team.color}
-                                onChange={(v) =>
-                                  handleTeamChange(index, "color", v)
-                                }
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <DialogFooter>
-                      <Button type="submit" disabled={handleDisabled()}>
-                        Create a tournament
-                      </Button>
-                    </DialogFooter>
-                  </form>
+                  <CreateTournamentForm setOpen={setOpen} />
+                  {/*<form onSubmit={handleSubmit} className="grid gap-4">*/}
+                  {/*  <div className="grid w-full items-center gap-4">*/}
+                  {/*    <div className="flex flex-col space-y-1.5">*/}
+                  {/*      <Label htmlFor="name">Tournament Name</Label>*/}
+                  {/*      <Input*/}
+                  {/*        id="name"*/}
+                  {/*        placeholder="Your tournament name"*/}
+                  {/*        onChange={handleOnChange}*/}
+                  {/*        required*/}
+                  {/*      />*/}
+                  {/*    </div>*/}
+                  {/*    <div className="flex flex-col space-y-1.5">*/}
+                  {/*      <Label htmlFor="team-number">*/}
+                  {/*        How many teams do you need ?*/}
+                  {/*      </Label>*/}
+                  {/*      <Input*/}
+                  {/*        id="team-number"*/}
+                  {/*        className="flex flex-grow"*/}
+                  {/*        type="number"*/}
+                  {/*        value={teamNumber.toString()}*/}
+                  {/*        min="2"*/}
+                  {/*        max="5"*/}
+                  {/*        onChange={handleTeamNumberChange}*/}
+                  {/*        placeholder="Your number of teams"*/}
+                  {/*        required*/}
+                  {/*      />*/}
+                  {/*    </div>*/}
+                  {/*    {tournament.teams.map((team, index) => (*/}
+                  {/*      <div*/}
+                  {/*        key={index}*/}
+                  {/*        className="flex w-full flex-col space-y-1.5"*/}
+                  {/*      >*/}
+                  {/*        <Label htmlFor={`team-name-${index}`}>*/}
+                  {/*          Team {index + 1} : Name and Color*/}
+                  {/*        </Label>*/}
+                  {/*        <div key={index} className="flex flex-row gap-4">*/}
+                  {/*          <Input*/}
+                  {/*            id={`team-name-${index}`}*/}
+                  {/*            value={team.name}*/}
+                  {/*            onChange={(e) =>*/}
+                  {/*              handleTeamChange(index, "name", e.target.value)*/}
+                  {/*            }*/}
+                  {/*            placeholder="Team name"*/}
+                  {/*            required*/}
+                  {/*          />*/}
+                  {/*          <div>*/}
+                  {/*            <ColorPicker*/}
+                  {/*              id={`team-color-${index}`}*/}
+                  {/*              value={team.color}*/}
+                  {/*              onChange={(v) =>*/}
+                  {/*                handleTeamChange(index, "color", v)*/}
+                  {/*              }*/}
+                  {/*            />*/}
+                  {/*          </div>*/}
+                  {/*        </div>*/}
+                  {/*      </div>*/}
+                  {/*    ))}*/}
+                  {/*  </div>*/}
+                  {/*  <DialogFooter>*/}
+                  {/*    <Button type="submit" disabled={handleDisabled()}>*/}
+                  {/*      Create a tournament*/}
+                  {/*    </Button>*/}
+                  {/*  </DialogFooter>*/}
+                  {/*</form>*/}
                 </DialogContent>
               </Dialog>
             </div>

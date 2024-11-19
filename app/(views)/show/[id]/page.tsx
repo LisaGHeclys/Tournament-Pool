@@ -28,7 +28,6 @@ import PieChartComponent from "@/components/ui/charts/pie-chart";
 import Autoplay from "embla-carousel-autoplay";
 import PointsPreview from "@/components/ui/points-preview";
 import { BarChartComponent } from "@/components/ui/charts/bar-chart";
-import { RadialChartComponent } from "@/components/ui/charts/radial-chart";
 import { UserNav } from "@/components/ui/navbar/user-nav";
 import { useTournamentsById } from "@/api";
 
@@ -87,11 +86,8 @@ export default function ShowTournament() {
                   <CarouselItem className="w-[160px] h-[240px] md:h-full">
                     <PieChartComponent tournament={data} />
                   </CarouselItem>
-                  <CarouselItem className="w-[160px] h-[240px] md:h-full">
+                  <CarouselItem className="w-[20px] md:w-[160px] h-[240px] md:h-full">
                     <BarChartComponent tournament={data} />
-                  </CarouselItem>
-                  <CarouselItem className="w-[160px] h-[240px] md:h-full">
-                    <RadialChartComponent tournament={data} />
                   </CarouselItem>
                 </CarouselContent>
               </Carousel>

@@ -171,7 +171,6 @@ export function EditTournamentForm({
             </FormItem>
           )}
         />
-
         <div className="flex justify-between">
           <Dialog open={openDelete} onOpenChange={setOpenDelete}>
             <DialogTrigger asChild>

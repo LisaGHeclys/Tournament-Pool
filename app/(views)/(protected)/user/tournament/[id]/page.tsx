@@ -40,7 +40,6 @@ import PointsPreview from "@/components/ui/points-preview";
 import Autoplay from "embla-carousel-autoplay";
 import PieChartComponent from "@/components/ui/charts/pie-chart";
 import { BarChartComponent } from "@/components/ui/charts/bar-chart";
-import { RadialChartComponent } from "@/components/ui/charts/radial-chart";
 import {
   Tooltip,
   TooltipContent,
@@ -185,11 +184,8 @@ export default function Tournament() {
                   <CarouselItem className="w-[160px] h-[240px] md:h-full">
                     <PieChartComponent tournament={data} />
                   </CarouselItem>
-                  <CarouselItem className="w-[160px] h-[240px] md:h-full">
+                  <CarouselItem className="w-[20px] md:w-[160px] h-[240px] md:h-full">
                     <BarChartComponent tournament={data} />
-                  </CarouselItem>
-                  <CarouselItem className="w-[160px] h-[240px] md:h-full">
-                    <RadialChartComponent tournament={data} />
                   </CarouselItem>
                 </CarouselContent>
               </Carousel>

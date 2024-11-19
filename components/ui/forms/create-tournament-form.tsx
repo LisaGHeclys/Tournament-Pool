@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import createTournamentSchema from "@/schema/create-tournament-schema";
 import {
@@ -14,21 +14,79 @@ import {
 import { Input } from "@/components/ui/input";
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { ColorPicker } from "@/components/ui/color-picker";
+import { useSession } from "next-auth/react";
+import { tournamentBody } from "@/app/api/_helpers/types/types";
+import { useCreateTournament } from "@/api";
+import { useRouter } from "next/navigation";
 
-export function CreateTournamentForm() {
+interface CreateTournamentFormProps {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export function CreateTournamentForm({ setOpen }: CreateTournamentFormProps) {
+  const { data: session } = useSession();
+  const router = useRouter();
+  const [updatedTournament, setUpdatedTournament] =
+    React.useState<tournamentBody>({
+      name: "",
+      teams: [
+        { name: "", color: "" },
+        { name: "", color: "" },
+      ],
+      createdBy: session?.user?.name ?? "",
+      createdAt: new Date(),
+      points: [],
+    });
+  const createTournamentMutation = useCreateTournament({
+    router: router,
+    closeModal: () => setOpen(false),
+  });
   const form = useForm<z.infer<typeof createTournamentSchema>>({
     resolver: zodResolver(createTournamentSchema),
     defaultValues: {
       name: "",
       teamNumber: 2,
-      teams: [],
+      teams: [
+        { name: "", color: "" },
+        { name: "", color: "" },
+      ],
     },
   });
 
+  const handleTeamNumberChange = (
+    value: number,
+    tempData: z.infer<typeof createTournamentSchema>,
+  ) => {
+    if (value >= 2 && value <= 5) {
+      let updatedTeams = [...tempData.teams];
+
+      if (value > updatedTeams.length) {
+        updatedTeams = [
+          ...updatedTeams,
+          ...Array.from({ length: value - updatedTeams.length }, () => ({
+            name: "",
+            color: "",
+          })),
+        ];
+      } else {
+        updatedTeams = updatedTeams.slice(0, value);
+      }
+      form.setValue("teams", updatedTeams, { shouldValidate: true });
+    }
+  };
+
   function onSubmit(values: z.infer<typeof createTournamentSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    const newTournament: tournamentBody = {
+      name: values.name,
+      teams: values.teams,
+      points: [],
+      createdBy: session?.user?.name ?? "",
+      createdAt: new Date(),
+    };
+    console.log(newTournament);
+    // createTournamentMutation.mutate(newTournament);
   }
 
   return (
@@ -52,18 +110,87 @@ export function CreateTournamentForm() {
           name="teamNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>How many teams do you need ?</FormLabel>
+              <FormLabel>How many teams do you need?</FormLabel>
               <FormControl>
                 <Input
+                  id="teamNumber"
                   type="number"
+                  min="1"
                   placeholder="Your number of teams"
-                  {...field}
+                  value={field.value}
+                  onChange={(e) => {
+                    const value = Math.max(
+                      2,
+                      Math.min(5, Number(e.target.value)),
+                    );
+                    handleTeamNumberChange(Number(value), form.getValues());
+                    form.setValue("teamNumber", Number(value));
+                  }}
                 />
-                {/*<Input placeholder="Your tournament name" required {...field} />*/}
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
+        />
+        <FormField
+          control={form.control}
+          name="teams"
+          render={() => {
+            const teams = form.watch("teams"); // Use watch to reactively track changes
+            return (
+              <FormItem>
+                <FormControl>
+                  <div className="space-y-4">
+                    {teams.map((team, index) => (
+                      <div
+                        key={index}
+                        className="flex w-full flex-col space-y-1.5"
+                      >
+                        <Label htmlFor={`team-${index}-name`}>
+                          Team {index + 1}: Name and Color
+                        </Label>
+                        <div className="flex flex-row gap-4">
+                          <Input
+                            id={`team-${index}-name`}
+                            value={team.name}
+                            onChange={(e) => {
+                              const newTeams = [...teams];
+                              newTeams[index] = {
+                                ...newTeams[index],
+                                name: e.target.value,
+                              };
+                              form.setValue("teams", newTeams, {
+                                shouldValidate: true,
+                              });
+                            }}
+                            placeholder="Team name"
+                            required
+                          />
+                          <div>
+                            <ColorPicker
+                              id={`team-${index}-color`}
+                              value={team.color}
+                              onChange={(v) => {
+                                const newTeams = [...teams];
+                                newTeams[index] = {
+                                  ...newTeams[index],
+                                  color: v,
+                                };
+                                form.setValue("teams", newTeams, {
+                                  shouldValidate: true,
+                                });
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
         <Button type="submit">Create a tournament</Button>
       </form>
