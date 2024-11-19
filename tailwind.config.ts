@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  important: '#root',
+  important: "#root",
   darkMode: ["class"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,7 +11,7 @@ const config: Config = {
   theme: {
     extend: {
       animation: {
-        "infinite-scroll": "infinite-scroll 25s linear infinite",
+        "infinite-scroll": "infinite-scroll 140s linear infinite",
       },
       keyframes: {
         "infinite-scroll": {

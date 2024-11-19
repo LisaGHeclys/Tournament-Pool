@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/firebase/firebase";
 import withSession from "@/app/api/_helpers/middleware/with-session";
-import { pointsBody, tournamentBody } from "@/app/api/_helpers/types/types";
+import { pointsBody, tournamentBody } from "@/types/types";
 import { Session } from "next-auth";
 import { firestoreTimestampToDate } from "@/app/api/_helpers/getDates";
 
