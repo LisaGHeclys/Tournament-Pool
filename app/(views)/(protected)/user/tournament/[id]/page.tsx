@@ -47,7 +47,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { UserNav } from "@/components/navbar/user-nav";
-import { useDeletePoints, useTournamentsById } from "@/api";
+import { useDeletePoints, useTournamentsById } from "@/backend-calls";
 import { AddPointsForm } from "@/components/forms/add-points-form";
 import { EditTournamentForm } from "@/components/forms/edit-tournament-form";
 

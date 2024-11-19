@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient, tournamentsQueryKeys } from "@/api";
 import { tournamentBody } from "@/types/types";
 import { toast } from "@/hooks/use-toast";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { apiClient, tournamentsQueryKeys } from "@/backend-calls";
 
 interface Props {
   router: AppRouterInstance;

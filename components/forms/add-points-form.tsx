@@ -24,7 +24,7 @@ import {
 import { tournamentBody } from "@/types/types";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
-import { useAddPoints } from "@/api";
+import { useAddPoints } from "@/backend-calls";
 
 interface AddPointsFormProps {
   data: tournamentBody;

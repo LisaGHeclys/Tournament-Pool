@@ -33,7 +33,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import ChartPreview from "@/components/charts/chart-preview";
 import { Skeleton } from "@/components/ui/skeleton";
 import { UserNav } from "@/components/navbar/user-nav";
-import { useUserTournaments } from "@/api";
+import { useUserTournaments } from "@/backend-calls";
 import { CreateTournamentForm } from "@/components/forms/create-tournament-form";
 
 export default function User() {

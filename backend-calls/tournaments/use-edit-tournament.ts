@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient, tournamentsQueryKeys } from "@/api";
+import { apiClient, tournamentsQueryKeys } from "@/backend-calls";
 import { toast } from "@/hooks/use-toast";
 import { tournamentBody } from "@/types/types";
 

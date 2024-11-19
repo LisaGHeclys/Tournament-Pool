@@ -1,4 +1,4 @@
-import { apiClient, tournamentsQueryKeys } from "@/api";
+import { apiClient, tournamentsQueryKeys } from "@/backend-calls";
 import { useQuery } from "@tanstack/react-query";
 import { tournamentBody } from "@/types/types";
 

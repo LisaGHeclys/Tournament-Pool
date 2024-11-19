@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { useSession } from "next-auth/react";
 import { tournamentBody } from "@/types/types";
-import { useCreateTournament } from "@/api";
+import { useCreateTournament } from "@/backend-calls";
 import { useRouter } from "next/navigation";
 
 interface CreateTournamentFormProps {

@@ -29,7 +29,7 @@ import Autoplay from "embla-carousel-autoplay";
 import PointsPreview from "@/components/ui/points-preview";
 import { BarChartComponent } from "@/components/charts/bar-chart";
 import { UserNav } from "@/components/navbar/user-nav";
-import { useTournamentsById } from "@/api";
+import { useTournamentsById } from "@/backend-calls";
 
 export default function ShowTournament() {
   const id = useParams().id;

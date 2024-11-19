@@ -1,5 +1,4 @@
 "use client";
-
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts";
 import { Card, CardContent } from "@/components/ui/card";
 import {

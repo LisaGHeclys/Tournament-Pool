@@ -13,7 +13,7 @@ import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import ChartPreview from "@/components/charts/chart-preview";
 import { UserNav } from "@/components/navbar/user-nav";
-import { usePaginatedTournaments } from "@/api";
+import { usePaginatedTournaments } from "@/backend-calls";
 
 export default function Home() {
   const [isActive, setIsActive] = React.useState<number>(1);

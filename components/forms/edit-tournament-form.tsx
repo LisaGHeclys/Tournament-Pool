@@ -27,7 +27,7 @@ import {
 import updateTournamentSchema from "@/schema/update-tournament-schema";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { Label } from "@/components/ui/label";
-import { useDeleteTournament, useEditTournament } from "@/api";
+import { useDeleteTournament, useEditTournament } from "@/backend-calls";
 
 interface EditTournamentFormProps {
   data: tournamentBody;
