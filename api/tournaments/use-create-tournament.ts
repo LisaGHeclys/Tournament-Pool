@@ -14,7 +14,6 @@ export function useCreateTournament({ router, closeModal }: Props) {
 
   async function createTournamentFn(tournament: tournamentBody) {
     const response = await apiClient.put(`/tournaments`, tournament);
-    console.log(response.data);
     return response.data;
   }
 
