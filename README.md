@@ -64,38 +64,7 @@ npm run build
 
 ## Contribution Guidelines
 
-We welcome contributions from the community to improve this project. Here's how you can get involved:
-
-### How to Commit
-
-Follow these steps to commit changes:
-
-1. **Create a new branch**: Start by creating a branch from an [issue of the repository on GitHub](https://github.com/LisaGHeclys/Tournament-Pool/issues).
-    ```bash
-    git fetch origin
-    git checkout "Name of your issue, ex: 1-init-project"
-    ```
-
-2. **Make your changes**: After you make your changes or additions, add the files to staging.
-    ```bash
-    git add -A
-    ```
-
-3. **Write a clear, concise commit message**: Be sure to summarize your changes in the commit message.
-    ```bash
-    git commit -m "add: feature description"
-    git commit -m "fix: fix bug description"
-    git commit -m "wip: work in progress"
-    ```
-
-4. **Push your changes to your branch**:
-    ```bash
-    git push origin "Name of your issue, ex: 1-init-project"
-    ```
-
-5. **Create a Pull Request (PR)**: Once your changes are pushed, go to the repository on GitHub, and create a pull request from your feature branch to the `dev` branch.
-    - In the pull request, provide a description of what your changes do and any relevant context.
-    - Wait for code review, and make any requested changes.
+Feel free to improve this project by developing ([contribution guide](CONTRIBUTING.md)) or participating in [community discussions](https://github.com/LisaGHeclys/Tournament-Pool/discussions).
 
 ### Contribution Best Practices
 
