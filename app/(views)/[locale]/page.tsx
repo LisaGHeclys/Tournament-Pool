@@ -17,6 +17,7 @@ import { usePaginatedTournaments } from "@/backend-calls";
 
 export default function Home() {
   const [isActive, setIsActive] = React.useState<number>(1);
+
   const { data, isFetching, refetch } = usePaginatedTournaments({
     pageLimit: 4,
     page: isActive,

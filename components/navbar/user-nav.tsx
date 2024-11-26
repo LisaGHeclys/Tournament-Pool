@@ -36,12 +36,7 @@ export function UserNav({
   function handleUserNav() {
     switch (status) {
       case "authenticated":
-        return (
-          <div className="w-full md:w-fit flex flex-row gap-4 md:gap-6 items-center justify-end md:justify-center">
-            <ThemeToggle />
-            {avatar && <UserToggle />}
-          </div>
-        );
+        return avatar && <UserToggle />;
       case "loading":
         return <Skeleton className="h-8 w-8 rounded-full" />;
       default:
@@ -77,7 +72,10 @@ export function UserNav({
         </h1>
         {isEdit && children}
       </div>
-      {handleUserNav()}
+      <div className="w-full md:w-fit flex flex-row gap-4 md:gap-6 items-center justify-end md:justify-center">
+        <ThemeToggle />
+        {handleUserNav()}
+      </div>
     </header>
   );
 }

@@ -12,8 +12,6 @@ export function IntlProvider({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
     async function loadMessages() {
       const messages = (await import(`../dictionaries/${locale}.json`)).default;
-      console.log(messages);
-      console.log(locale);
       setMessages(messages);
     }
     loadMessages();

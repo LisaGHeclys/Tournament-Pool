@@ -4,10 +4,18 @@
     "support": "Support",
     "privacy-policy": "Privacy Policy"
   },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
   "navbar": {
     "welcome": "Welcome to Tournament Pool!",
+    "welcome-login": "Welcome to the Login page!",
     "login": "Login",
-    "log-out": "Log out"
+    "login-github": "Login with GitHub",
+    "login-description": "On this app, we’ll use your GitHub account to securely log you in, so you don’t need to create a new password.",
+    "log-out": "Log out",
+    "homepage": "Homepage"
   },
   "footer": {
     "rights": "All rights reserved",

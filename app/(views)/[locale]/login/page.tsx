@@ -13,9 +13,12 @@ import React from "react";
 import { signIn, useSession } from "next-auth/react";
 import Footer from "@/components/ui/footer";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslations } from "next-intl";
+import { ThemeToggle } from "@/components/navbar/theme-toggle";
 
 export default function Login() {
   const router = useRouter();
+  const t = useTranslations();
   const { toast } = useToast();
   const { status } = useSession();
 
@@ -47,21 +50,18 @@ export default function Login() {
             router.push("/");
           }}
         >
-          Homepage
+          {t("navbar.homepage")}
         </Button>
         <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Welcome to the Login page !
+          {t("navbar.welcome-login")}
         </h1>
-        <div />
+        <ThemeToggle />
       </header>
       <main className="w-full flex flex-col gap-8 justify-center items-center">
         <Card className="w-full md:w-[400px]">
           <CardHeader>
-            <CardTitle>Login</CardTitle>
-            <CardDescription>
-              On this app, we’ll use your GitHub account to securely log you in,
-              so you don’t need to create a new password.
-            </CardDescription>
+            <CardTitle>{t("navbar.login")}</CardTitle>
+            <CardDescription>{t("navbar.login-description")}</CardDescription>
           </CardHeader>
           <CardContent className="flex justify-center">
             <form onSubmit={handleSignIn}>
@@ -69,7 +69,7 @@ export default function Login() {
                 className="hover:scale-105 transition ease-in-out delay-250"
                 type="submit"
               >
-                <Github className="mr-2" /> Login with GitHub
+                <Github className="mr-2" /> {t("navbar.login-github")}
               </Button>
             </form>
           </CardContent>
