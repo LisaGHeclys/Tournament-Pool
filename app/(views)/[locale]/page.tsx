@@ -76,7 +76,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <UserNav title="Welcome to Tournament Pool!" avatar centered />
+      <UserNav title="navbar.welcome" avatar centered />
       <main className="gap-2 h-full w-full flex flex-col md:gap-6 row-start-2 items-center justify-between">
         <div className="flex relative mt-4"></div>
         {data ? (

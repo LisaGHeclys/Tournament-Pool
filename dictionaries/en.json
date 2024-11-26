@@ -1,8 +1,21 @@
 {
-  "user-toggle": {
+  "pages": {
     "your-page": "Your page",
     "support": "Support",
-    "privacy-policy": "Privacy Policy",
+    "privacy-policy": "Privacy Policy"
+  },
+  "navbar": {
+    "welcome": "Welcome to Tournament Pool!",
+    "login": "Login",
     "log-out": "Log out"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "other-projects": "Go see my other projects"
+  },
+  "me": {
+    "pronouns": "she/her",
+    "description": " Mobile & Frontend dev crafting sleek, fun user experiences.\nUI/UX enthusiast from France !",
+    "joined": "Joined September 28, 2020"
   }
 }

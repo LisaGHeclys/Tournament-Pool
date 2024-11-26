@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/navbar/theme-toggle";
 import { ChevronLeft } from "lucide-react";
 import { useWindowSize } from "@/hooks/use-window-size";
+import { useTranslations } from "next-intl";
 
 interface UserNavProps {
   title: string;
@@ -30,6 +31,7 @@ export function UserNav({
   const size = useWindowSize();
   const router = useRouter();
   const { status } = useSession();
+  const t = useTranslations();
 
   function handleUserNav() {
     switch (status) {
@@ -48,7 +50,7 @@ export function UserNav({
             className="hover:scale-105 transition ease-in-out delay-250"
             onClick={() => router.push("/login")}
           >
-            <span>Login</span>
+            <span>{t("navbar.login")}</span>
           </Button>
         );
     }
@@ -71,7 +73,7 @@ export function UserNav({
         ))}
       <div className="flex flex-row gap-2 items-center">
         <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl">
-          {title}
+          {t(title)}
         </h1>
         {isEdit && children}
       </div>

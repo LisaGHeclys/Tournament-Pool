@@ -1,8 +1,21 @@
 {
-  "user-toggle": {
+  "pages": {
     "your-page": "Votre page",
     "support": "Support",
-    "privacy-policy": "Politique de confidentialité",
+    "privacy-policy": "Politique de confidentialité"
+  },
+  "navbar": {
+    "welcome": "Bienvenue sur Tournament Pool!",
+    "login": "Se connecter",
     "log-out": "Déconnexion"
+  },
+  "footer": {
+    "rights": "Tous droits réservés",
+    "other-projects": "Allez voir mes autres projets"
+  },
+  "me": {
+    "pronouns": "elle",
+    "description": "Développeuse Mobile et Frontend créant des expériences utilisateur élégantes et amusantes.\nPassionnée de UI/UX en provenance de France !",
+    "joined": "Rejoint le 28 septembre 2020"
   }
 }

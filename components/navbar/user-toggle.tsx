@@ -73,25 +73,23 @@ export function UserToggle() {
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => router.push("/user")}>
           <User className="mr-2 size-3 md:size-4" />
-          <span className="text-xs md:text-sm">
-            {t("user-toggle.your-page")}
-          </span>
+          <span className="text-xs md:text-sm">{t("pages.your-page")}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => router.push("/")}>
           <LifeBuoy className="mr-2 size-3 md:size-4" />
-          <span className="text-xs md:text-sm">{t("user-toggle.support")}</span>
+          <span className="text-xs md:text-sm">{t("pages.support")}</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => router.push("/privacy-policy")}>
           <BookLock className="mr-2 size-3 md:size-4" />
           <span className="text-xs md:text-sm">
-            {t("user-toggle.privacy-policy")}
+            {t("pages.privacy-policy")}
           </span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut}>
           <LogOut className="mr-2 size-3 md:size-4" />
-          <span className="text-xs md:text-sm">{t("user-toggle.log-out")}</span>
+          <span className="text-xs md:text-sm">{t("navbar.log-out")}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
