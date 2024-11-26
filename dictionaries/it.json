@@ -1,21 +1,22 @@
 {
   "pages": {
+    "homepage": "Homepage",
     "your-page": "La tua pagina",
     "support": "Supporto",
     "privacy-policy": "Informativa sulla privacy"
   },
-  "pagination": {
-    "previous": "Precedente",
-    "next": "Successivo"
-  },
   "navbar": {
     "welcome": "Benvenuto in Tournament Pool!",
     "welcome-login": "Benvenuto alla pagina di Login!",
+    "welcome-user": "Bentornato",
     "login": "Login",
     "login-github": "Login con GitHub",
     "login-description": "In questa app, utilizzeremo il tuo account GitHub per accedere in modo sicuro, così non dovrai creare una nuova password.",
-    "log-out": "Esci",
-    "homepage": "Homepage"
+    "log-out": "Esci"
+  },
+  "pagination": {
+    "previous": "Precedente",
+    "next": "Successivo"
   },
   "footer": {
     "rights": "Tutti i diritti riservati",
@@ -25,5 +26,34 @@
     "pronouns": "lei",
     "description": "Sviluppatrice Mobile e Frontend che crea esperienze utente eleganti e divertenti.\nAppassionata di UI/UX dalla Francia!",
     "joined": "Iscritta il 28 Settembre 2020"
+  },
+  "language": {
+    "french": "Francese",
+    "english": "Inglese",
+    "italian" : "Italiano"
+  },
+  "tournament": {
+    "your-tournaments": "I tuoi tornei?",
+    "tournaments-description": "Qui puoi creare tornei e trovare quelli precedenti.",
+    "search-pool": "Cerca un torneo...",
+    "add": "Aggiungi un torneo",
+    "add-description": "Qui puoi creare il tuo torneo.",
+    "created-by": "Creato da : "
+  },
+  "forms": {
+    "tournament": {
+      "name": "Nome del torneo",
+      "name-description": "Il nome del tuo torneo",
+      "team-number": "Quante squadre ti servono?",
+      "team-number-description": "Il numero delle tue squadre",
+      "name-color": "Nome e Colore",
+      "team-name": "Nome della Team",
+      "create": "Creare un torneo"
+    }
+  },
+  "no-tournament": {
+    "yet": "Ancora nessun torneo !",
+    "yours": "Non hai ancora dei tornei !",
+    "no-points": "Questo torneo non ha ancora punti !"
   }
 }

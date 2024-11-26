@@ -14,10 +14,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ChartPreview from "@/components/charts/chart-preview";
 import { UserNav } from "@/components/navbar/user-nav";
 import { usePaginatedTournaments } from "@/backend-calls";
+import { useTranslations } from "next-intl";
 
 export default function Home() {
   const [isActive, setIsActive] = React.useState<number>(1);
-
+  const t = useTranslations();
   const { data, isFetching, refetch } = usePaginatedTournaments({
     pageLimit: 4,
     page: isActive,
@@ -92,7 +93,7 @@ export default function Home() {
           </div>
         ) : (
           <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
-            No tournaments yet !
+            {t("no.yet")}
           </h1>
         )}
         <Pagination>

@@ -1,21 +1,22 @@
 {
   "pages": {
+    "homepage": "Homepage",
     "your-page": "Your page",
     "support": "Support",
     "privacy-policy": "Privacy Policy"
   },
-  "pagination": {
-    "previous": "Previous",
-    "next": "Next"
-  },
   "navbar": {
     "welcome": "Welcome to Tournament Pool!",
     "welcome-login": "Welcome to the Login page!",
+    "welcome-user": "Welcome back",
     "login": "Login",
     "login-github": "Login with GitHub",
     "login-description": "On this app, we’ll use your GitHub account to securely log you in, so you don’t need to create a new password.",
-    "log-out": "Log out",
-    "homepage": "Homepage"
+    "log-out": "Log out"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
   },
   "footer": {
     "rights": "All rights reserved",
@@ -23,7 +24,36 @@
   },
   "me": {
     "pronouns": "she/her",
-    "description": " Mobile & Frontend dev crafting sleek, fun user experiences.\nUI/UX enthusiast from France !",
+    "description": "Mobile & Frontend dev crafting sleek, fun user experiences.\nUI/UX enthusiast from France !",
     "joined": "Joined September 28, 2020"
+  },
+  "language": {
+    "french": "French",
+    "english": "English",
+    "italian" : "Italian"
+  },
+  "tournament": {
+    "your-tournaments": "Your tournaments ?",
+    "tournaments-description": "You can create tournaments here and find your previous ones.",
+    "search-pool": "Search for a tournament...",
+    "add": "Add a tournament",
+    "add-description": "You can create your own tournament here.",
+    "created-by": "Created by : "
+  },
+  "forms": {
+    "tournament": {
+      "name": "Tournament Name",
+      "name-description": "Your tournament name",
+      "team-number": "How many teams do you need ?",
+      "team-number-description": "Your number of teams",
+      "name-color": "Name and Color",
+      "team-name": "Team name",
+      "create": "Create a tournament"
+    }
+  },
+  "no": {
+    "yet": "No tournaments yet !",
+    "yours": "You have no tournaments yet !",
+    "no-points": "This tournament has no points set yet !"
   }
 }

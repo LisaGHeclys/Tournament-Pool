@@ -35,6 +35,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { UserNav } from "@/components/navbar/user-nav";
 import { useUserTournaments } from "@/backend-calls";
 import { CreateTournamentForm } from "@/components/forms/create-tournament-form";
+import { useTranslations } from "next-intl";
 
 export default function User() {
   const { data: session } = useSession();
@@ -43,6 +44,7 @@ export default function User() {
   const [filteredTournaments, setFilteredTournaments] =
     useState<tournamentBody[]>();
   const { data, isFetching } = useUserTournaments();
+  const t = useTranslations();
 
   useEffect(() => {
     if (data) {
@@ -72,24 +74,30 @@ export default function User() {
 
   return (
     <div className="min-h-screen sm:p-16 p-8 gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <UserNav title={`Welcome back ${session?.user?.name} !`} avatar />
+      <UserNav
+        title={"navbar.welcome-user"}
+        username={`${session?.user?.name} !`}
+        avatar
+      />
       <main className="w-full h-full flex gap-2 md:gap-6 items-center">
         <Card className="flex flex-col p-2 md:px-16 w-full h-full">
           <CardHeader className="p-2 pb-4 md:p-6">
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                  <BreadcrumbLink href="/">
+                    {t("pages.homepage")}
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Your page</BreadcrumbPage>
+                  <BreadcrumbPage>{t("pages.your-page")}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
-            <CardTitle>Your tournaments ?</CardTitle>
+            <CardTitle>{t("tournament.your-tournaments")}</CardTitle>
             <CardDescription>
-              You can create tournaments here and find your previous ones.
+              {t("tournament.tournaments-description")}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col h-full p-2 md:p-6 gap-4 md:gap-8">
@@ -98,7 +106,7 @@ export default function User() {
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder="Search for a pool..."
+                  placeholder={t("tournament.search-pool")}
                   className="w-full rounded-lg bg-background pl-8"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -112,9 +120,9 @@ export default function User() {
                 </DialogTrigger>
                 <DialogContent className="flex flex-col rounded-md max-w-[280px] sm:max-w-[425px]">
                   <DialogHeader>
-                    <DialogTitle>Add a tournament</DialogTitle>
+                    <DialogTitle>{t("tournament.add")}</DialogTitle>
                     <DialogDescription>
-                      You can create your own tournament here.
+                      {t("tournament.add-description")}
                     </DialogDescription>
                   </DialogHeader>
                   <CreateTournamentForm setOpen={setOpen} />
@@ -135,7 +143,7 @@ export default function User() {
                   </div>
                 ) : (
                   <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
-                    You have no tournaments yet !
+                    {t("no.yours")}
                   </h1>
                 )}
               </ScrollArea>

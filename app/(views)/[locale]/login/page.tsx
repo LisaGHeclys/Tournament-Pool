@@ -50,7 +50,7 @@ export default function Login() {
             router.push("/");
           }}
         >
-          {t("navbar.homepage")}
+          {t("pages.homepage")}
         </Button>
         <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl">
           {t("navbar.welcome-login")}

@@ -17,6 +17,7 @@ interface UserNavProps {
   centered?: boolean;
   isEdit?: boolean;
   children?: ReactNode;
+  username?: string;
 }
 
 export function UserNav({
@@ -26,6 +27,7 @@ export function UserNav({
   avatar = false,
   centered = false,
   isEdit = false,
+  username,
   children,
 }: UserNavProps): JSX.Element {
   const size = useWindowSize();
@@ -68,7 +70,7 @@ export function UserNav({
         ))}
       <div className="flex flex-row gap-2 items-center">
         <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl">
-          {t(title)}
+          {t(title)} {username && username}
         </h1>
         {isEdit && children}
       </div>

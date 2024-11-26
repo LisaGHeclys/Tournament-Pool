@@ -1,21 +1,22 @@
 {
   "pages": {
+    "homepage": "Page d'accueil",
     "your-page": "Votre page",
     "support": "Support",
     "privacy-policy": "Politique de confidentialité"
   },
-  "pagination": {
-    "previous": "Précédent",
-    "next": "Suivant"
-  },
   "navbar": {
     "welcome": "Bienvenue sur Tournament Pool!",
     "welcome-login": "Bienvenue sur la page de Connexion!",
+    "welcome-user": "Bon retard",
     "login": "Se connecter",
     "login-github": "Login avec GitHub",
     "login-description": "Sur cette application, nous utiliserons votre compte GitHub pour vous connecter en toute sécurité, afin que vous n'ayez pas besoin de créer un nouveau mot de passe.",
-    "log-out": "Déconnexion",
-    "homepage": "Page d'accueil"
+    "log-out": "Déconnexion"
+  },
+  "pagination": {
+    "previous": "Précédent",
+    "next": "Suivant"
   },
   "footer": {
     "rights": "Tous droits réservés",
@@ -25,5 +26,34 @@
     "pronouns": "elle",
     "description": "Développeuse Mobile et Frontend créant des expériences utilisateur élégantes et amusantes.\nPassionnée de UI/UX en provenance de France !",
     "joined": "Rejoint le 28 septembre 2020"
+  },
+  "language": {
+    "french": "Français",
+    "english": "Anglais",
+    "italian" : "Italien"
+  },
+  "tournament": {
+    "your-tournaments": "Vos tournois ?",
+    "tournaments-description": "Vous pouvez créer des tournois ici et retrouver vos précédents.",
+    "search-pool": "Recherchez un tournoi...",
+    "add": "Ajoutez un tournoi",
+    "add-description": "Vous pouvez créer vos propres tournois ici.",
+    "created-by": "Créé par : "
+  },
+  "forms": {
+    "tournament": {
+      "name": "Nom du tournoi",
+      "name-description": "Le nom de votre tournoi",
+      "team-number": "Combien d'équipes avez-vous besoin ?",
+      "team-number-description": "Le nombre de vos équipes",
+      "name-color": "Nom et Couleur",
+      "team-name": "Nom de la Team",
+      "create": "Créer un tournoi"
+    }
+  },
+  "no-tournament": {
+    "yet": "Pas encore de tournois !",
+    "yours": "Vous n'avez pas encore de tournois !",
+    "no-points": "Ce tournoi n'a pas encore de points !"
   }
 }
