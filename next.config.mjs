@@ -1,8 +1,8 @@
 const nextConfig = {
-  // i18n: {
-  //   locales: ["fr", "en", "it"],
-  //   defaultLocale: "en",
-  // },
+  i18nProvider: {
+    locales: ["fr", "en", "it"],
+    defaultLocale: "fr",
+  },
 };
 
 export default nextConfig;

@@ -14,11 +14,13 @@ import { signOut, useSession } from "next-auth/react";
 import { BookLock, LifeBuoy, LogOut, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslations } from "next-intl";
 
 export function UserToggle() {
   const { toast } = useToast();
   const router = useRouter();
   const { data: session } = useSession();
+  const t = useTranslations();
 
   async function handleSignOut(e: React.FormEvent) {
     e.preventDefault();
@@ -71,21 +73,25 @@ export function UserToggle() {
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => router.push("/user")}>
           <User className="mr-2 size-3 md:size-4" />
-          <span className="text-xs md:text-sm">Your page</span>
+          <span className="text-xs md:text-sm">
+            {t("user-toggle.your-page")}
+          </span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => router.push("/")}>
           <LifeBuoy className="mr-2 size-3 md:size-4" />
-          <span className="text-xs md:text-sm">Support</span>
+          <span className="text-xs md:text-sm">{t("user-toggle.support")}</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => router.push("/privacy-policy")}>
           <BookLock className="mr-2 size-3 md:size-4" />
-          <span className="text-xs md:text-sm">Privacy Policy</span>
+          <span className="text-xs md:text-sm">
+            {t("user-toggle.privacy-policy")}
+          </span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut}>
           <LogOut className="mr-2 size-3 md:size-4" />
-          <span className="text-xs md:text-sm">Log out</span>
+          <span className="text-xs md:text-sm">{t("user-toggle.log-out")}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
