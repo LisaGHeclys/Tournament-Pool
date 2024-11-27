@@ -83,5 +83,11 @@
     "yet": "No tournaments yet !",
     "yours": "You have no tournaments yet !",
     "no-points": "This tournament has no points set yet !"
+  },
+  "theme": {
+    "span": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
   }
 }

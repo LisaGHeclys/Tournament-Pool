@@ -83,5 +83,11 @@
     "yet": "Pas encore de tournois !",
     "yours": "Vous n'avez pas encore de tournois !",
     "no-points": "Ce tournoi n'a pas encore de points !"
+  },
+  "theme": {
+    "span": "Changer de thème",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système"
   }
 }

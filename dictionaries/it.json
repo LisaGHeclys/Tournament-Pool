@@ -83,5 +83,11 @@
     "yet": "Ancora nessun torneo !",
     "yours": "Non hai ancora dei tornei !",
     "no-points": "Questo torneo non ha ancora punti !"
+  },
+  "theme": {
+    "span": "Cambia tema",
+    "light": "Chiaro",
+    "dark": "Scuro",
+    "system": "Sistema"
   }
 }
