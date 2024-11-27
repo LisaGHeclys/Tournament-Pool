@@ -1,4 +1,5 @@
 {
+  "none": "",
   "pages": {
     "homepage": "Homepage",
     "your-page": "La tua pagina",
@@ -38,20 +39,47 @@
     "search-pool": "Cerca un torneo...",
     "add": "Aggiungi un torneo",
     "add-description": "Qui puoi creare il tuo torneo.",
-    "created-by": "Creato da : "
+    "created-by": "Creato da : ",
+    "edit-information": "Modifica le informazioni del torneo",
+    "edit": "Modifica il tuo torneo",
+    "edit-description": "Qui puoi modificare il tuo torneo.",
+    "title": "I grafici del torneo",
+    "description": "Qui puoi vedere tutti i differenti grafici per questo torneo."
+  },
+  "points": {
+    "title": "Aggiungere più punti?",
+    "description": "Puoi aggiungere punti in base alla team.",
+    "search": "Cerca punti...",
+    "add": "Aggiungi punti",
+    "add-description": "Puoi aggiungere punti per le tue squadre qui."
   },
   "forms": {
     "tournament": {
       "name": "Nome del torneo",
       "name-description": "Il nome del tuo torneo",
-      "team-number": "Quante squadre ti servono?",
-      "team-number-description": "Il numero delle tue squadre",
+      "team-number": "Quante team ti servono?",
+      "team-number-description": "Il numero delle tue team",
       "name-color": "Nome e Colore",
       "team-name": "Nome della Team",
-      "create": "Creare un torneo"
+      "create": "Creare un torneo",
+      "update": "Aggiorna",
+      "delete": "Elimina",
+      "delete-title": "Elimina",
+      "delete-description": "Sei sicuro di voler eliminare questo torneo?",
+      "confirm-delete": "Conferma eliminazione",
+      "cancel": "Annulla"
+    },
+    "points": {
+      "which-team": "Per quale team?",
+      "choose-team": "Scegli una team",
+      "what-reason": "Quale motivo?",
+      "write-reason": "Scrivi il motivo per aggiungere punti",
+      "how-many": "Quanti punti?",
+      "how-many-description": "Quanti punti vuoi aggiungere?",
+      "add": "Aggiungi punti"
     }
   },
-  "no-tournament": {
+  "no": {
     "yet": "Ancora nessun torneo !",
     "yours": "Non hai ancora dei tornei !",
     "no-points": "Questo torneo non ha ancora punti !"

@@ -50,8 +50,10 @@ import { UserNav } from "@/components/navbar/user-nav";
 import { useDeletePoints, useTournamentsById } from "@/backend-calls";
 import { AddPointsForm } from "@/components/forms/add-points-form";
 import { EditTournamentForm } from "@/components/forms/edit-tournament-form";
+import { useTranslations } from "next-intl";
 
 export default function Tournament() {
+  const t = useTranslations();
   const id: string | string[] = useParams().id;
   const [openPoints, setOpenPoints] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
@@ -114,7 +116,8 @@ export default function Tournament() {
   return (
     <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
       <UserNav
-        title={data?.name ?? ""}
+        title={"none"}
+        username={data?.name ?? ""}
         isBack
         backPath={"/user"}
         centered
@@ -129,16 +132,16 @@ export default function Tournament() {
                   <Button variant="ghost" size="icon">
                     <SquarePen className="h-4 w-4 md:h-6 md:w-6" />
                     <span className="sr-only">
-                      Edit tournament's information
+                      {t("tournament.edit-information")}
                     </span>
                   </Button>
                 </TooltipTrigger>
               </DialogTrigger>
               <DialogContent className="flex flex-col rounded-md max-w-[280px] sm:max-w-[425px]">
                 <DialogHeader>
-                  <DialogTitle>Edit your tournament</DialogTitle>
+                  <DialogTitle> {t("tournament.edit")}</DialogTitle>
                   <DialogDescription>
-                    You can edit your tournament here.
+                    {t("tournament.edit-description")}
                   </DialogDescription>
                 </DialogHeader>
                 {data && (
@@ -146,7 +149,7 @@ export default function Tournament() {
                 )}
               </DialogContent>
             </Dialog>
-            <TooltipContent>Edit tournament's information</TooltipContent>
+            <TooltipContent> {t("tournament.edit-information")}</TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </UserNav>
@@ -156,11 +159,15 @@ export default function Tournament() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                  <BreadcrumbLink href="/">
+                    {t("pages.homepage")}
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/user">Your page</BreadcrumbLink>
+                  <BreadcrumbLink href="/user">
+                    {t("pages.your-page")}
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
@@ -168,10 +175,8 @@ export default function Tournament() {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
-            <CardTitle>This tournament charts</CardTitle>
-            <CardDescription>
-              Here you can see the different charts for this tournaments.
-            </CardDescription>
+            <CardTitle>{t("tournament.title")}</CardTitle>
+            <CardDescription>{t("tournament.description")}</CardDescription>
           </CardHeader>
           <div className="w-full h-full flex">
             {data && Array.isArray(data?.points) && (
@@ -194,10 +199,8 @@ export default function Tournament() {
         </Card>
         <Card className="py-2 px-4 lg:py-8 lg:px-16 w-full lg:w-1/3 lg:h-full flex flex-col">
           <CardHeader>
-            <CardTitle>Add more points ?</CardTitle>
-            <CardDescription>
-              You can add points depending on the team.
-            </CardDescription>
+            <CardTitle>{t("points.title")}</CardTitle>
+            <CardDescription>{t("points.description")}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col w-full gap-2 md:gap-8 h-full p-2 md:p-6">
             <div className="h-fit w-full flex flex-col-reverse md:flex-row gap-2 md:gap-8">
@@ -205,7 +208,7 @@ export default function Tournament() {
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder="Search points..."
+                  placeholder={t("points.search")}
                   className="w-full rounded-lg bg-background pl-8"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -219,9 +222,9 @@ export default function Tournament() {
                 </DialogTrigger>
                 <DialogContent className="flex flex-col sm:max-w-[425px]">
                   <DialogHeader>
-                    <DialogTitle>Add points</DialogTitle>
+                    <DialogTitle>{t("points.add")}</DialogTitle>
                     <DialogDescription>
-                      You can add points for your teams here.
+                      {t("points.add-description")}
                     </DialogDescription>
                   </DialogHeader>
                   {data && (
@@ -245,7 +248,7 @@ export default function Tournament() {
                 </div>
               ) : (
                 <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
-                  This tournament has no points set yet !
+                  {t("no.no-points")}
                 </h1>
               )}
             </ScrollArea>

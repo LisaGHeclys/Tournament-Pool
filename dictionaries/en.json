@@ -1,4 +1,5 @@
 {
+  "none": "",
   "pages": {
     "homepage": "Homepage",
     "your-page": "Your page",
@@ -38,7 +39,19 @@
     "search-pool": "Search for a tournament...",
     "add": "Add a tournament",
     "add-description": "You can create your own tournament here.",
-    "created-by": "Created by : "
+    "created-by": "Created by : ",
+    "edit-information": "Edit tournament's information",
+    "edit": "Edit your tournament",
+    "edit-description": "You can edit your tournament here.",
+    "title": "This tournament charts",
+    "description": "Here you can see the different charts for this tournaments."
+  },
+  "points": {
+    "title": "Add more points ?",
+    "description": "You can add points depending on the team.",
+    "search": "Search points...",
+    "add": "Add points",
+    "add-description": "You can add points for your teams here."
   },
   "forms": {
     "tournament": {
@@ -48,7 +61,22 @@
       "team-number-description": "Your number of teams",
       "name-color": "Name and Color",
       "team-name": "Team name",
-      "create": "Create a tournament"
+      "create": "Create a tournament",
+      "update": "Update",
+      "delete": "Delete",
+      "delete-title": "Delete ",
+      "delete-description": "Are you sure you want to delete this tournament ?",
+      "confirm-delete": "Confirm delete",
+      "cancel": "Cancel"
+    },
+    "points": {
+      "which-team": "For which team ?",
+      "choose-team": "Choose a team",
+      "what-reason": "What reason ?",
+      "write-reason": "Write the reason to add points",
+      "how-many": "How many points ?",
+      "how-many-description": "How many points do you want to add ?",
+      "add": "Add points"
     }
   },
   "no": {

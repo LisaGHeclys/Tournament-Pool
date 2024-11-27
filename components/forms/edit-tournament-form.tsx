@@ -28,6 +28,7 @@ import updateTournamentSchema from "@/schema/update-tournament-schema";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { Label } from "@/components/ui/label";
 import { useDeleteTournament, useEditTournament } from "@/backend-calls";
+import { useTranslations } from "next-intl";
 
 interface EditTournamentFormProps {
   data: tournamentBody;
@@ -39,6 +40,7 @@ export function EditTournamentForm({
   setOpenEdit,
 }: EditTournamentFormProps) {
   const router = useRouter();
+  const t = useTranslations();
   const id: string | string[] = useParams().id;
   const [openDelete, setOpenDelete] = React.useState(false);
   const [updatedTournament, setUpdatedTournament] =
@@ -134,7 +136,7 @@ export function EditTournamentForm({
                       className="flex w-full flex-col space-y-1.5"
                     >
                       <Label htmlFor={`team-${index}-name`}>
-                        Team {index + 1}: Name and Color
+                        Team {index + 1}: {t("forms.tournament.name-color")}
                       </Label>
                       <div className="flex flex-row gap-4">
                         <Input
@@ -147,7 +149,7 @@ export function EditTournamentForm({
                             });
                             handleTeamChange(index, "name", newName);
                           }}
-                          placeholder="Team name"
+                          placeholder={t("forms.tournament.team-name")}
                           required
                         />
                         <div>
@@ -174,18 +176,23 @@ export function EditTournamentForm({
         <div className="flex justify-between">
           <Dialog open={openDelete} onOpenChange={setOpenDelete}>
             <DialogTrigger asChild>
-              <Button variant="destructive">Delete</Button>
+              <Button variant="destructive">
+                {t("forms.tournament.delete")}
+              </Button>
             </DialogTrigger>
             <DialogContent className="flex flex-col rounded-md max-w-[280px] sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>Delete {data.name}</DialogTitle>
+                <DialogTitle>
+                  {t("forms.tournament.delete-title")}
+                  {data.name}
+                </DialogTitle>
                 <DialogDescription>
-                  Are you sure you want to delete this tournament ?
+                  {t("forms.tournament.delete-description")}
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter className="sm:justify-between">
                 <Button variant="outline" onClick={() => setOpenDelete(false)}>
-                  Cancel
+                  {t("forms.tournament.cancel")}
                 </Button>
                 <Button
                   variant="destructive"
@@ -193,13 +200,13 @@ export function EditTournamentForm({
                     handleDeleteTournament(Array.isArray(id) ? id[0] : id)
                   }
                 >
-                  Confirm delete
+                  {t("forms.tournament.confirm-delete")}
                 </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
           <Button type="submit" variant="outline">
-            Update
+            {t("forms.tournament.update")}
           </Button>
         </div>
       </form>
