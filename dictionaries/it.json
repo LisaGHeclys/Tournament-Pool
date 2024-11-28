@@ -47,6 +47,8 @@
     "description": "Qui puoi vedere tutti i differenti grafici per questo torneo."
   },
   "points": {
+    "teams": "Punti delle squadre?",
+    "teams-description": "Qui puoi vedere i punti di ogni squadra.",
     "title": "Aggiungere più punti?",
     "description": "Puoi aggiungere punti in base alla team.",
     "search": "Cerca punti...",
@@ -64,7 +66,7 @@
       "create": "Creare un torneo",
       "update": "Aggiorna",
       "delete": "Elimina",
-      "delete-title": "Elimina",
+      "delete-title": "Elimina ",
       "delete-description": "Sei sicuro di voler eliminare questo torneo?",
       "confirm-delete": "Conferma eliminazione",
       "cancel": "Annulla"
@@ -89,5 +91,24 @@
     "light": "Chiaro",
     "dark": "Scuro",
     "system": "Sistema"
+  },
+  "privacy-policy": {
+    "last-updated": "Ultimo aggiornamento: ",
+    "small-description-1": "Il sito web Tournament-pool (",
+    "small-description-2": ") è gestito e mantenuto da Lisa Glaziou.",
+    "small-description-3": "Questa pagina ti informa delle nostre politiche riguardanti la raccolta,\nl'uso e la divulgazione delle informazioni personali che riceviamo dagli utenti\ndel sito web.",
+    "1": "1. Raccolta e utilizzo delle informazioni",
+    "1-1": "Raccogliamo informazioni utilizzando l'autenticazione OAuth 2.0 con GitHub.\nQuando accedi o ti registri tramite GitHub, accediamo a determinate\ninformazioni associate al tuo account GitHub, come:",
+    "1-2": "• Informazioni personali: Il tuo nome utente GitHub, indirizzo email\ne immagine del profilo (se fornita).",
+    "1-3": "• Informazioni pubbliche: Eventuali repository pubblici o\nprogetti collegati al tuo account GitHub.",
+    "1-4": "Queste informazioni vengono utilizzate per creare e gestire il tuo account e\npersonalizzare la tua esperienza sulla nostra piattaforma. Inoltre, utilizziamo\nVercel Analytics per raccogliere dati sulle prestazioni e interazioni degli utenti.\nQuesti includono, ma non sono limitati a, visualizzazioni di pagina, durata delle sessioni\ne interazioni degli utenti per migliorare le prestazioni\ne l'esperienza utente della nostra piattaforma.",
+    "2": "2. Cookie",
+    "2-1": "I cookie sono file che contengono una piccola quantità di dati, che possono\nincludere un identificatore anonimo univoco. I cookie vengono inviati al tuo\nbrowser da un sito web e memorizzati sul disco rigido del tuo computer.\nPuoi configurare il tuo browser per rifiutare tutti i cookie o per\nindicare quando viene inviato un cookie. Questo sito utilizza solo i cookie\nnecessari per il suo corretto funzionamento. Questi cookie non vengono utilizzati\nper scopi di tracciamento. Devi accettare questi cookie per\nutilizzare il nostro sito.",
+    "3": "3. Sicurezza",
+    "3-1": "La sicurezza delle tue informazioni personali è importante per noi.\nAbbiamo dedicato tempo di sviluppo per garantire la massima sicurezza\na tutti i nostri utenti attraverso l'uso di servizi sicuri. Tieni presente\nche nessun metodo di trasmissione su Internet o metodo\ndi archiviazione elettronica è sicuro al 100%. Pur impegnandoci a utilizzare\nmezzi commercialmente accettabili per proteggere le tue informazioni\npersonali, non possiamo garantirne la sicurezza assoluta.",
+    "4": "4. Modifiche a questa politica sulla privacy",
+    "4-1": "Questa politica sulla privacy è efficace a partire dalla data indicata sopra e\nrimarrà in vigore. Eventuali modifiche alle sue disposizioni saranno\nimmediatamente applicate dopo essere state pubblicate su questa pagina. Ci riserviamo\nil diritto di aggiornare o modificare la nostra politica sulla privacy in qualsiasi momento, e\ndovresti periodicamente rivedere questa politica. Il tuo uso continuato\ndel servizio dopo che abbiamo pubblicato modifiche alla politica sulla privacy su\nquesta pagina costituirà la tua accettazione di tali modifiche e\nil tuo consenso a rispettare e essere vincolato dalla politica sulla privacy aggiornata.",
+    "5": "5. Contattaci",
+    "5-1": "Se hai domande relative a questa politica sulla privacy, contatta\nlo sviluppatore principale via email a "
   }
 }

@@ -47,6 +47,8 @@
     "description": "Here you can see the different charts for this tournaments."
   },
   "points": {
+    "teams": "Team's points ?",
+    "teams-description": "Here you can see the points from each teams.",
     "title": "Add more points ?",
     "description": "You can add points depending on the team.",
     "search": "Search points...",
@@ -76,7 +78,8 @@
       "write-reason": "Write the reason to add points",
       "how-many": "How many points ?",
       "how-many-description": "How many points do you want to add ?",
-      "add": "Add points"
+      "add": "Add points",
+      "delete": "Are you sure you want to delete this point ?"
     }
   },
   "no": {
@@ -89,5 +92,24 @@
     "light": "Light",
     "dark": "Dark",
     "system": "System"
+  },
+  "privacy-policy": {
+    "last-updated": "Last updated : ",
+    "small-description-1": "The website Tournament-pool (",
+    "small-description-2": ") is operated and maintained by Lisa Glaziou.",
+    "small-description-3": "This page informs you of our policies regarding the collection,\nuse, and disclosure of personal information we receive from users\nof the website.",
+    "1": "1. Information Collection and Use",
+    "1-1": "We collect information using OAuth 2.0 authentication with GitHub.\nWhen you log in or sign up via GitHub, we access certain\ninformation associated with your GitHub account, such as:",
+    "1-2": "• Personal Information: Your GitHub username, email\naddress, and profile picture (if provided).",
+    "1-3": "• Public Information: Any public repositories or\nprojects linked to your GitHub account.",
+    "1-4": "This information is used to create and manage your account, and\npersonalize your experience on our platform. Additionally, we use\nVercel Analytics to collect performance and user interaction data.\nThis includes but is not limited to page views, session duration,\nand user interactions to help improve our platform’s performance\nand user experience.",
+    "2": "2. Cookies",
+    "2-1": "Cookies are files containing a small amount of data, which may\ninclude an anonymous unique identifier. Cookies are sent to your\nbrowser from a website and stored on your computer’s hard drive.\nYou can configure your browser to refuse all cookies or to\nindicate when a cookie is sent. This site only uses cookies\nnecessary for its proper functioning. These cookies are not used\nfor tracking purposes. You are required to accept these cookies to\nuse our site.",
+    "3": "3. Security",
+    "3-1": "The security of your personal information is important to us.\nDevelopment time has been dedicated to ensuring maximum security\nfor all our users through the use of secure services. Please keep\nin mind that no method of transmission over the Internet or method\nof electronic storage is 100% secure. While we strive to use\ncommercially acceptable means to protect your personal\ninformation, we cannot guarantee its absolute security.",
+    "4": "4. Changes to this Privacy Policy",
+    "4-1": "This privacy policy is effective as of the date above and will\nremain in effect. Any modifications to its provisions will be\nimmediately applied after being published on this page. We reserve\nthe right to update or change our privacy policy at any time, and\nyou should periodically review this policy. Your continued use of\nthe service after we have posted changes to the privacy policy on\nthis page will constitute your acceptance of those changes and\nyour consent to abide by and be bound by the updated privacy\npolicy.",
+    "5": "5. Contact Us",
+    "5-1": "If you have any questions regarding this privacy policy, please\ncontact the lead developer via email at "
   }
 }

@@ -47,6 +47,8 @@
     "description": "Ici, vous pouvez voir les différents graphiques pour ce tournoi."
   },
   "points": {
+    "teams": "Points des équipes ?",
+    "teams-description": "Ici, vous pouvez voir les points de chaque équipe.",
     "title": "Ajouter plus de points ?",
     "description": "Vous pouvez ajouter des points en fonction de l'équipe.",
     "search": "Rechercher des points...",
@@ -64,7 +66,7 @@
       "create": "Créer un tournoi",
       "update": "Mettre à jour",
       "delete": "Supprimer",
-      "delete-title": "Supprimer",
+      "delete-title": "Supprimer ",
       "delete-description": "Êtes-vous sûr de vouloir supprimer ce tournoi ?",
       "confirm-delete": "Confirmer la suppression",
       "cancel": "Annuler"
@@ -89,5 +91,24 @@
     "light": "Clair",
     "dark": "Sombre",
     "system": "Système"
+  },
+  "privacy-policy": {
+    "last-updated": "Dernière mise à jour : ",
+    "small-description-1": "Le site web Tournament-pool (",
+    "small-description-2": ") est exploité et maintenu par Lisa Glaziou.",
+    "small-description-3": "Cette page vous informe de nos politiques concernant la collecte,\nl'utilisation et la divulgation des informations personnelles que nous recevons des utilisateurs\ndu site web.",
+    "1": "1. Collecte et utilisation des informations",
+    "1-1": "Nous collectons des informations en utilisant l'authentification OAuth 2.0 avec GitHub.\nLorsque vous vous connectez ou vous inscrivez via GitHub, nous accédons à certaines\ninformations associées à votre compte GitHub, telles que :",
+    "1-2": "• Informations personnelles : Votre nom d'utilisateur GitHub, adresse email\net photo de profil (si fournie).",
+    "1-3": "• Informations publiques : Tous les dépôts publics ou\nprojets liés à votre compte GitHub.",
+    "1-4": "Ces informations sont utilisées pour créer et gérer votre compte et\npersonnaliser votre expérience sur notre plateforme. De plus, nous utilisons\nVercel Analytics pour collecter des données sur les performances et les interactions des utilisateurs.\nCela inclut, mais sans s'y limiter, les vues de pages, la durée des sessions\net les interactions des utilisateurs afin d'améliorer les performances\nde notre plateforme et l'expérience utilisateur.",
+    "2": "2. Cookies",
+    "2-1": "Les cookies sont des fichiers contenant une petite quantité de données, pouvant\ninclure un identifiant unique anonyme. Les cookies sont envoyés à votre\nnavigateur par un site web et stockés sur le disque dur de votre ordinateur.\nVous pouvez configurer votre navigateur pour refuser tous les cookies ou pour\nindiquer quand un cookie est envoyé. Ce site n'utilise que des cookies\nnécessaires à son bon fonctionnement. Ces cookies ne sont pas utilisés\nà des fins de suivi. Vous devez accepter ces cookies pour\nutiliser notre site.",
+    "3": "3. Sécurité",
+    "3-1": "La sécurité de vos informations personnelles est importante pour nous.\nDu temps de développement a été consacré à garantir une sécurité maximale\npour tous nos utilisateurs grâce à l'utilisation de services sécurisés. Veuillez noter\nqu'aucune méthode de transmission sur Internet ou méthode\nde stockage électronique n'est sécurisée à 100 %. Bien que nous nous efforcions d'utiliser\nles moyens commercialement acceptables pour protéger vos informations\npersonnelles, nous ne pouvons garantir leur sécurité absolue.",
+    "4": "4. Modifications de cette politique de confidentialité",
+    "4-1": "Cette politique de confidentialité est en vigueur à partir de la date indiquée ci-dessus et\nrestera en vigueur. Toute modification de ses dispositions sera\nimmédiatement appliquée après sa publication sur cette page. Nous nous réservons\nle droit de mettre à jour ou de modifier notre politique de confidentialité à tout moment, et\nvous devriez consulter cette politique périodiquement. Votre utilisation continue\ndu service après que nous ayons publié des modifications à la politique de confidentialité sur\ncette page constituera votre acceptation de ces modifications et\nvotre consentement à respecter et à être lié par la politique de confidentialité mise à jour.",
+    "5": "5. Nous contacter",
+    "5-1": "Si vous avez des questions concernant cette politique de confidentialité, veuillez\ncontacter le développeur principal par email à "
   }
 }
