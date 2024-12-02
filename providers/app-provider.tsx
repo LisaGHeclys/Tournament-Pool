@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { SessionProvider } from "next-auth/react";
 import { TanstackQueryProvider } from "@/providers/tanstack-query-provider";
 import { ReactNode } from "react";
+import { IntlProvider } from "@/providers/intl-provider";
 
 export default function AppProvider({
   children,
@@ -12,19 +13,21 @@ export default function AppProvider({
   children: ReactNode;
 }>) {
   return (
-    <TanstackQueryProvider>
-      <SessionProvider>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-      </SessionProvider>
-      <ToasterProvider />
-      <CookieConsentProvider />
-    </TanstackQueryProvider>
+    <IntlProvider>
+      <TanstackQueryProvider>
+        <SessionProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </SessionProvider>
+        <ToasterProvider />
+        <CookieConsentProvider />
+      </TanstackQueryProvider>
+    </IntlProvider>
   );
 }

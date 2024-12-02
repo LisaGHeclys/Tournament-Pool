@@ -25,6 +25,7 @@ import { tournamentBody } from "@/types/types";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useAddPoints } from "@/backend-calls";
+import { useTranslations } from "next-intl";
 
 interface AddPointsFormProps {
   data: tournamentBody;
@@ -33,6 +34,7 @@ interface AddPointsFormProps {
 
 export function AddPointsForm({ data, setOpenPoints }: AddPointsFormProps) {
   const { data: session } = useSession();
+  const t = useTranslations();
   const id: string | string[] = useParams().id;
   const addPointsMutation = useAddPoints({
     id: Array.isArray(id) ? id[0] : id,
@@ -71,7 +73,7 @@ export function AddPointsForm({ data, setOpenPoints }: AddPointsFormProps) {
           name="team"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>For which team?</FormLabel>
+              <FormLabel>{t("forms.points.which-team")}</FormLabel>
               <FormControl>
                 <Select
                   onValueChange={(value) => {
@@ -91,7 +93,7 @@ export function AddPointsForm({ data, setOpenPoints }: AddPointsFormProps) {
                   }}
                 >
                   <SelectTrigger id="team-number">
-                    <SelectValue placeholder="Choose a team" />
+                    <SelectValue placeholder={t("forms.points.choose-team")} />
                   </SelectTrigger>
                   <SelectContent position="popper">
                     {data.teams.map((team, index) => (
@@ -111,11 +113,11 @@ export function AddPointsForm({ data, setOpenPoints }: AddPointsFormProps) {
           name="reason"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>What reason?</FormLabel>
+              <FormLabel>{t("forms.points.what-reason")}</FormLabel>
               <FormControl>
                 <Input
                   id="reason"
-                  placeholder="Write the reason to add points"
+                  placeholder={t("forms.points.write-reason")}
                   {...field}
                 />
               </FormControl>
@@ -128,13 +130,13 @@ export function AddPointsForm({ data, setOpenPoints }: AddPointsFormProps) {
           name="points"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>How many points?</FormLabel>
+              <FormLabel>{t("forms.points.how-many")}</FormLabel>
               <FormControl>
                 <Input
                   id="points"
                   max={1000}
                   value={field.value}
-                  placeholder="How many points do you want to add?"
+                  placeholder={t("forms.points.how-many-description")}
                   onChange={(e) => {
                     form.setValue("points", Number(e.target.value));
                   }}
@@ -144,7 +146,7 @@ export function AddPointsForm({ data, setOpenPoints }: AddPointsFormProps) {
             </FormItem>
           )}
         />
-        <Button type="submit">Add point</Button>
+        <Button type="submit">{t("forms.points.add")}</Button>
       </form>
     </Form>
   );

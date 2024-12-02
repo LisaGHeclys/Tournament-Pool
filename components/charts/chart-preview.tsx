@@ -11,6 +11,7 @@ import PieChartComponent from "@/components/charts/pie-chart";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 type ChartPreviewProps = {
   tournament: tournamentBody;
   link: string;
@@ -18,6 +19,7 @@ type ChartPreviewProps = {
 
 export default function ChartPreview({ tournament, link }: ChartPreviewProps) {
   const router = useRouter();
+  const t = useTranslations();
 
   return (
     <Button
@@ -40,7 +42,10 @@ export default function ChartPreview({ tournament, link }: ChartPreviewProps) {
               ))}
             </CardDescription>
           </div>
-          <span className="flex">Created by : {tournament.createdBy}</span>
+          <span className="flex">
+            {t("tournament.created-by")}
+            {tournament.createdBy}
+          </span>
         </CardHeader>
         <div className="flex h-1/2 sm:h-full w-full sm:w-1/2 p-2 sm:p-4">
           <PieChartComponent tournament={tournament} />

@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient, tournamentsQueryKeys } from "@/backend-calls";
 import { toast } from "@/hooks/use-toast";
 import { tournamentBody } from "@/types/types";
+import { useTranslations } from "next-intl";
 
 interface Props {
   id: string;
@@ -9,6 +10,7 @@ interface Props {
 
 export function useEditTournament({ id }: Props) {
   const queryClient = useQueryClient();
+  const t = useTranslations();
 
   const editTournamentFn = async (updatedTournament: tournamentBody) => {
     return await apiClient.patch(`/tournaments/${id}`, updatedTournament);
@@ -28,8 +30,8 @@ export function useEditTournament({ id }: Props) {
         updateTournament,
       );
       toast({
-        title: "Updated successfully !",
-        description: "You’ve successfully updated the tournament.",
+        title: t("toast.edit-tournament-success.title"),
+        description: t("toast.edit-tournament-success.description"),
       });
       return {
         previousTournament: previousTournament,
@@ -38,8 +40,8 @@ export function useEditTournament({ id }: Props) {
     },
     onError: (updatedTournament: tournamentBody) => {
       toast({
-        title: "Couldn't update the tournaments",
-        description: "An error occurred during the update of the tournaments.",
+        title: t("toast.edit-tournament-fail.title"),
+        description: t("toast.edit-tournament-fail.description"),
         variant: "destructive",
       });
       queryClient.setQueryData(

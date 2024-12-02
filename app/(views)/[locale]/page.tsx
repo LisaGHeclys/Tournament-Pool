@@ -14,9 +14,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ChartPreview from "@/components/charts/chart-preview";
 import { UserNav } from "@/components/navbar/user-nav";
 import { usePaginatedTournaments } from "@/backend-calls";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Home() {
   const [isActive, setIsActive] = React.useState<number>(1);
+  const t = useTranslations();
+  const locale = useLocale();
   const { data, isFetching, refetch } = usePaginatedTournaments({
     pageLimit: 4,
     page: isActive,
@@ -76,7 +79,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <UserNav title="Welcome to Tournament Pool!" avatar centered />
+      <UserNav title="navbar.welcome" avatar centered />
       <main className="gap-2 h-full w-full flex flex-col md:gap-6 row-start-2 items-center justify-between">
         <div className="flex relative mt-4"></div>
         {data ? (
@@ -85,13 +88,13 @@ export default function Home() {
               <ChartPreview
                 key={index}
                 tournament={tournament}
-                link={"/show/"}
+                link={`/${locale}/show/`}
               />
             ))}
           </div>
         ) : (
           <h1 className="flex items-center justify-center text-xs md:text-md font-extrabold lg:text-xl text-muted-foreground ">
-            No tournaments yet !
+            {t("no.yet")}
           </h1>
         )}
         <Pagination>

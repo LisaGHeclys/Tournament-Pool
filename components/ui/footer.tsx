@@ -6,8 +6,11 @@ import {
 } from "@/components/ui/hover-card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useTranslations } from "next-intl";
 
 export default function Footer() {
+  const t = useTranslations();
+
   return (
     <footer className="h-fit row-start-3 flex gap-2 flex-wrap items-center justify-center">
       <HoverCard>
@@ -17,7 +20,7 @@ export default function Footer() {
             variant="link"
           >
             <Copyright width={16} height={16} />
-            All rights reserved
+            {t("footer.rights")}
           </Button>
         </HoverCardTrigger>
         <HoverCardContent className="w-80">
@@ -29,16 +32,13 @@ export default function Footer() {
             <div className="space-y-1">
               <h4 className="text-sm font-semibold">Lisopaïne</h4>
               <h4 className="text-xs text-muted-foreground font-medium">
-                LisaGHeclys · she/her
+                LisaGHeclys · {t("me.pronouns")}
               </h4>
-              <p className="text-sm">
-                Mobile & Frontend dev crafting sleek, fun user experiences.
-                UI/UX enthusiast from France !
-              </p>
+              <p className="text-sm">{t("me.description")}</p>
               <div className="flex items-center pt-2">
-                <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
+                <CalendarDays className="mr-2 h-4 w-4 opacity-70" />
                 <span className="text-xs text-muted-foreground">
-                  Joined September 28, 2020
+                  {t("me.joined")}
                 </span>
               </div>
             </div>
@@ -61,7 +61,7 @@ export default function Footer() {
         rel="noopener noreferrer"
       >
         <Globe width={16} height={16} />
-        Go see my other projects →
+        {t("footer.other-projects")} →
       </a>
     </footer>
   );

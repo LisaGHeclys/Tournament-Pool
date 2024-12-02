@@ -14,6 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useTranslations } from "next-intl";
 
 type PointsPreviewProps = {
   isShowing?: boolean;
@@ -30,6 +31,7 @@ export default function PointsPreview({
   handleRemovePointsToTournament,
 }: PointsPreviewProps) {
   const [openDeletePoint, setOpenDeletePoint] = React.useState(false);
+  const t = useTranslations();
 
   return (
     <Card className="w-full h-full flex justify-between drop-shadow-lg dark:shadow-white">
@@ -59,7 +61,10 @@ export default function PointsPreview({
                   </DialogTrigger>
                   <DialogContent className="flex flex-col rounded-md max-w-[280px] sm:max-w-[425px]">
                     <DialogHeader>
-                      <DialogTitle>Delete {point.reason}</DialogTitle>
+                      <DialogTitle>
+                        {t("forms.tournament.delete-title")}
+                        {point.reason}
+                      </DialogTitle>
                       <DialogDescription>
                         Are you sure you want to delete this point ?
                       </DialogDescription>
@@ -69,7 +74,7 @@ export default function PointsPreview({
                         variant="outline"
                         onClick={() => setOpenDeletePoint(false)}
                       >
-                        Cancel
+                        {t("forms.tournament.cancel")}
                       </Button>
                       <Button
                         variant="destructive"
@@ -81,7 +86,7 @@ export default function PointsPreview({
                           )
                         }
                       >
-                        Confirm delete
+                        {t("forms.tournament.confirm-delete")}
                       </Button>
                     </DialogFooter>
                   </DialogContent>
@@ -101,7 +106,8 @@ export default function PointsPreview({
           <span className="font-semibold">{point.team.name}</span>
         </span>
         <span className="flex text-xs md:text-sm">
-          Created by : {point.createdBy}
+          {t("tournament.created-by")}
+          {point.createdBy}
         </span>
       </CardHeader>
     </Card>
