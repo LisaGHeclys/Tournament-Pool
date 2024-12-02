@@ -12,8 +12,8 @@ export function useTournamentsById({ id, refetchInterval, isShow }: Props) {
   async function getTournamentsByIdFn(id: string) {
     const response = await apiClient.get(`/tournaments/${id}`);
     response.data.points =
-      response.data.points.length > 65 && isShow
-        ? response.data.points.slice(65)
+      response.data.points.length > 45 && isShow
+        ? response.data.points.slice(0, 45)
         : response.data.points;
     return response.data as tournamentBody;
   }
