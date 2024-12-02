@@ -30,18 +30,12 @@ import PointsPreview from "@/components/ui/points-preview";
 import { BarChartComponent } from "@/components/charts/bar-chart";
 import { UserNav } from "@/components/navbar/user-nav";
 import { useTournamentsById } from "@/backend-calls";
-<<<<<<<< HEAD:app/(views)/[locale]/show/[id]/page.tsx
 import { useLocale, useTranslations } from "next-intl";
 
 export default function ShowTournament() {
   const id = useParams().id;
   const t = useTranslations();
   const locale = useLocale();
-========
-
-export default function ShowTournament() {
-  const id = useParams().id;
->>>>>>>> main:app/(views)/show/[id]/page.tsx
   const { data, isFetching } = useTournamentsById({
     id: Array.isArray(id) ? id[0] : id,
     refetchInterval: 35000,
@@ -64,7 +58,6 @@ export default function ShowTournament() {
 
   return (
     <div className="min-h-screen max-w-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-<<<<<<<< HEAD:app/(views)/[locale]/show/[id]/page.tsx
       <UserNav
         title={"none"}
         username={data?.name ?? ""}
@@ -72,22 +65,15 @@ export default function ShowTournament() {
         backPath={`/${locale}/`}
         centered
       />
-========
-      <UserNav title={data?.name ?? ""} isBack backPath={"/"} centered />
->>>>>>>> main:app/(views)/show/[id]/page.tsx
       <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-between">
         <Card className="flex flex-col h-[440px] md:h-[440px] p-2 md:px-16 w-full lg:w-2/3 lg:h-full">
           <CardHeader>
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-<<<<<<<< HEAD:app/(views)/[locale]/show/[id]/page.tsx
                   <BreadcrumbLink href={`/${locale}/`}>
                     {t("pages.homepage")}
                   </BreadcrumbLink>
-========
-                  <BreadcrumbLink href="/public">Home</BreadcrumbLink>
->>>>>>>> main:app/(views)/show/[id]/page.tsx
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
