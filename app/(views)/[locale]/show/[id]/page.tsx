@@ -38,7 +38,8 @@ export default function ShowTournament() {
   const locale = useLocale();
   const { data, isFetching } = useTournamentsById({
     id: Array.isArray(id) ? id[0] : id,
-    refetchInterval: 35000,
+    refetchInterval: 45000,
+    isShow: true,
   });
 
   if (isFetching) {
