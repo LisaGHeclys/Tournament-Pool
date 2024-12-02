@@ -3,6 +3,7 @@ import { tournamentBody } from "@/types/types";
 import { toast } from "@/hooks/use-toast";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { apiClient, tournamentsQueryKeys } from "@/backend-calls";
+import { useTranslations } from "next-intl";
 
 interface Props {
   router: AppRouterInstance;
@@ -12,6 +13,7 @@ interface Props {
 
 export function useCreateTournament({ router, closeModal, locale }: Props) {
   const queryClient = useQueryClient();
+  const t = useTranslations();
 
   async function createTournamentFn(tournament: tournamentBody) {
     const response = await apiClient.put(`/tournaments`, tournament);
@@ -25,11 +27,16 @@ export function useCreateTournament({ router, closeModal, locale }: Props) {
     },
     onSuccess: () => {
       toast({
-        title: "Creation successful !",
-        description: "You’ve successfully created a tournament.",
+        title: t("toast.create-tournament-success.title"),
+        description: t("toast.create-tournament-success.description"),
       });
     },
     onError: (newTournament) => {
+      toast({
+        title: t("toast.create-tournament-fail.title"),
+        description: t("toast.create-tournament-fail.description"),
+        variant: "destructive",
+      });
       queryClient.setQueryData(tournamentsQueryKeys.all, newTournament);
     },
     onSettled: (data) => {

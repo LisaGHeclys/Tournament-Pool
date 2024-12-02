@@ -111,5 +111,55 @@
     "4-1": "This privacy policy is effective as of the date above and will\nremain in effect. Any modifications to its provisions will be\nimmediately applied after being published on this page. We reserve\nthe right to update or change our privacy policy at any time, and\nyou should periodically review this policy. Your continued use of\nthe service after we have posted changes to the privacy policy on\nthis page will constitute your acceptance of those changes and\nyour consent to abide by and be bound by the updated privacy\npolicy.",
     "5": "5. Contact Us",
     "5-1": "If you have any questions regarding this privacy policy, please\ncontact the lead developer via email at "
+  },
+  "toast" : {
+    "login-success": {
+      "title": "Welcome Back!",
+      "description": "You’ve successfully logged in."
+    },
+    "login-fail": {
+      "title": "Login Failed :",
+      "description": "An error occurred during sign-in. Please try again."
+    },
+    "add-points-success": {
+      "title": "Points added successfully !",
+      "description": "You’ve successfully add points to the tournament."
+    },
+    "add-points-fail": {
+      "title": "Couldn't add points to the tournaments",
+      "description": "An error occurred during the update of the points of the tournaments."
+    },
+    "delete-points-success": {
+      "title": "Points successfully deleted !",
+      "description": "You’ve successfully deleted points of the tournament."
+    },
+    "delete-points-fail": {
+      "title": "Couldn't delete the points to the tournaments",
+      "description": "An error occurred during the suppression of the points of the tournaments."
+    },
+    "create-tournament-success": {
+      "title": "Creation successful !",
+      "description": "You’ve successfully created a tournament."
+    },
+    "create-tournament-fail": {
+      "title": "Couldn't create a tournament.",
+      "description": "An error occurred during the creation of a tournament."
+    },
+    "delete-tournament-success": {
+      "title": "Deleted successfully !",
+      "description": "You’ve successfully deleted the tournament."
+    },
+    "delete-tournament-fail": {
+      "title": "Couldn't delete the tournaments",
+      "description": "An error occurred during the suppression of the tournaments."
+    },
+    "edit-tournament-success": {
+      "title": "Updated successfully !",
+      "description": "You’ve successfully updated the tournament."
+    },
+    "edit-tournament-fail": {
+      "title": "Couldn't update the tournaments",
+      "description": "An error occurred during the update of the tournaments."
+    }
   }
 }

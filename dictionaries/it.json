@@ -110,5 +110,55 @@
     "4-1": "Questa politica sulla privacy è efficace a partire dalla data indicata sopra e\nrimarrà in vigore. Eventuali modifiche alle sue disposizioni saranno\nimmediatamente applicate dopo essere state pubblicate su questa pagina. Ci riserviamo\nil diritto di aggiornare o modificare la nostra politica sulla privacy in qualsiasi momento, e\ndovresti periodicamente rivedere questa politica. Il tuo uso continuato\ndel servizio dopo che abbiamo pubblicato modifiche alla politica sulla privacy su\nquesta pagina costituirà la tua accettazione di tali modifiche e\nil tuo consenso a rispettare e essere vincolato dalla politica sulla privacy aggiornata.",
     "5": "5. Contattaci",
     "5-1": "Se hai domande relative a questa politica sulla privacy, contatta\nlo sviluppatore principale via email a "
+  },
+  "toast": {
+    "login-success": {
+      "title": "Bentornato!",
+      "description": "Accesso effettuato con successo."
+    },
+    "login-fail": {
+      "title": "Accesso fallito :",
+      "description": "Si è verificato un errore durante l'accesso. Riprova."
+    },
+    "add-points-success": {
+      "title": "Punti aggiunti con successo!",
+      "description": "Hai aggiunto punti al torneo con successo."
+    },
+    "add-points-fail": {
+      "title": "Impossibile aggiungere punti al torneo",
+      "description": "Si è verificato un errore durante l'aggiornamento dei punti del torneo."
+    },
+    "delete-points-success": {
+      "title": "Punti eliminati con successo!",
+      "description": "Hai eliminato i punti del torneo con successo."
+    },
+    "delete-points-fail": {
+      "title": "Impossibile eliminare i punti dal torneo",
+      "description": "Si è verificato un errore durante l'eliminazione dei punti del torneo."
+    },
+    "create-tournament-success": {
+      "title": "Creazione riuscita!",
+      "description": "Hai creato un torneo con successo."
+    },
+    "create-tournament-fail": {
+      "title": "Impossibile creare un torneo.",
+      "description": "Si è verificato un errore durante la creazione del torneo."
+    },
+    "delete-tournament-success": {
+      "title": "Eliminato con successo!",
+      "description": "Hai eliminato il torneo con successo."
+    },
+    "delete-tournament-fail": {
+      "title": "Impossibile eliminare il torneo",
+      "description": "Si è verificato un errore durante l'eliminazione del torneo."
+    },
+    "edit-tournament-success": {
+      "title": "Aggiornamento riuscito!",
+      "description": "Hai aggiornato il torneo con successo."
+    },
+    "edit-tournament-fail": {
+      "title": "Impossibile aggiornare il torneo",
+      "description": "Si è verificato un errore durante l'aggiornamento del torneo."
+    }
   }
 }

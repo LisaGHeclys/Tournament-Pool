@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient, tournamentsQueryKeys } from "@/backend-calls";
 import { toast } from "@/hooks/use-toast";
 import { tournamentBody } from "@/types/types";
+import { useTranslations } from "next-intl";
 
 interface Props {
   id: string;
@@ -9,6 +10,7 @@ interface Props {
 
 export function useDeletePoints({ id }: Props) {
   const queryClient = useQueryClient();
+  const t = useTranslations();
 
   const deletePointsFn = async (updatedTournament: tournamentBody) => {
     return await apiClient.patch(`/tournaments/${id}`, updatedTournament);
@@ -23,15 +25,14 @@ export function useDeletePoints({ id }: Props) {
     },
     onSuccess: () => {
       toast({
-        title: "Points successfully deleted !",
-        description: "You’ve successfully deleted points of the tournament.",
+        title: t("toast.delete-points-success.title"),
+        description: t("toast.delete-points-success.description"),
       });
     },
     onError: () => {
       toast({
-        title: "Couldn't delete the points to the tournaments",
-        description:
-          "An error occurred during the suppression of the points of the tournaments.",
+        title: t("toast.delete-points-fail.title"),
+        description: t("toast.delete-points-fail.description"),
         variant: "destructive",
       });
       queryClient.invalidateQueries({ queryKey: tournamentsQueryKeys.all });

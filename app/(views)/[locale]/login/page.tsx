@@ -28,13 +28,13 @@ export default function Login() {
     try {
       await signIn("github", { redirectTo: `/${locale}/user` });
       toast({
-        title: "Welcome Back!",
-        description: "You’ve successfully logged in.",
+        title: t("toast.login-success.title"),
+        description: t("toast.login-success.description"),
       });
     } catch (e) {
       toast({
-        title: "Login Failed :" + e,
-        description: "An error occurred during sign-in. Please try again.",
+        title: t("toast.login-fail.title") + e,
+        description: t("toast.login-fail.description"),
         variant: "destructive",
       });
     }

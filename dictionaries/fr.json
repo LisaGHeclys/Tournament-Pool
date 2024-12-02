@@ -110,5 +110,55 @@
     "4-1": "Cette politique de confidentialité est en vigueur à partir de la date indiquée ci-dessus et\nrestera en vigueur. Toute modification de ses dispositions sera\nimmédiatement appliquée après sa publication sur cette page. Nous nous réservons\nle droit de mettre à jour ou de modifier notre politique de confidentialité à tout moment, et\nvous devriez consulter cette politique périodiquement. Votre utilisation continue\ndu service après que nous ayons publié des modifications à la politique de confidentialité sur\ncette page constituera votre acceptation de ces modifications et\nvotre consentement à respecter et à être lié par la politique de confidentialité mise à jour.",
     "5": "5. Nous contacter",
     "5-1": "Si vous avez des questions concernant cette politique de confidentialité, veuillez\ncontacter le développeur principal par email à "
+  },
+  "toast": {
+    "login-success": {
+      "title": "Bon retour parmi nous !",
+      "description": "Vous vous êtes connecté avec succès."
+    },
+    "login-fail": {
+      "title": "Échec de la connexion :",
+      "description": "Une erreur s'est produite lors de la connexion. Veuillez réessayer."
+    },
+    "add-points-success": {
+      "title": "Points ajoutés avec succès !",
+      "description": "Vous avez ajouté des points au tournoi avec succès."
+    },
+    "add-points-fail": {
+      "title": "Impossible d'ajouter des points au tournoi",
+      "description": "Une erreur s'est produite lors de la mise à jour des points du tournoi."
+    },
+    "delete-points-success": {
+      "title": "Points supprimés avec succès !",
+      "description": "Vous avez supprimé les points du tournoi avec succès."
+    },
+    "delete-points-fail": {
+      "title": "Impossible de supprimer les points du tournoi",
+      "description": "Une erreur s'est produite lors de la suppression des points du tournoi."
+    },
+    "create-tournament-success": {
+      "title": "Création réussie !",
+      "description": "Vous avez créé un tournoi avec succès."
+    },
+    "create-tournament-fail": {
+      "title": "Impossible de créer un tournoi.",
+      "description": "Une erreur s'est produite lors de la création du tournoi."
+    },
+    "delete-tournament-success": {
+      "title": "Supprimé avec succès !",
+      "description": "Vous avez supprimé le tournoi avec succès."
+    },
+    "delete-tournament-fail": {
+      "title": "Impossible de supprimer le tournoi",
+      "description": "Une erreur s'est produite lors de la suppression du tournoi."
+    },
+    "edit-tournament-success": {
+      "title": "Mis à jour avec succès !",
+      "description": "Vous avez mis à jour le tournoi avec succès."
+    },
+    "edit-tournament-fail": {
+      "title": "Impossible de mettre à jour le tournoi",
+      "description": "Une erreur s'est produite lors de la mise à jour du tournoi."
+    }
   }
 }
