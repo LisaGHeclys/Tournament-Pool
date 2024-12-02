@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/navbar/theme-toggle";
 import { ChevronLeft } from "lucide-react";
 import { useWindowSize } from "@/hooks/use-window-size";
+import { useLocale, useTranslations } from "next-intl";
+import { LanguageToggle } from "@/components/navbar/language-toggle";
 
 interface UserNavProps {
   title: string;
@@ -16,6 +18,7 @@ interface UserNavProps {
   centered?: boolean;
   isEdit?: boolean;
   children?: ReactNode;
+  username?: string;
 }
 
 export function UserNav({
@@ -25,30 +28,28 @@ export function UserNav({
   avatar = false,
   centered = false,
   isEdit = false,
+  username,
   children,
 }: UserNavProps): JSX.Element {
   const size = useWindowSize();
   const router = useRouter();
   const { status } = useSession();
+  const t = useTranslations();
+  const locale = useLocale();
 
   function handleUserNav() {
     switch (status) {
       case "authenticated":
-        return (
-          <div className="w-full md:w-fit flex flex-row gap-4 md:gap-6 items-center justify-end md:justify-center">
-            <ThemeToggle />
-            {avatar && <UserToggle />}
-          </div>
-        );
+        return avatar && <UserToggle />;
       case "loading":
         return <Skeleton className="h-8 w-8 rounded-full" />;
       default:
         return (
           <Button
             className="hover:scale-105 transition ease-in-out delay-250"
-            onClick={() => router.push("/login")}
+            onClick={() => router.push(`/${locale}/login`)}
           >
-            <span>Login</span>
+            <span>{t("navbar.login")}</span>
           </Button>
         );
     }
@@ -71,11 +72,15 @@ export function UserNav({
         ))}
       <div className="flex flex-row gap-2 items-center">
         <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight lg:text-5xl">
-          {title}
+          {t(title)} {username && username}
         </h1>
         {isEdit && children}
       </div>
-      {handleUserNav()}
+      <div className="w-full md:w-fit flex flex-row gap-4 md:gap-6 items-center justify-end md:justify-center">
+        <LanguageToggle />
+        <ThemeToggle />
+        {handleUserNav()}
+      </div>
     </header>
   );
 }

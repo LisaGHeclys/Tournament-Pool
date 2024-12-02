@@ -20,6 +20,7 @@ import { useSession } from "next-auth/react";
 import { tournamentBody } from "@/types/types";
 import { useCreateTournament } from "@/backend-calls";
 import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 
 interface CreateTournamentFormProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,9 +29,12 @@ interface CreateTournamentFormProps {
 export function CreateTournamentForm({ setOpen }: CreateTournamentFormProps) {
   const { data: session } = useSession();
   const router = useRouter();
+  const t = useTranslations();
+  const locale = useLocale();
   const createTournamentMutation = useCreateTournament({
     router: router,
     closeModal: () => setOpen(false),
+    locale: locale,
   });
   const form = useForm<z.infer<typeof createTournamentSchema>>({
     resolver: zodResolver(createTournamentSchema),
@@ -85,9 +89,12 @@ export function CreateTournamentForm({ setOpen }: CreateTournamentFormProps) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tournament Name</FormLabel>
+              <FormLabel>{t("forms.tournament.name")}</FormLabel>
               <FormControl>
-                <Input placeholder="Your tournament name" {...field} />
+                <Input
+                  placeholder={t("forms.tournament.name-description")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -98,13 +105,13 @@ export function CreateTournamentForm({ setOpen }: CreateTournamentFormProps) {
           name="teamNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>How many teams do you need?</FormLabel>
+              <FormLabel>{t("forms.tournament.team-number")}</FormLabel>
               <FormControl>
                 <Input
                   id="teamNumber"
                   type="number"
                   min="1"
-                  placeholder="Your number of teams"
+                  placeholder={t("forms.tournament.team-number-description")}
                   value={field.value}
                   onChange={(e) => {
                     const value = Math.max(
@@ -124,7 +131,7 @@ export function CreateTournamentForm({ setOpen }: CreateTournamentFormProps) {
           control={form.control}
           name="teams"
           render={() => {
-            const teams = form.watch("teams"); // Use watch to reactively track changes
+            const teams = form.watch("teams");
             return (
               <FormItem>
                 <FormControl>
@@ -135,7 +142,7 @@ export function CreateTournamentForm({ setOpen }: CreateTournamentFormProps) {
                         className="flex w-full flex-col space-y-1.5"
                       >
                         <Label htmlFor={`team-${index}-name`}>
-                          Team {index + 1}: Name and Color
+                          Team {index + 1}: {t("forms.tournament.name-color")}
                         </Label>
                         <div className="flex flex-row gap-4">
                           <Input
@@ -151,7 +158,7 @@ export function CreateTournamentForm({ setOpen }: CreateTournamentFormProps) {
                                 shouldValidate: true,
                               });
                             }}
-                            placeholder="Team name"
+                            placeholder={t("forms.tournament.team-name")}
                             required
                           />
                           <div>
@@ -180,7 +187,7 @@ export function CreateTournamentForm({ setOpen }: CreateTournamentFormProps) {
             );
           }}
         />
-        <Button type="submit">Create a tournament</Button>
+        <Button type="submit">{t("forms.tournament.create")}</Button>
       </form>
     </Form>
   );
