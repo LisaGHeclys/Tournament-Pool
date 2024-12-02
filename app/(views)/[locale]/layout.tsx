@@ -1,27 +1,16 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-<<<<<<<< HEAD:app/(views)/[locale]/layout.tsx
 import AppProvider from "@/providers/app-provider";
 import "../../../styles/globals.css";
 
 const geistSans = localFont({
   src: "../../../styles/fonts/GeistVF.woff",
-========
-import "../../styles/globals.css";
-import AppProvider from "@/providers/app-provider";
-
-const geistSans = localFont({
-  src: "../../styles/fonts/GeistVF.woff",
->>>>>>>> main:app/(views)/layout.tsx
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
-<<<<<<<< HEAD:app/(views)/[locale]/layout.tsx
   src: "../../../styles/fonts/GeistMonoVF.woff",
-========
-  src: "../../styles/fonts/GeistMonoVF.woff",
->>>>>>>> main:app/(views)/layout.tsx
   variable: "--font-geist-mono",
   weight: "100 900",
 });
