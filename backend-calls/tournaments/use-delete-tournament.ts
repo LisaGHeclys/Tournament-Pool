@@ -6,9 +6,10 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 interface Props {
   router: AppRouterInstance;
   closeModal: () => void;
+  locale: string;
 }
 
-export function useDeleteTournament({ router, closeModal }: Props) {
+export function useDeleteTournament({ router, closeModal, locale }: Props) {
   const queryClient = useQueryClient();
 
   const deleteTournamentFn = async (id: string) => {
@@ -37,7 +38,7 @@ export function useDeleteTournament({ router, closeModal }: Props) {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: tournamentsQueryKeys.all });
-      router.push("/user/");
+      router.push(`/${locale}/user/`);
       closeModal();
     },
   });

@@ -14,19 +14,20 @@ import { signOut, useSession } from "next-auth/react";
 import { BookLock, LifeBuoy, LogOut, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export function UserToggle() {
   const { toast } = useToast();
   const router = useRouter();
   const { data: session } = useSession();
   const t = useTranslations();
+  const locale = useLocale();
 
   async function handleSignOut(e: React.FormEvent) {
     e.preventDefault();
 
     try {
-      await signOut({ redirectTo: "/" });
+      await signOut({ redirectTo: `/${locale}/` });
       toast({
         title: "See You Soon !",
         description: "You’ve been logged out of your account.",
@@ -71,16 +72,18 @@ export function UserToggle() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => router.push("/user")}>
+        <DropdownMenuItem onClick={() => router.push(`/${locale}/user/`)}>
           <User className="mr-2 size-3 md:size-4" />
           <span className="text-xs md:text-sm">{t("pages.your-page")}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => router.push("/")}>
+        <DropdownMenuItem onClick={() => router.push(`/${locale}/`)}>
           <LifeBuoy className="mr-2 size-3 md:size-4" />
           <span className="text-xs md:text-sm">{t("pages.support")}</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => router.push("/privacy-policy")}>
+        <DropdownMenuItem
+          onClick={() => router.push(`/${locale}/privacy-policy`)}
+        >
           <BookLock className="mr-2 size-3 md:size-4" />
           <span className="text-xs md:text-sm">
             {t("pages.privacy-policy")}

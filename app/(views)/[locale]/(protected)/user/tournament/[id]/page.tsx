@@ -50,7 +50,7 @@ import { UserNav } from "@/components/navbar/user-nav";
 import { useDeletePoints, useTournamentsById } from "@/backend-calls";
 import { AddPointsForm } from "@/components/forms/add-points-form";
 import { EditTournamentForm } from "@/components/forms/edit-tournament-form";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Tournament() {
   const t = useTranslations();
@@ -58,6 +58,7 @@ export default function Tournament() {
   const [openPoints, setOpenPoints] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const locale = useLocale();
   const [filteredPoints, setFilteredPoints] = useState<pointsBody[]>();
   const { data, isFetching, refetch } = useTournamentsById({
     id: Array.isArray(id) ? id[0] : id,
@@ -119,7 +120,7 @@ export default function Tournament() {
         title={"none"}
         username={data?.name ?? ""}
         isBack
-        backPath={"/user"}
+        backPath={`/${locale}/user`}
         centered
         avatar
         isEdit
@@ -159,13 +160,13 @@ export default function Tournament() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/">
+                  <BreadcrumbLink href={`/${locale}/`}>
                     {t("pages.homepage")}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/user">
+                  <BreadcrumbLink href={`/${locale}/user`}>
                     {t("pages.your-page")}
                   </BreadcrumbLink>
                 </BreadcrumbItem>

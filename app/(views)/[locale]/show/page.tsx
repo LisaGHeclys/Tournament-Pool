@@ -1,6 +1,8 @@
 "use client";
 import { redirect } from "next/navigation";
+import { useLocale } from "next-intl";
 
 export default function RedirectToHomepage() {
-  redirect("/");
+  const locale = useLocale();
+  redirect(`/${locale}/`);
 }

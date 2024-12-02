@@ -13,7 +13,7 @@ import React from "react";
 import { signIn, useSession } from "next-auth/react";
 import Footer from "@/components/ui/footer";
 import { useToast } from "@/hooks/use-toast";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ThemeToggle } from "@/components/navbar/theme-toggle";
 
 export default function Login() {
@@ -21,11 +21,12 @@ export default function Login() {
   const t = useTranslations();
   const { toast } = useToast();
   const { status } = useSession();
+  const locale = useLocale();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await signIn("github", { redirectTo: "/user" });
+      await signIn("github", { redirectTo: `/${locale}/user` });
       toast({
         title: "Welcome Back!",
         description: "You’ve successfully logged in.",
@@ -39,7 +40,7 @@ export default function Login() {
     }
   };
 
-  if (status === "authenticated") redirect("/user");
+  if (status === "authenticated") redirect(`/${locale}/user`);
 
   return (
     <div className="min-h-screen p-8 sm:pb-20 gap-16 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -47,7 +48,7 @@ export default function Login() {
         <Button
           className="hover:scale-105 transition ease-in-out delay-150"
           onClick={() => {
-            router.push("/");
+            router.push(`/${locale}/`);
           }}
         >
           {t("pages.homepage")}

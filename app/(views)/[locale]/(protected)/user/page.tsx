@@ -35,7 +35,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { UserNav } from "@/components/navbar/user-nav";
 import { useUserTournaments } from "@/backend-calls";
 import { CreateTournamentForm } from "@/components/forms/create-tournament-form";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function User() {
   const { data: session } = useSession();
@@ -45,6 +45,7 @@ export default function User() {
     useState<tournamentBody[]>();
   const { data, isFetching } = useUserTournaments();
   const t = useTranslations();
+  const locale = useLocale();
 
   useEffect(() => {
     if (data) {
@@ -85,7 +86,7 @@ export default function User() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/">
+                  <BreadcrumbLink href={`/${locale}/`}>
                     {t("pages.homepage")}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
@@ -137,7 +138,7 @@ export default function User() {
                       <ChartPreview
                         key={index}
                         tournament={tournament}
-                        link={"/user/tournament/"}
+                        link={`/${locale}/user/tournament/`}
                       />
                     ))}
                   </div>

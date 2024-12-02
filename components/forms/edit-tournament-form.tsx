@@ -28,7 +28,7 @@ import updateTournamentSchema from "@/schema/update-tournament-schema";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { Label } from "@/components/ui/label";
 import { useDeleteTournament, useEditTournament } from "@/backend-calls";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 interface EditTournamentFormProps {
   data: tournamentBody;
@@ -41,6 +41,7 @@ export function EditTournamentForm({
 }: EditTournamentFormProps) {
   const router = useRouter();
   const t = useTranslations();
+  const locale = useLocale();
   const id: string | string[] = useParams().id;
   const [openDelete, setOpenDelete] = React.useState(false);
   const [updatedTournament, setUpdatedTournament] =
@@ -51,6 +52,7 @@ export function EditTournamentForm({
   const deleteTournamentMutation = useDeleteTournament({
     router: router,
     closeModal: () => setOpenDelete(false),
+    locale: locale,
   });
 
   async function handleDeleteTournament(id: string) {

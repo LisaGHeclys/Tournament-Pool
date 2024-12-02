@@ -7,9 +7,10 @@ import { apiClient, tournamentsQueryKeys } from "@/backend-calls";
 interface Props {
   router: AppRouterInstance;
   closeModal: () => void;
+  locale: string;
 }
 
-export function useCreateTournament({ router, closeModal }: Props) {
+export function useCreateTournament({ router, closeModal, locale }: Props) {
   const queryClient = useQueryClient();
 
   async function createTournamentFn(tournament: tournamentBody) {
@@ -34,7 +35,7 @@ export function useCreateTournament({ router, closeModal }: Props) {
     onSettled: (data) => {
       queryClient.invalidateQueries({ queryKey: tournamentsQueryKeys.all });
       closeModal();
-      router.push("/user/tournament/" + data.id);
+      router.push(`/${locale}/user/tournament/` + data.id);
     },
   });
 }

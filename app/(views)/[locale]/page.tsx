@@ -14,11 +14,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ChartPreview from "@/components/charts/chart-preview";
 import { UserNav } from "@/components/navbar/user-nav";
 import { usePaginatedTournaments } from "@/backend-calls";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Home() {
   const [isActive, setIsActive] = React.useState<number>(1);
   const t = useTranslations();
+  const locale = useLocale();
   const { data, isFetching, refetch } = usePaginatedTournaments({
     pageLimit: 4,
     page: isActive,
@@ -87,7 +88,7 @@ export default function Home() {
               <ChartPreview
                 key={index}
                 tournament={tournament}
-                link={"/show/"}
+                link={`/${locale}/show/`}
               />
             ))}
           </div>

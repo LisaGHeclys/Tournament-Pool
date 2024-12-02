@@ -4,14 +4,20 @@ import Footer from "@/components/ui/footer";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { UserNav } from "@/components/navbar/user-nav";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function PrivacyPolicy() {
   const t = useTranslations();
+  const locale = useLocale();
 
   return (
     <div className="min-h-screen gap-2 sm:p-14 p-8 sm:gap-6 grid sm:grid-rows-[20px_1fr_20px] items-center sm:justify-items-center font-[family-name:var(--font-geist-sans)]">
-      <UserNav title="pages.privacy-policy" isBack backPath={"/"} centered />
+      <UserNav
+        title="pages.privacy-policy"
+        isBack
+        backPath={`/${locale}/`}
+        centered
+      />
       <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-center">
         <Card className="w-full md:w-2/3 pt-4">
           <CardContent className="flex flex-col gap-2">

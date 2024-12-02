@@ -30,11 +30,12 @@ import PointsPreview from "@/components/ui/points-preview";
 import { BarChartComponent } from "@/components/charts/bar-chart";
 import { UserNav } from "@/components/navbar/user-nav";
 import { useTournamentsById } from "@/backend-calls";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function ShowTournament() {
   const id = useParams().id;
   const t = useTranslations();
+  const locale = useLocale();
   const { data, isFetching } = useTournamentsById({
     id: Array.isArray(id) ? id[0] : id,
     refetchInterval: 35000,
@@ -61,7 +62,7 @@ export default function ShowTournament() {
         title={"none"}
         username={data?.name ?? ""}
         isBack
-        backPath={"/"}
+        backPath={`/${locale}/`}
         centered
       />
       <main className="gap-2 h-full w-full flex flex-col lg:flex-row md:gap-6 row-start-2 items-center justify-between">
@@ -70,7 +71,7 @@ export default function ShowTournament() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/">
+                  <BreadcrumbLink href={`/${locale}/`}>
                     {t("pages.homepage")}
                   </BreadcrumbLink>
                 </BreadcrumbItem>

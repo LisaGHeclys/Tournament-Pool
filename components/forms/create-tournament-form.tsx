@@ -20,7 +20,7 @@ import { useSession } from "next-auth/react";
 import { tournamentBody } from "@/types/types";
 import { useCreateTournament } from "@/backend-calls";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 interface CreateTournamentFormProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,9 +30,11 @@ export function CreateTournamentForm({ setOpen }: CreateTournamentFormProps) {
   const { data: session } = useSession();
   const router = useRouter();
   const t = useTranslations();
+  const locale = useLocale();
   const createTournamentMutation = useCreateTournament({
     router: router,
     closeModal: () => setOpen(false),
+    locale: locale,
   });
   const form = useForm<z.infer<typeof createTournamentSchema>>({
     resolver: zodResolver(createTournamentSchema),

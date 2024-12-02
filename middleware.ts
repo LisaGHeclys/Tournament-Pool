@@ -10,12 +10,16 @@ export function middleware(req: NextRequest) {
 
   const pathnameParts = pathname.split("/");
   const locale = pathnameParts[1];
+  const url = req.nextUrl.clone();
 
   const supportedLocales = ["en", "fr", "it"];
 
   if (!supportedLocales.includes(locale)) {
-    const url = req.nextUrl.clone();
     url.pathname = `/fr${pathname}`;
     return NextResponse.redirect(url);
   }
+
+  const response = NextResponse.next();
+  response.cookies.set("locale", locale);
+  return response;
 }

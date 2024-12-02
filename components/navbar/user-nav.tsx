@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/navbar/theme-toggle";
 import { ChevronLeft } from "lucide-react";
 import { useWindowSize } from "@/hooks/use-window-size";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { LanguageToggle } from "@/components/navbar/language-toggle";
 
 interface UserNavProps {
   title: string;
@@ -34,6 +35,7 @@ export function UserNav({
   const router = useRouter();
   const { status } = useSession();
   const t = useTranslations();
+  const locale = useLocale();
 
   function handleUserNav() {
     switch (status) {
@@ -45,7 +47,7 @@ export function UserNav({
         return (
           <Button
             className="hover:scale-105 transition ease-in-out delay-250"
-            onClick={() => router.push("/login")}
+            onClick={() => router.push(`/${locale}/login`)}
           >
             <span>{t("navbar.login")}</span>
           </Button>
@@ -75,6 +77,7 @@ export function UserNav({
         {isEdit && children}
       </div>
       <div className="w-full md:w-fit flex flex-row gap-4 md:gap-6 items-center justify-end md:justify-center">
+        <LanguageToggle />
         <ThemeToggle />
         {handleUserNav()}
       </div>
