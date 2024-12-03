@@ -39,7 +39,6 @@ export default function ShowTournament() {
   const { data, isFetching } = useTournamentsById({
     id: Array.isArray(id) ? id[0] : id,
     refetchInterval: 45000,
-    isShow: true,
   });
 
   if (isFetching) {
@@ -117,16 +116,26 @@ export default function ShowTournament() {
                     className={`flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 ${data.points.length > 3 && "animate-infinite-scroll"}`}
                   >
                     {Array.isArray(data.points) &&
-                      data?.points?.map((point, index) => (
-                        <PointsPreview isShowing point={point} key={index} />
-                      ))}
+                      data.points.length > 40 &&
+                      data.points
+                        .slice(0, 40)
+                        .map((point, index) => (
+                          <PointsPreview isShowing point={point} key={index} />
+                        ))}
                   </div>
                   {data.points.length > 3 && (
                     <div className="flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 animate-infinite-scroll">
                       {Array.isArray(data.points) &&
-                        data?.points?.map((point, index) => (
-                          <PointsPreview isShowing point={point} key={index} />
-                        ))}
+                        data.points.length > 40 &&
+                        data.points
+                          .slice(0, 40)
+                          .map((point, index) => (
+                            <PointsPreview
+                              isShowing
+                              point={point}
+                              key={index}
+                            />
+                          ))}
                     </div>
                   )}
                 </>
