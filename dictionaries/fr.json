@@ -9,7 +9,7 @@
   "navbar": {
     "welcome": "Bienvenue sur Tournament Pool!",
     "welcome-login": "Bienvenue sur la page de Connexion!",
-    "welcome-user": "Bon retard",
+    "welcome-user": "Bon retour",
     "login": "Se connecter",
     "login-github": "Login avec GitHub",
     "login-description": "Sur cette application, nous utiliserons votre compte GitHub pour vous connecter en toute sécurité, afin que vous n'ayez pas besoin de créer un nouveau mot de passe.",
