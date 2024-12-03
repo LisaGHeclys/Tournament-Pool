@@ -109,27 +109,39 @@ export default function ShowTournament() {
             <CardDescription>{t("points.teams-description")}</CardDescription>
           </CardHeader>
           <CardContent className="flex w-full h-full p-2 md:p-6">
-            <ScrollArea className="w-full h-[460px] md:h-[600px] flex-nowrap rounded-md p-0 md:px-2">
+            <ScrollArea className="w-full h-[460px] md:h-[600px] flex-nowrap rounded-md p-0 md:px-2 pointer-events-none">
               {data && Array.isArray(data.points) ? (
                 <>
                   <div
-                    className={`flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 ${data.points.length > 3 && "animate-infinite-scroll"}`}
+                    className={`flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 ${data.points.length > 3 && "animate-infinite-scroll delay-5s"}`}
                   >
-                    {Array.isArray(data.points) &&
-                      data.points.length > 40 &&
-                      data.points
-                        .slice(0, 40)
-                        .map((point, index) => (
+                    {Array.isArray(data.points) && data.points.length > 40
+                      ? data.points
+                          .slice(0, 40)
+                          .map((point, index) => (
+                            <PointsPreview
+                              isShowing
+                              point={point}
+                              key={index}
+                            />
+                          ))
+                      : data.points.map((point, index) => (
                           <PointsPreview isShowing point={point} key={index} />
                         ))}
                   </div>
                   {data.points.length > 3 && (
                     <div className="flex flex-col h-fit gap-2 p-1 md:gap-4 md:p-2 animate-infinite-scroll">
-                      {Array.isArray(data.points) &&
-                        data.points.length > 40 &&
-                        data.points
-                          .slice(0, 40)
-                          .map((point, index) => (
+                      {Array.isArray(data.points) && data.points.length > 40
+                        ? data.points
+                            .slice(0, 40)
+                            .map((point, index) => (
+                              <PointsPreview
+                                isShowing
+                                point={point}
+                                key={index}
+                              />
+                            ))
+                        : data.points.map((point, index) => (
                             <PointsPreview
                               isShowing
                               point={point}
