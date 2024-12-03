@@ -112,6 +112,49 @@
     "5": "5. Contact Us",
     "5-1": "If you have any questions regarding this privacy policy, please\ncontact the lead developer via email at "
   },
+  "support": {
+    "title": "Frequently asked questions",
+    "description-1": "These are the most commonly asked questions about Tournament-Pool. ",
+    "description-2": "Can't find what you're looking for ? ",
+    "description-3": "Chat to our friendly team !",
+    "Q1": {
+      "title": "What is Tournament-Pool ?",
+      "response": "This Tournament-Pool is a tournament management platform designed to streamline the creation and management of tournaments. It enables users to create tournaments, link teams, and add points to their respective teams. Additionally, the platform automatically generates charts based on the data, providing a dynamic and visual representation of team standings and performance throughout the tournament."
+    },
+    "Q2": {
+      "title": "What are the main features of the platform?",
+      "response-1": "• Tournament Creation: Easily set up tournaments with linked teams.",
+      "response-2": "• Point Management: Assign and update points for teams.",
+      "response-3": "• Chart Generation: Automatically display team standings and performance with dynamic charts."
+    },
+    "Q3": {
+      "title": "How do I log in to Tournament-Pool?",
+      "response-1": "Logging in is simple and secure with GitHub's two-factor authentication:",
+      "response-2": "1. Click on the 'Login with GitHub' button on the loginpage.",
+      "response-3": "2. Enter your GitHub credentials if prompted.",
+      "response-4": "3. Complete the two-factor authentication process by entering the code sent to your authenticator app or email.",
+      "response-5": "4. Once authenticated, you’ll be redirected to the platform's dashboard."
+    },
+    "Q4": {
+      "title": "How do I create a tournament?",
+      "response-1": "Creating a tournament is quick and intuitive:",
+      "response-2": "1. Navigate to the 'Create Tournament' section in your dashboard.",
+      "response-3": "2. Fill in the tournament details:",
+      "response-4": "   - Title: Enter the name of the tournament.",
+      "response-5": "   - Number of Teams: Select between 2 and 5 teams.",
+      "response-6": "   - Team Names and Colors: Assign a unique name and color to each team for easy identification.",
+      "response-7": "3. Review your entries and click 'Create.'",
+      "response-8": "4. Your tournament is now set up, and you can start managing points or viewing standings."
+    },
+    "Q5": {
+      "title": "What is the purpose of the /show/ID page?",
+      "response": "The /show/ID page is a public, read-only view of the tournament. It automatically displays team standings and points based on the latest data. Users can see the results and performance charts without any interaction or manual updates."
+    },
+    "Q6": {
+      "title": "What is the purpose of the /user/tournament/ID page?",
+      "response": "The /user/tournament/ID page is for managing the tournament. Authorized users can update details, add points, and make changes to the tournament data. These updates reflect immediately on the /show/ID page."
+    }
+  },
   "toast" : {
     "login-success": {
       "title": "Welcome Back!",
@@ -120,6 +163,14 @@
     "login-fail": {
       "title": "Login Failed :",
       "description": "An error occurred during sign-in. Please try again."
+    },
+    "logout-success": {
+      "title": "See You Soon !",
+      "description": "You’ve been logged out of your account."
+    },
+    "logout-fail": {
+      "title": "Logout Failed :",
+      "description": "An error occurred during sign-out. Please try again."
     },
     "add-points-success": {
       "title": "Points added successfully !",

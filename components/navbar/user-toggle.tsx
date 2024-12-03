@@ -29,13 +29,13 @@ export function UserToggle() {
     try {
       await signOut({ redirectTo: `/${locale}/` });
       toast({
-        title: "See You Soon !",
-        description: "You’ve been logged out of your account.",
+        title: t("toast.logout-success.title"),
+        description: t("toast.logout-success.description"),
       });
     } catch (e) {
       toast({
-        title: "Logout Failed :" + e,
-        description: "An error occurred during sign-out. Please try again.",
+        title: t("toast.logout-fail.title") + e,
+        description: t("toast.login-fail.description"),
         variant: "destructive",
       });
     }
@@ -77,7 +77,7 @@ export function UserToggle() {
           <span className="text-xs md:text-sm">{t("pages.your-page")}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => router.push(`/${locale}/`)}>
+        <DropdownMenuItem onClick={() => router.push(`/${locale}/support`)}>
           <LifeBuoy className="mr-2 size-3 md:size-4" />
           <span className="text-xs md:text-sm">{t("pages.support")}</span>
         </DropdownMenuItem>
