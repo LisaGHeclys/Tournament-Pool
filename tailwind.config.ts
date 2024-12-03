@@ -11,13 +11,16 @@ const config: Config = {
   theme: {
     extend: {
       animation: {
-        "infinite-scroll": "infinite-scroll 80s linear infinite",
+        "infinite-scroll": "infinite-scroll 120s linear infinite",
       },
       keyframes: {
         "infinite-scroll": {
           from: { transform: "translateY(0)" },
           to: { transform: "translateY(-100%)" },
         },
+      },
+      animationDelay: {
+        "5s": "5s",
       },
       colors: {
         background: "hsl(var(--background))",
