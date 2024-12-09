@@ -49,7 +49,17 @@ export default function User() {
   const locale = useLocale();
   const { startOnborda, closeOnborda } = useOnborda();
 
-  console.log(session);
+  function handleTour() {
+    if (session?.user?.isFirstTime == false) {
+      startOnborda("welcome");
+    } else {
+      closeOnborda();
+    }
+  }
+
+  useEffect(() => {
+    handleTour();
+  }, [session]);
 
   useEffect(() => {
     if (data) {
@@ -133,11 +143,6 @@ export default function User() {
                   <CreateTournamentForm setOpen={setOpen} />
                 </DialogContent>
               </Dialog>
-              <div>
-                <button onClick={() => startOnborda("welcome")}>
-                  Start Tour
-                </button>
-              </div>
             </div>
             <div className="flex w-full justify-center">
               <ScrollArea className="w-full lg:w-2/3 h-[560px] md:px-2">

@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
 
 const MyCard: React.FC<CardComponentProps> = ({
   step,
@@ -24,6 +25,7 @@ const MyCard: React.FC<CardComponentProps> = ({
   arrow,
 }) => {
   const { closeOnborda } = useOnborda();
+  const t = useTranslations();
 
   function handleConfetti() {
     closeOnborda();
@@ -43,7 +45,7 @@ const MyCard: React.FC<CardComponentProps> = ({
               {step.icon} {step.title}
             </CardTitle>
             <CardDescription>
-              {currentStep + 1} of {totalSteps}
+              {currentStep + 1}/{totalSteps}
             </CardDescription>
           </div>
           <Button variant="ghost" size="icon" onClick={() => closeOnborda()}>
@@ -53,13 +55,15 @@ const MyCard: React.FC<CardComponentProps> = ({
       </CardHeader>
       <CardContent>{step.content}</CardContent>
       <CardFooter>
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full gap-6">
           {currentStep !== 0 && (
-            <Button onClick={() => prevStep()}>Previous</Button>
+            <Button onClick={() => prevStep()}>
+              {t("pagination.previous")}
+            </Button>
           )}
           {currentStep + 1 !== totalSteps && (
             <Button onClick={() => nextStep()} className="ml-auto">
-              Next
+              {t("pagination.next")}
             </Button>
           )}
           {currentStep + 1 === totalSteps && (
