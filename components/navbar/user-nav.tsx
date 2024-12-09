@@ -55,7 +55,10 @@ export function UserNav({
     }
   }
   return (
-    <header className="gap-2 md:gap-0 md:p-8 w-full md:h-fit flex flex-col md:flex-row items-center justify-between">
+    <header
+      id="welcome-step1"
+      className="gap-2 md:gap-0 md:p-8 w-full md:h-fit flex flex-col md:flex-row items-center justify-between"
+    >
       {centered &&
         (isBack && backPath ? (
           <Button

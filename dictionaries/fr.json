@@ -163,6 +163,14 @@
       "title": "Échec de la connexion :",
       "description": "Une erreur s'est produite lors de la connexion. Veuillez réessayer."
     },
+    "logout-success": {
+      "title": "À bientôt !",
+      "description": "Vous avez été déconnecté de votre compte."
+    },
+    "logout-fail": {
+      "title": "Échec de la déconnexion :",
+      "description": "Une erreur est survenue lors de la déconnexion. Veuillez réessayer."
+    },
     "add-points-success": {
       "title": "Points ajoutés avec succès !",
       "description": "Vous avez ajouté des points au tournoi avec succès."

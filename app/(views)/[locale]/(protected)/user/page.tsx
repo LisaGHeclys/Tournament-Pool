@@ -36,6 +36,7 @@ import { UserNav } from "@/components/navbar/user-nav";
 import { useUserTournaments } from "@/backend-calls";
 import { CreateTournamentForm } from "@/components/forms/create-tournament-form";
 import { useLocale, useTranslations } from "next-intl";
+import { useOnborda } from "onborda";
 
 export default function User() {
   const { data: session } = useSession();
@@ -46,6 +47,9 @@ export default function User() {
   const { data, isFetching } = useUserTournaments();
   const t = useTranslations();
   const locale = useLocale();
+  const { startOnborda, closeOnborda } = useOnborda();
+
+  console.log(session);
 
   useEffect(() => {
     if (data) {
@@ -114,7 +118,7 @@ export default function User() {
                 />
               </div>
               <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger asChild>
+                <DialogTrigger id="welcome-step2" asChild>
                   <Button className="hover:scale-105 transition ease-in-out delay-250">
                     <Plus />
                   </Button>
@@ -129,6 +133,11 @@ export default function User() {
                   <CreateTournamentForm setOpen={setOpen} />
                 </DialogContent>
               </Dialog>
+              <div>
+                <button onClick={() => startOnborda("welcome")}>
+                  Start Tour
+                </button>
+              </div>
             </div>
             <div className="flex w-full justify-center">
               <ScrollArea className="w-full lg:w-2/3 h-[560px] md:px-2">

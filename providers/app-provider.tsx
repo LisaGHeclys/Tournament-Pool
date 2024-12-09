@@ -6,6 +6,9 @@ import { SessionProvider } from "next-auth/react";
 import { TanstackQueryProvider } from "@/providers/tanstack-query-provider";
 import { ReactNode } from "react";
 import { IntlProvider } from "@/providers/intl-provider";
+import { Onborda, OnbordaProvider } from "onborda";
+import { steps } from "@/lib/steps";
+import MyCard from "@/components/tours/my-card";
 
 export default function AppProvider({
   children,
@@ -22,7 +25,17 @@ export default function AppProvider({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <OnbordaProvider>
+              <Onborda
+                showOnborda
+                steps={steps}
+                cardComponent={MyCard}
+                shadowOpacity="0.8"
+                cardTransition={{ type: "tween" }}
+              >
+                {children}
+              </Onborda>
+            </OnbordaProvider>
           </ThemeProvider>
         </SessionProvider>
         <ToasterProvider />

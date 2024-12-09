@@ -163,6 +163,14 @@
       "title": "Accesso fallito :",
       "description": "Si è verificato un errore durante l'accesso. Riprova."
     },
+    "logout-success": {
+      "title": "A presto!",
+      "description": "Sei stato disconnesso dal tuo account."
+    },
+    "logout-fail": {
+      "title": "Disconnessione fallita:",
+      "description": "Si è verificato un errore durante la disconnessione. Per favore riprova."
+    },
     "add-points-success": {
       "title": "Punti aggiunti con successo!",
       "description": "Hai aggiunto punti al torneo con successo."
