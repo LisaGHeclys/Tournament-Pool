@@ -40,16 +40,18 @@ import { useOnborda } from "onborda";
 
 export default function User() {
   const { data: session } = useSession();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredTournaments, setFilteredTournaments] =
     useState<tournamentBody[]>();
   const { data, isFetching } = useUserTournaments();
   const t = useTranslations();
   const locale = useLocale();
-  const { startOnborda, closeOnborda } = useOnborda();
+  const { startOnborda, closeOnborda, isOnbordaVisible } = useOnborda();
+  const [isStarted, setIsStarted] = useState<boolean>(false);
 
   function handleTour() {
+    console.log("Handling Onborda Tour:", session);
     if (session?.user?.isFirstTime == false) {
       startOnborda("welcome");
     } else {
@@ -58,8 +60,20 @@ export default function User() {
   }
 
   useEffect(() => {
-    handleTour();
-  }, [session]);
+    // console.log(isOnbordaVisible);
+    console.log(isStarted);
+
+    if (session?.user?.isFirstTime && !isStarted) {
+      console.log(isStarted);
+
+      setIsStarted(true);
+      // console.log("Session Changed:", session?.user?.isFirstTime);
+      //   handleTour();
+      //   // setTimeout(() => {
+      //   //   handleTour();
+      //   // }, 10); // Adjust delay as needed
+    }
+  }, [isStarted]);
 
   useEffect(() => {
     if (data) {
