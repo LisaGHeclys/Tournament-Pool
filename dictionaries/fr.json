@@ -9,7 +9,7 @@
   "navbar": {
     "welcome": "Bienvenue sur Tournament Pool!",
     "welcome-login": "Bienvenue sur la page de Connexion!",
-    "welcome-user": "Bon retard",
+    "welcome-user": "Bon retour",
     "login": "Se connecter",
     "login-github": "Login avec GitHub",
     "login-description": "Sur cette application, nous utiliserons votre compte GitHub pour vous connecter en toute sécurité, afin que vous n'ayez pas besoin de créer un nouveau mot de passe.",
@@ -110,6 +110,49 @@
     "4-1": "Cette politique de confidentialité est en vigueur à partir de la date indiquée ci-dessus et\nrestera en vigueur. Toute modification de ses dispositions sera\nimmédiatement appliquée après sa publication sur cette page. Nous nous réservons\nle droit de mettre à jour ou de modifier notre politique de confidentialité à tout moment, et\nvous devriez consulter cette politique périodiquement. Votre utilisation continue\ndu service après que nous ayons publié des modifications à la politique de confidentialité sur\ncette page constituera votre acceptation de ces modifications et\nvotre consentement à respecter et à être lié par la politique de confidentialité mise à jour.",
     "5": "5. Nous contacter",
     "5-1": "Si vous avez des questions concernant cette politique de confidentialité, veuillez\ncontacter le développeur principal par email à "
+  },
+  "support": {
+    "title": "Questions fréquentes",
+    "description-1": "Voici les questions les plus fréquemment posées à propos de Tournament-Pool. ",
+    "description-2": "Vous n'arrivez pas à trouver ce que vous cherchez ? ",
+    "description-3": "Discutez avec notre équipe !",
+    "Q1": {
+      "title": "Qu'est ce que Tournament-Pool ?",
+      "response": "Tournament-Pool est une plateforme de gestion de tournois conçue pour simplifier la création et la gestion des tournois. Elle permet aux utilisateurs de créer des tournois, de lier des équipes et d'ajouter des points aux équipes respectives. De plus, la plateforme génère automatiquement des graphiques basés sur les données, offrant une représentation dynamique et visuelle des classements des équipes et de leurs performances tout au long du tournoi."
+    },
+    "Q2": {
+      "title": "Quelles sont les principales fonctionnalités de la plateforme ?",
+      "response-1": "• Création de tournoi : Créez facilement des tournois avec des équipes liées.",
+      "response-2": "• Gestion des points : Assignez et mettez à jour les points des équipes.",
+      "response-3": "• Génération de graphiques : Affichez automatiquement les classements des équipes et leurs performances à l'aide de graphiques dynamiques."
+    },
+    "Q3": {
+      "title": "Comment me connecter à Tournament-Pool ?",
+      "response-1": "La connexion est simple et sécurisée grâce à l'authentification à deux facteurs de GitHub :",
+      "response-2": "1. Cliquez sur le bouton 'Se connecter avec GitHub' sur la page de connexion.",
+      "response-3": "2. Saisissez vos identifiants GitHub si nécessaire.",
+      "response-4": "3. Complétez le processus d'authentification à deux facteurs en entrant le code envoyé à votre application d'authentification ou à votre e-mail.",
+      "response-5": "4. Une fois authentifié, vous serez redirigé vers le tableau de bord de la plateforme."
+    },
+    "Q4": {
+      "title": "Comment créer un tournoi ?",
+      "response-1": "La création d'un tournoi est rapide et intuitive :",
+      "response-2": "1. Allez dans la section 'Créer un tournoi' dans votre tableau de bord.",
+      "response-3": "2. Remplissez les détails du tournoi :",
+      "response-4": "   - Titre : Entrez le nom du tournoi.",
+      "response-5": "   - Nombre d'équipes : Sélectionnez entre 2 et 5 équipes.",
+      "response-6": "   - Noms et couleurs des équipes : Attribuez un nom et une couleur uniques à chaque équipe pour une identification facile.",
+      "response-7": "3. Vérifiez vos entrées et cliquez sur 'Créer'.",
+      "response-8": "4. Votre tournoi est maintenant créé, et vous pouvez commencer à gérer les points ou afficher les classements."
+    },
+    "Q5": {
+      "title": "À quoi sert la page /show/ID ?",
+      "response": "La page /show/ID est une vue publique en lecture seule du tournoi. Elle affiche automatiquement les classements et les points des équipes en fonction des dernières données. Les utilisateurs peuvent voir les résultats et les graphiques de performance sans interaction ou mise à jour manuelle."
+    },
+    "Q6": {
+      "title": "À quoi sert la page /user/tournament/ID ?",
+      "response": "La page /user/tournament/ID est destinée à la gestion du tournoi. Les utilisateurs autorisés peuvent mettre à jour les détails, ajouter des points et apporter des modifications aux données du tournoi. Ces mises à jour sont immédiatement reflétées sur la page /show/ID."
+    }
   },
   "toast": {
     "login-success": {
