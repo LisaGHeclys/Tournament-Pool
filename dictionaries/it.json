@@ -111,6 +111,49 @@
     "5": "5. Contattaci",
     "5-1": "Se hai domande relative a questa politica sulla privacy, contatta\nlo sviluppatore principale via email a "
   },
+  "support": {
+    "title": "Domanda frequente",
+    "description-1": "Queste sono le demande più frequenti su Tournament-Pool. ",
+    "description-2": "Non trova la cosa che sta cercando ? ",
+    "description-3": "Discuta con la nostra squadra !",
+    "Q1": {
+      "title": "Cosa è Tournament-Pool?",
+      "response": "Tournament-Pool è una piattaforma di gestione tornei progettata per semplificare la creazione e la gestione dei tornei. Permette agli utenti di creare tornei, collegare le squadre e aggiungere punti alle rispettive squadre. Inoltre, la piattaforma genera automaticamente grafici basati sui dati, offrendo una rappresentazione dinamica e visiva delle classifiche delle squadre e delle loro performance durante il torneo."
+    },
+    "Q2": {
+      "title": "Quali sono le principali funzionalità della piattaforma?",
+      "response-1": "• Creazione Torneo: Crea facilmente tornei con squadre collegate.",
+      "response-2": "• Gestione Punti: Assegna e aggiorna i punti delle squadre.",
+      "response-3": "• Generazione di Grafici: Visualizza automaticamente le classifiche delle squadre e le loro performance con grafici dinamici."
+    },
+    "Q3": {
+      "title": "Come posso accedere a Tournament-Pool?",
+      "response-1": "L'accesso è semplice e sicuro grazie all'autenticazione a due fattori di GitHub:",
+      "response-2": "1. Fai clic sul pulsante 'Accedi con GitHub' nella pagina di login.",
+      "response-3": "2. Inserisci le tue credenziali GitHub se richiesto.",
+      "response-4": "3. Completa il processo di autenticazione a due fattori inserendo il codice inviato alla tua app di autenticazione o alla tua email.",
+      "response-5": "4. Una volta autenticato, sarai reindirizzato alla dashboard della piattaforma."
+    },
+    "Q4": {
+      "title": "Come creare un torneo?",
+      "response-1": "Creare un torneo è veloce e intuitivo:",
+      "response-2": "1. Vai alla sezione 'Crea Torneo' nel tuo pannello di controllo.",
+      "response-3": "2. Compila i dettagli del torneo:",
+      "response-4": "   - Titolo: Inserisci il nome del torneo.",
+      "response-5": "   - Numero di Squadre: Seleziona tra 2 e 5 squadre.",
+      "response-6": "   - Nomi e Colori delle Squadre: Assegna un nome e un colore unici a ciascuna squadra per un'identificazione facile.",
+      "response-7": "3. Controlla i tuoi dati e clicca su 'Crea'.",
+      "response-8": "4. Il tuo torneo è ora creato e puoi iniziare a gestire i punti o visualizzare le classifiche."
+    },
+    "Q5": {
+      "title": "A cosa serve la pagina /show/ID?",
+      "response": "La pagina /show/ID è una vista pubblica in sola lettura del torneo. Visualizza automaticamente le classifiche e i punti delle squadre in base ai dati più recenti. Gli utenti possono vedere i risultati e i grafici delle performance senza alcuna interazione o aggiornamento manuale."
+    },
+    "Q6": {
+      "title": "A cosa serve la pagina /user/tournament/ID?",
+      "response": "La pagina /user/tournament/ID è destinata alla gestione del torneo. Gli utenti autorizzati possono aggiornare i dettagli, aggiungere punti e modificare i dati del torneo. Gli aggiornamenti sono immediatamente riflessi nella pagina /show/ID."
+    }
+  },
   "toast": {
     "login-success": {
       "title": "Bentornato!",
