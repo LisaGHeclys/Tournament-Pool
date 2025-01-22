@@ -4,7 +4,8 @@
     "homepage": "Homepage",
     "your-page": "La tua pagina",
     "support": "Supporto",
-    "privacy-policy": "Informativa sulla privacy"
+    "privacy-policy": "Informativa sulla privacy",
+    "admin": "Admin Panello"
   },
   "navbar": {
     "welcome": "Benvenuto in Tournament Pool!",

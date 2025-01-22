@@ -4,7 +4,8 @@
     "homepage": "Homepage",
     "your-page": "Your page",
     "support": "Support",
-    "privacy-policy": "Privacy Policy"
+    "privacy-policy": "Privacy Policy",
+    "admin": "Admin Panel"
   },
   "navbar": {
     "welcome": "Welcome to Tournament Pool!",

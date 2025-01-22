@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import React from "react";
 import { signOut, useSession } from "next-auth/react";
-import { BookLock, LifeBuoy, LogOut, User } from "lucide-react";
+import { BookLock, LifeBuoy, LogOut, User, UserRoundCog } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { useLocale, useTranslations } from "next-intl";
@@ -90,6 +90,15 @@ export function UserToggle() {
           </span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
+        {session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL && (
+          <>
+            <DropdownMenuItem onClick={() => router.push(`/${locale}/admin`)}>
+              <UserRoundCog className="mr-2 size-3 md:size-4" />
+              <span className="text-xs md:text-sm">{t("pages.admin")}</span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+          </>
+        )}
         <DropdownMenuItem onClick={handleSignOut}>
           <LogOut className="mr-2 size-3 md:size-4" />
           <span className="text-xs md:text-sm">{t("navbar.log-out")}</span>
