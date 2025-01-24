@@ -1,7 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 
 export default function ProtectedLayout({
@@ -13,12 +13,9 @@ export default function ProtectedLayout({
 
   if (session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
     return (
-      <SidebarProvider>
+      <SidebarProvider defaultOpen={false} open={false}>
         <AppSidebar />
-        <main>
-          <SidebarTrigger />
-          {children}
-        </main>
+        <main>{children}</main>
       </SidebarProvider>
     );
   } else redirect("/");

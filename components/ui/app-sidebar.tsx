@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Home, Swords, UsersRound } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -9,6 +9,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { Tooltip, TooltipContent } from "./tooltip";
+import { TooltipTrigger } from "@/components/ui/tooltip";
 
 const items = [
   {
@@ -19,22 +21,12 @@ const items = [
   {
     title: "Users",
     url: "#",
-    icon: Inbox,
+    icon: UsersRound,
   },
   {
     title: "Tournaments",
     url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    icon: Swords,
   },
 ];
 
@@ -49,10 +41,16 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <a href={item.url}>
+                          <item.icon />
+                        </a>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>{item.title}</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
