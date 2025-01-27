@@ -17,29 +17,29 @@ import { useSession } from "next-auth/react";
 import { NavUser } from "@/components/admin/nav-user";
 import { useLocale } from "next-intl";
 
-const items = {
-  nav: [
-    {
-      title: "Dashboard",
-      url: "#",
-      icon: Home,
-    },
-    {
-      title: "Users",
-      url: "#",
-      icon: UsersRound,
-    },
-    {
-      title: "Tournaments",
-      url: "#",
-      icon: Swords,
-    },
-  ],
-};
-
 export function AppSidebar() {
   const { data: session } = useSession();
   const locale = useLocale();
+
+  const items = {
+    nav: [
+      {
+        title: "Dashboard",
+        url: `/admin/dashboard`,
+        icon: Home,
+      },
+      {
+        title: "Users",
+        url: `/admin/users`,
+        icon: UsersRound,
+      },
+      {
+        title: "Tournaments",
+        url: `/admin/tournaments`,
+        icon: Swords,
+      },
+    ],
+  };
 
   return (
     <Sidebar collapsible={"icon"}>
