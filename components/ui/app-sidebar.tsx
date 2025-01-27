@@ -2,17 +2,22 @@ import { Home, Swords, UsersRound } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarRail,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import * as React from "react";
+import { useSession } from "next-auth/react";
+import { NavUser } from "@/components/admin/nav-user";
+import { useLocale } from "next-intl";
 
-const data = {
+const items = {
   nav: [
     {
       title: "Dashboard",
@@ -33,13 +38,19 @@ const data = {
 };
 
 export function AppSidebar() {
+  const { data: session } = useSession();
+  const locale = useLocale();
+
   return (
     <Sidebar collapsible={"icon"}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
+              <a
+                href={`/${locale}/`}
+                className={"hover:scale-[102%] transition ease-in-out delay-50"}
+              >
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <Image
                     alt="Logo TP"
@@ -61,7 +72,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Admin Panel</SidebarGroupLabel>
           <SidebarMenu>
-            {data.nav.map((item) => (
+            {items.nav.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton tooltip={item.title}>
                   {item.icon && <item.icon />}
@@ -74,6 +85,10 @@ export function AppSidebar() {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={session?.user} />
+      </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   );
 }
