@@ -92,7 +92,9 @@ export function UserToggle() {
         <DropdownMenuSeparator />
         {session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL && (
           <>
-            <DropdownMenuItem onClick={() => router.push(`/${locale}/admin`)}>
+            <DropdownMenuItem
+              onClick={() => router.push(`/${locale}/admin/dashboard`)}
+            >
               <UserRoundCog className="mr-2 size-3 md:size-4" />
               <span className="text-xs md:text-sm">{t("pages.admin")}</span>
             </DropdownMenuItem>
