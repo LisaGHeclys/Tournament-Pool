@@ -5,7 +5,7 @@ import { useLatestTournaments } from "@/backend-calls";
 import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
 import { ColumnType } from "@/components/admin/table-component";
-import { tournamentBody } from "@/types/types";
+import { teamBody, tournamentBody } from "@/types/types";
 import { Separator } from "@/components/ui/separator";
 import {
   Table,
@@ -16,13 +16,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatDate } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 export default function Dashboard() {
   const locale = useLocale();
   const latestTournamentsQuery = useLatestTournaments();
 
   const columns: ColumnType<tournamentBody>[] = [
-    { key: "id", label: "ID", className: "w-[120px] font-semibold" },
+    { key: "id", label: "ID", className: "font-semibold" },
     { key: "name", label: "Name", className: "font-normal" },
     { key: "teams", label: "Teams", className: "font-normal" },
     { key: "createdBy", label: "Created By", className: "font-normal" },
@@ -76,9 +77,33 @@ export default function Dashboard() {
                             key={String(column.key)}
                             className={column.className || "font-normal"}
                           >
-                            {column.key === "createdAt"
-                              ? formatDate(String(item[column.key]))
-                              : String(item[column.key])}
+                            {(() => {
+                              switch (column.key) {
+                                case "teams":
+                                  return (
+                                    <div className="flex flex-wrap gap-2">
+                                      {(item[column.key] as teamBody[]).map(
+                                        (team, index) => (
+                                          <Badge
+                                            variant={"secondary"}
+                                            key={index}
+                                            style={{
+                                              backgroundColor: team.color,
+                                              color: "white",
+                                            }}
+                                          >
+                                            {team.name}
+                                          </Badge>
+                                        ),
+                                      )}
+                                    </div>
+                                  );
+                                case "createdAt":
+                                  return formatDate(String(item[column.key]));
+                                default:
+                                  return String(item[column.key]);
+                              }
+                            })()}
                           </TableCell>
                         ))}
                       </TableRow>
