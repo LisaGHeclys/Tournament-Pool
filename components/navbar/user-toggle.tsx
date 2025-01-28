@@ -90,7 +90,7 @@ export function UserToggle() {
           </span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        {session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL && (
+        {session?.user && session?.user?.role === "admin" && (
           <>
             <DropdownMenuItem
               onClick={() => router.push(`/${locale}/admin/dashboard`)}

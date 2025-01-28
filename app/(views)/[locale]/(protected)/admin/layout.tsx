@@ -18,7 +18,7 @@ export default function ProtectedLayout({
     return (
       <SidebarProvider>
         <AppSidebar />
-        <SidebarInset className="px-2">{children}</SidebarInset>
+        <SidebarInset className="px-2 bg-background">{children}</SidebarInset>
       </SidebarProvider>
     );
   } else redirect(`/${locale}/`);

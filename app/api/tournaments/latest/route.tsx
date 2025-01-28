@@ -10,7 +10,7 @@ async function getHandler(req: NextRequest, session?: Session) {
     const tournamentsData = await getDb()
       .collection("tournaments")
       .orderBy("createdAt", "desc")
-      .limit(5)
+      .limit(3)
       .get();
 
     if (tournamentsData.empty) return NextResponse.json({ tournaments: [] });
@@ -24,10 +24,11 @@ async function getHandler(req: NextRequest, session?: Session) {
       };
     });
 
-    // tournaments.sort(
-    //   (a: tournamentBody, b: tournamentBody) =>
-    //     b.createdAt.getTime() - a.createdAt.getTime(),
-    // );
+    tournaments.sort(
+      (a: tournamentBody, b: tournamentBody) =>
+        b.createdAt.getTime() - a.createdAt.getTime(),
+    );
+
     return NextResponse.json({ tournaments: tournaments });
   } catch (e) {
     console.error("Error fetching tournaments of one user:", e);
