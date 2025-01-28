@@ -21,7 +21,18 @@ import { useLocale, useTranslations } from "next-intl";
 import { signOut } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 
-export function NavUser({ user }: { user: User | undefined }) {
+export function NavUser({
+  user,
+}: {
+  user:
+    | {
+        id?: string;
+        name?: string | null;
+        email?: string | null;
+        image?: string | null;
+      }
+    | undefined;
+}) {
   const { isMobile } = useSidebar();
   const { toast } = useToast();
   const router = useRouter();
@@ -56,7 +67,7 @@ export function NavUser({ user }: { user: User | undefined }) {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-full">
-                <AvatarImage src={user?.image} alt={user?.name} />
+                <AvatarImage src={user?.image || ""} alt={user?.name || ""} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -75,7 +86,10 @@ export function NavUser({ user }: { user: User | undefined }) {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-full">
-                  <AvatarImage src={user?.image} alt={user?.name} />
+                  <AvatarImage
+                    src={user?.image || ""}
+                    alt={(user && user?.name) || ""}
+                  />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
