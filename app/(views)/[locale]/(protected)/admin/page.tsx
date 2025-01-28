@@ -7,7 +7,7 @@ export default function Dashboard() {
   const locale = useLocale();
   const { data: session } = useSession();
 
-  if (session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+  if (session?.user && session?.user?.role === "admin") {
     redirect(`/${locale}/admin/dashboard`);
   } else {
     redirect(`/${locale}/`);

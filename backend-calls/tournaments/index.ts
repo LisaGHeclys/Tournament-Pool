@@ -7,3 +7,4 @@ export * from "./use-delete-points";
 export * from "./use-edit-tournament";
 export * from "./use-delete-tournament";
 export * from "./use-create-tournament";
+export * from "./use-latest-tournaments";

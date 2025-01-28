@@ -14,7 +14,7 @@ export default function ProtectedLayout({
   const locale = useLocale();
   const { data: session } = useSession();
 
-  if (session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+  if (session?.user && session?.user?.role === "admin") {
     return (
       <SidebarProvider>
         <AppSidebar />
