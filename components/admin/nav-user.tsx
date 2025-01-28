@@ -21,17 +21,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { signOut } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 
-export function NavUser({
-  user,
-}: {
-  user:
-    | {
-        name: string;
-        email: string;
-        image: string;
-      }
-    | undefined;
-}) {
+export function NavUser({ user }: { user: User | undefined }) {
   const { isMobile } = useSidebar();
   const { toast } = useToast();
   const router = useRouter();
