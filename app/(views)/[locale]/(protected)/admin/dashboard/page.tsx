@@ -6,14 +6,18 @@ export default function Dashboard() {
   const locale = useLocale();
 
   return (
-    <div>
+    <div className="flex flex-col h-screen">
       <Header to={`${locale}/admin/dashboard`} breadcrumbName={"Dashboard"} />
-      <div className="px-8 py-4 grid gap-4">
-        <div className="grid grid-cols-2 gap-4 w-full">
-          <div className="bg-gray-200 p-4">First Element (50%)</div>
-          <div className="bg-gray-200 p-4">Second Element (50%)</div>
+      <div className="flex-1 px-8 py-4 grid grid-rows-3 grid-cols-2 gap-4">
+        <div className="bg-gray-200 p-4 row-span-2">
+          First Element (spans 2 rows)
         </div>
-        <div className="bg-gray-200 p-4">Third Element (100%)</div>
+        <div className="bg-gray-200 p-4 row-span-2">
+          Second Element (spans 2 rows)
+        </div>
+        <div className="bg-gray-200 p-4 col-span-2">
+          Third Element (spans full row)
+        </div>
       </div>
     </div>
   );
