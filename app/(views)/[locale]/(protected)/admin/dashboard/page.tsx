@@ -17,6 +17,13 @@ import {
 } from "@/components/ui/table";
 import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { AreaChartComponent } from "@/components/charts/area-chart";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function Dashboard() {
   const locale = useLocale();
@@ -45,14 +52,20 @@ export default function Dashboard() {
           {latestTournamentsQuery.isPending ? (
             <Skeleton className="h-full w-full flex rounded-2xl" />
           ) : (
-            <Skeleton className="h-full w-full flex rounded-2xl" />
+            <AreaChartComponent />
           )}
         </div>
         <div className="col-span-2 shadow-xl rounded-2xl">
           {latestTournamentsQuery.isPending ? (
             <Skeleton className="h-full w-full flex rounded-2xl" />
           ) : (
-            <div className="p-2">
+            <Card>
+              <CardHeader>
+                <CardTitle>Latest Tournaments</CardTitle>
+                <CardDescription>
+                  Showing total visitors for the last 6 months
+                </CardDescription>
+              </CardHeader>
               <h2 className="m-2 text-xl font-extrabold">Latest Tournaments</h2>
               <Separator className="m-2 w-1/6" />
               <Table>
@@ -110,7 +123,7 @@ export default function Dashboard() {
                     ))}
                 </TableBody>
               </Table>
-            </div>
+            </Card>
           )}
         </div>
       </div>
