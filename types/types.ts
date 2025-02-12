@@ -19,3 +19,7 @@ export type tournamentBody = {
   createdAt: Date;
   points?: pointsBody[];
 };
+
+export type TournamentsByMonth = {
+  [month: string]: number;
+};
