@@ -33,7 +33,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function UsersCharts() {
+export default function TournamentsCharts() {
   return (
     <Card>
       <CardHeader>

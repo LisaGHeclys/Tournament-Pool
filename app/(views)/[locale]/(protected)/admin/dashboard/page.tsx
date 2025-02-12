@@ -4,7 +4,7 @@ import { useLocale } from "next-intl";
 import { useLatestTournaments } from "@/backend-calls";
 import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
-import { UsersCharts } from "@/components/admin/dashboard/area-chart";
+import TournamentsCharts from "@/components/admin/dashboard/tournaments-charts";
 import LatestTournamentsTable from "@/components/admin/dashboard/latest-tournaments-table";
 
 export default function Dashboard() {
@@ -19,14 +19,14 @@ export default function Dashboard() {
           {latestTournamentsQuery.isPending ? (
             <Skeleton className="h-full w-full flex rounded-2xl" />
           ) : (
-            <Skeleton className="h-full w-full flex rounded-2xl" />
+            <TournamentsCharts />
           )}
         </div>
         <div className="row-span-2 shadow-xl rounded-2xl">
           {latestTournamentsQuery.isPending ? (
             <Skeleton className="h-full w-full flex rounded-2xl" />
           ) : (
-            <UsersCharts />
+            <TournamentsCharts />
           )}
         </div>
         <div className="col-span-2 shadow-xl rounded-2xl">
