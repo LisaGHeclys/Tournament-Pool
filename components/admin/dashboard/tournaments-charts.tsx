@@ -16,30 +16,45 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/charts/chart";
+import React from "react";
+import { TournamentsByMonth } from "@/types/types";
 
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-];
+export function getChartData(data: TournamentsByMonth) {
+  const today = new Date();
+  const chartData = [];
+
+  for (let i = 11; i >= 0; i--) {
+    const monthDate = new Date(today.getFullYear(), today.getMonth() - i, 1);
+    const monthKey = monthDate.getFullYear() + "-" + (monthDate.getMonth() + 1);
+
+    chartData.push({
+      month: monthKey,
+      tournaments: data[monthKey] || 0,
+    });
+  }
+
+  return chartData;
+}
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  tournaments: {
+    label: "Tournaments",
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
 
-export default function TournamentsCharts() {
+type Props = {
+  data: TournamentsByMonth;
+};
+
+export default function TournamentsCharts({ data }: Props) {
+  const chartData = getChartData(data);
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Area Chart</CardTitle>
+        <CardTitle>Tournaments by month</CardTitle>
         <CardDescription>
-          Showing total visitors for the last 6 months
+          The number of tournaments created the last year
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -53,23 +68,17 @@ export default function TournamentsCharts() {
             }}
           >
             <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
+            <XAxis dataKey="month" tickLine={false} axisLine={false} />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="line" />}
             />
             <Area
-              dataKey="desktop"
+              dataKey="tournaments"
               type="natural"
-              fill="var(--color-desktop)"
+              fill="var(--color-tournaments)"
               fillOpacity={0.4}
-              stroke="var(--color-desktop)"
+              stroke="var(--color-tournaments)"
             />
           </AreaChart>
         </ChartContainer>
