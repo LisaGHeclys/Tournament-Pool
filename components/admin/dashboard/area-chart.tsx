@@ -33,7 +33,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function AreaChartComponent() {
+export function UsersCharts() {
   return (
     <Card>
       <CardHeader>
